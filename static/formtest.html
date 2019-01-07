@@ -1,0 +1,36 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+function makerequest() {
+  var method = $('#method').val()
+  var url = $('#url').val()
+  var params = { 'search[value]': $('#search').val(), 'phone': $('#phone').val() }
+  $.ajax({
+    data: params,
+    url: url,
+    type: method,
+    success: function(data, status) {
+      $('#output').html("<pre>"+JSON.stringify(data, null, "\t")+"</pre>");
+    }
+  });
+}
+</script>
+<body>
+<form id="myform">
+URL: <input id="url" type="text" name="url" size="50" value="http://dev.deeplegal.glamsi.com/users/">
+<select id="method">
+  <option value="get">GET</option>
+  <option value="post">POST</option>
+  <option value="delete">DELETE</option>
+  <option value="put">PUT</option>
+</select>
+<input type="text" id="search" size=15>
+<input type="text" id="phone" size=15>
+<input type="button" onclick="makerequest();" value="request">
+<br>
+<br>
+<div id="output" />
+</form>
+</body>
+</html>
