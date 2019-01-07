@@ -114,8 +114,12 @@ class RestModelView(View):
     return self.jsonResponse(jsonObj=response)
 
   def read(self, request, *args, **kwargs):
-    data = self.dictOf(self.obj.get(id=kwargs["id"]))
-    return self.jsonResponse(jsonObj=data)
+    try:
+      data = self.dictOf(self.obj.get(id=kwargs["id"]))
+      return self.jsonResponse(jsonObj=data)
+    except:
+      pass
+    return self.jsonResponse(jsonObj={"result": self.MSG_NOT_FOUND, "status": 404})
 
   def create(self, request, *args, **kwargs):
     obj = self.obj.model()
@@ -141,12 +145,11 @@ class RestModelView(View):
   def update(self, request, *args, **kwargs):
     try:
       data = self.obj.get(id=kwargs["id"])
-    except:
-      data = None
-    if data:
       if self.updateFields(data, self.params):
         return self.jsonResponse(jsonObj={"result": self.MSG_SUCCESS, "status": 200}, status=200)
       else:
         return self.jsonResponse(jsonObj={"result": self.MSG_NOT_UPDATED, "status": 500}, status=200)
+    except:
+      pass
     return self.jsonResponse(jsonObj={"result": self.MSG_NOT_FOUND, "status": 404}, status=200)
 
