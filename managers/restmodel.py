@@ -5,6 +5,13 @@ from django.http import HttpResponse, JsonResponse, QueryDict
 from itertools import chain
 
 class RestModelView(View):
+  MSG_UNIMPLEMENTED = "Operation unimplemented"
+  MSG_SUCCESS = "The operation ended successfully"
+  MSG_DELETED = "Object deleted successfully"
+  MSG_NOT_FOUND = "Object does not exists"
+  MSG_NOT_DELETED = "Object was not deleted"
+  MSG_NOT_UPDATED = "Object was not updated"
+
   params = {}
   obj = None
   searchField = "name"
@@ -54,10 +61,11 @@ class RestModelView(View):
 
   def dispatch(self, request, *args, **kwargs):
     if self.obj:
-      self.setFilter(request)
       self.params = request.GET.copy()
       self.params.update(request.POST)
       self.params.update(QueryDict(request.body))
+      self.params.update(kwargs)
+      self.setFilter(request)
       return super(RestModelView, self).dispatch(request, *args, **kwargs)
     jsonObj = None
     return self.jsonResponse(jsonObj, status=404)
@@ -110,7 +118,14 @@ class RestModelView(View):
     return self.jsonResponse(jsonObj=data)
 
   def create(self, request, *args, **kwargs):
-    return self.jsonResponse(jsonObj={"result": "Unimplemented", "status": 500}, status=500)
+    obj = self.obj.model()
+    for f in obj._meta.fields:
+      if f.column in self.params:
+        setattr(obj, f.column, self.params[f.column])
+    obj.save()
+    output = self.dictOf(obj)
+    output.update({"result": self.MSG_SUCCESS, "status": 200})
+    return self.jsonResponse(jsonObj=output, status=200)
 
   def destroy(self, request, *args, **kwargs):
     try:
@@ -120,8 +135,8 @@ class RestModelView(View):
     if data:
       # trigger user delete
       #data.delete()
-      return self.jsonResponse(jsonObj={"result": "Object deleted", "status": 200}, status=200)
-    return self.jsonResponse(jsonObj={"result": "Object does not exists", "status": 404}, status=200)
+      return self.jsonResponse(jsonObj={"result": self.MSG_DELETED, "status": 200}, status=200)
+    return self.jsonResponse(jsonObj={"result": self.MSG_NOT_FOUND, "status": 404}, status=200)
 
   def update(self, request, *args, **kwargs):
     try:
@@ -130,8 +145,8 @@ class RestModelView(View):
       data = None
     if data:
       if self.updateFields(data, self.params):
-        return self.jsonResponse(jsonObj={"result": "Object updated", "status": 200}, status=200)
+        return self.jsonResponse(jsonObj={"result": self.MSG_SUCCESS, "status": 200}, status=200)
       else:
-        return self.jsonResponse(jsonObj={"result": "Object not updated", "status": 500}, status=200)
-    return self.jsonResponse(jsonObj={"result": "Object does not exists", "status": 404}, status=200)
+        return self.jsonResponse(jsonObj={"result": self.MSG_NOT_UPDATED, "status": 500}, status=200)
+    return self.jsonResponse(jsonObj={"result": self.MSG_NOT_FOUND, "status": 404}, status=200)
 

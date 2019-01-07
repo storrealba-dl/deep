@@ -5,13 +5,20 @@
 function makerequest() {
   var method = $('#method').val()
   var url = $('#url').val()
-  var params = { 'search[value]': $('#search').val(), 'phone': $('#phone').val() }
+  var params = {
+    'search[value]': $('#search').val(),
+    'phone': $('#phone').val(),
+    'name': $('#phone').val()
+  }
   $.ajax({
     data: params,
     url: url,
     type: method,
     success: function(data, status) {
       $('#output').html("<pre>"+JSON.stringify(data, null, "\t")+"</pre>");
+    },
+    error: function(request, status, error) {
+      $('#output').html("<pre>"+JSON.stringify(request.responseJSON, null, "\t")+"</pre>");
     }
   });
 }

@@ -42,6 +42,15 @@ class MenusItemsView(RestModelView):
     self.obj = self.obj.filter(menutype__lte=1)
     return True
 
+  def create(self, request, *args, **kwargs):
+    return self.jsonResponse(jsonObj={"result": "Unimplemented", "status": 500}, status=500)
+
+  def destroy(self, request, *args, **kwargs):
+    return self.jsonResponse(jsonObj={"result": "Unimplemented", "status": 500}, status=500)
+
+  def update(self, request, *args, **kwargs):
+    return self.jsonResponse(jsonObj={"result": "Unimplemented", "status": 500}, status=500)
+
 class RutsView(RestModelView):
   obj = Ruts.objects
 
@@ -62,5 +71,6 @@ class TeamsView(RestModelView):
     return obj
 
   def setFilter(self, data):
+    self.obj = self.obj.filter(company_id=self.params["company_id"])
     return True
 
