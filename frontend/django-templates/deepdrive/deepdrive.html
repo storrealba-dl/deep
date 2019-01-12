@@ -1,0 +1,102 @@
+{% extends "base/base.html" %}
+
+<!-- css -->
+{% block section_css %}
+<link rel="stylesheet" href="/frontend/lib/webix/filemanager_6.1.1/codebase/webix/webix.css" type="text/css"> 
+<link rel="stylesheet" href="/frontend/lib/webix/filemanager_6.1.1/codebase/filemanager.min.css" type="text/css"> 
+
+<link rel="stylesheet" type="text/css" href="/frontend/modules/deepdrive/deepdrive.css">
+{% endblock section_css %}
+
+<!-- body html - riot tags  -->
+{% block app_content %}
+<section id="deepdrive" class="container-fluid section-container">
+
+	<deepdrive></deepdrive>
+	
+  	<div class="row m-t-40">
+	    <div class="col-sm-12">
+	      	<div class="row">
+		        <div class="deepdrive-header section-header col-sm-12">
+		        	<a href="/" class="back-link-item">
+		            	<i class="ti-angle-left"></i>
+		        	</a>
+			        <h1>
+			            Deepdrive
+			        </h1>
+			        <div class="section-actions">
+			            <!-- <div class="section-graphs">
+			            </div>
+			            <div class="section-filters">
+			              	<ul class="nav nav-tabs">
+				                <li class="nav-item">
+				                 	<a class="nav-link btn-datatable {% if "laboral" in request.GET %}active show{% endif %}" data-toggle="tab" data-category="laboral" href="#laboral_KPI">Laboral</a>
+				              	</li>
+				              	<li class="nav-item">
+				                  	<a class="nav-link btn-datatable {% if "civil" in request.GET %}active show{% endif %}" data-toggle="tab" data-category="civil" href="#civil_KPI">Civil</a>
+				              	</li>
+				              	<li class="nav-item">
+				                  	<a class="nav-link btn-datatable {% if "cobranza" in request.GET %}active show{% endif %}" data-category="cobranza" data-toggle="tab" href="#cobranza_KPI">Cobranza</a>
+				              	</li>
+			          		</ul>
+			      		</div> -->
+			  		</div>
+				</div>
+			</div>
+			<div class="row">
+			    <div class="deepdrive-body section-body col-md-10">
+			     	<div id="fm-container" style=""></div>
+			     	<div id="hidden-dropzone"></div>
+				</div>
+				<div class="deepdrive-buttons col-md-2">
+					<button class="btn btn-primary btn-block" id="upload-btn"><i class="mdi mdi-upload"></i> Subir Archivo</button>
+					<button class="btn btn-outline-primary btn-block" id="create-folder-btn"><i class="mdi mdi-folder-plus"></i> Crear Carpeta</button>
+					<button class="btn btn-outline-primary btn-block" id="refresh-fm"><i class="mdi mdi-refresh"></i> Refrescar</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- modals -->
+	<div id="modal-preview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-litigantes.title" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                <h4 class="modal-title" id="modal-preview-title"></h4>
+	            </div>
+	            <div class="modal-body">
+	                <!-- loading -->
+	                <div class="loading-alert alert alert-info">
+	                    <div class="loading-message">
+	                        <div class="lds-dual-ring"></div>
+	                        <span>Cargando</span>
+	                    </div>
+	                </div>
+	                <!-- end loading -->
+	                <div class="files-target">
+	                	
+	                </div>
+
+	            </div>
+	            <div class="modal-footer">
+	                <a href="#" class="btn btn-primary waves-effect download-file-btn"><i class="mdi mdi-download"></i> Descargar</a>
+	                <!-- <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button> -->
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div>
+	
+</section>
+{% endblock app_content %}
+
+<!-- js -->
+{% block section_scripts %}
+<script src="/frontend/lib/webix/filemanager_6.1.1/codebase/webix/webix.js" type="text/javascript"></script>
+<script src="/frontend/lib/dropzone.js/dropzone.js" type="text/javascript"></script>
+<script src="/frontend/lib/webix/filemanager_6.1.1/codebase/filemanager.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="/frontend/modules/deepdrive/deepdrive.js"></script>
+{% endblock section_scripts %}

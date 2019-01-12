@@ -1,0 +1,37 @@
+/*modes button*/
+.webix_fmanager_modes .webix_selected{
+	background-color: #bbdefb !important;
+	border:1px solid #2196f3 !important;
+}
+
+/*Table*/
+.webix_fmanager_table .webix_row_select {
+	background: #bbdefb !important;
+}
+.webix_blur.webix_fmanager_table .webix_row_select{
+	background-color: #bbdefb !important;
+}
+
+/*Tree*/
+.webix_fmanager_tree .webix_selected{
+	background:  #bbdefb !important;
+	font-weight: bold;
+}
+
+.webix_blur.webix_fmanager_tree .webix_selected {
+	background-color: #bbdefb !important;
+}
+
+/*Files view*/
+.webix_fmanager_files .webix_selected .webix_fmanager_file {
+	background: #bbdefb !important;
+}
+.webix_blur.webix_fmanager_files .webix_selected .webix_fmanager_file{
+	background-color: #bbdefb;
+}
+
+
+
+
+
+

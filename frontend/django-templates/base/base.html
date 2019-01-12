@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="google" content="notranslate">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+
+        <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+
+        <title>Deeplegal.ai | {{ app }}</title>
+
+        <link href="/frontend/lib/minton/plugins/switchery/switchery.min.css" rel="stylesheet" />
+        <link href="/frontend/lib/minton/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
+
+        <link href="/frontend/lib/minton/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/frontend/lib/minton/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="/frontend/lib/minton/css/style.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="/frontend/lib/minton/plugins/notifyjs/dist/styles/metro/notify-metro.css">
+        
+        <!-- Deeplegal css-->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/frontend/styles/base.css">
+
+        {% block section_css %} {% endblock section_css %}
+
+        <script src="/frontend/lib/minton/js/jquery.min.js"></script>
+
+        <!-- Deeplegal js-->
+        
+        <!-- build:js -->
+        <script type="text/javascript" src="/frontend/js/deeplegal.js"></script>
+        <script type="text/javascript" src="/frontend/js/Util.js"></script>
+        <script type="text/javascript" src="/frontend/js/HTMLSnippets.js"></script>
+        <script type="text/javascript" src="/frontend/js/Events.js"></script>
+        <script type="text/javascript" src="/frontend/js/NotificationService.js"></script>
+        <!-- endbuild -->
+
+        <script src="/frontend/minton/js/modernizr.min.js"></script>        
+    </head>
+
+
+    <body class="fixed-left">
+        
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- top-navbar -->
+            {% include "top-navbar/top-navbar.html" %}
+            <!-- end top-navbar -->
+
+            <!-- left-sidebar -->
+            {% include "left-sidebar/left-sidebar.html" %}
+            <!-- end left-sidebar -->
+
+            <!-- right-sidebar -->
+            {% include "right-sidebar/right-sidebar.html" %}
+            <!-- end right-sidebar -->
+
+            <div class="main-view-container">
+                {% block app_content %}<div>Base content</div>{% endblock app_content %}    
+            </div>
+            
+        </div>
+        <!-- END wrapper -->
+
+        <div id="message-alert-container" class="alert alert-info">
+             <button type="button" class="close" onclick="deeplegal.Util.hideMessage()" aria-hidden="true">×</button>
+             <div id="message-alert-target"></div>
+        </div>
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- Plugins  -->
+        <script src="/frontend/minton/js/popper.min.js"></script><!-- Popper for Bootstrap -->
+        <script src="/frontend/minton/js/bootstrap.min.js"></script>
+        <script src="/frontend/minton/js/detect.js"></script>
+        <script src="/frontend/minton/js/fastclick.js"></script>
+        <script src="/frontend/minton/js/jquery.slimscroll.js"></script>
+        <script src="/frontend/minton/js/jquery.blockUI.js"></script>
+        <script src="/frontend/minton/js/waves.js"></script>
+        <script src="/frontend/minton/js/wow.min.js"></script>
+        <script src="/frontend/minton/js/jquery.nicescroll.js"></script>
+        <script src="/frontend/minton/js/jquery.scrollTo.min.js"></script>
+        <script src="/frontend/minton/plugins/switchery/switchery.min.js"></script>
+
+        <!-- Notifications -->
+        <script src="/frontend/minton/plugins/notifyjs/dist/notify.min.js"></script>
+        <script src="/frontend/minton/plugins/notifyjs/dist/styles/metro/notify-metro.js"></script>
+        <script src="/frontend/minton/plugins/notifyjs/dist/styles/bootstrap/notify-bootstrap.js"></script>
+        
+
+        <!-- Counter Up  -->
+        <script src="/frontend/minton/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="/frontend/minton/plugins/counterup/jquery.counterup.min.js"></script>
+
+        <!-- circliful Chart -->
+        <script src="/frontend/minton/plugins/jquery-circliful/js/jquery.circliful.min.js"></script>
+        <script src="/frontend/minton/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- skycons -->
+        <script src="/frontend/minton/plugins/skyicons/skycons.min.js" type="text/javascript"></script>
+
+        <!-- Page js  -->
+        <script src="/frontend/minton/pages/jquery.dashboard.js"></script>
+
+        <!-- Custom main Js -->
+        <script src="/frontend/minton/js/jquery.core.js"></script>
+        <script src="/frontend/minton/js/jquery.app.js"></script>
+
+        <script src="/frontend/lib/riot.min.js"></script>
+        <script src="/frontend/js/store.js"></script>
+
+        {% block section_scripts %}<div style="display: none;"></div>{% endblock section_scripts %}
+
+        <script type="text/javascript">
+            riot.store = new Store();
+            riot.mount('*');
+        </script>
+    </body>
+</html>
