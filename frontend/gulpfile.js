@@ -127,6 +127,7 @@ gulp.task('djangoTemplatesDev', function() {
     var src = './django-templates/**/*.html';
 
     return gulp.src(src)
+        .pipe(replace(/href="\/frontend\/styles/g, 'src="/static/css'))
         .pipe(replace(/href="\/frontend\/modules/g, 'src="/static/css'))
         .pipe(replace(/src="\/frontend\/modules/g, 'src="/static/js'))
         .pipe(replace(/href="\/frontend/g, 'href="/static'))
@@ -149,6 +150,7 @@ gulp.task('djangoTemplates', function() {
 
     gulp.src(src)
         //replace modules url
+        .pipe(replace(/href="\/frontend\/styles/g, 'src="/static/css'))
         .pipe(replace(/href="\/frontend\/modules/g, 'href="/static/css')) 
         .pipe(replace(/src="\/frontend\/modules/g, 'src="/static/js'))
         //replace other elements - lib
