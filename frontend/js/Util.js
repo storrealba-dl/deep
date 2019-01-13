@@ -15,6 +15,10 @@ deeplegal.Util = {
 		return cookieValue;
 	},
 
+	preventDefault: function(e) {
+		e.preventDefault ? e.preventDefault() : event.returnValue = false;
+	},
+
 	chunkArray: function(myArray, chunk_size) {
 	    var results = [];
 	    
