@@ -1,0 +1,40 @@
+<div class="top-navbar" id="top-navbar">
+    <div class="search-container">
+        <i class="mdi mdi-magnify"></i>
+        <input type="text" name="" placeholder="Buscar Caso, Causas..." disabled id="top-navbar-search">
+        <!-- <span>Buscar Caso, Causas…</span> -->
+    </div>
+
+    <div class="user-info">
+        <img class="company-logo" src="/picture/{{ request.security.cLoggedUser.company_id }}/">
+        
+        <div class="user-avatar">{{ request.security.initials }}</div>
+        
+        <li class="list-inline-item dropdown notification-list">
+            <a class="user-name nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                {{ request.security.cLoggedUser.name|capfirst }}
+            </a>
+            
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="Preview" x-placement="bottom-end" style="position: absolute; transform: translate3d(-105px, 21px, 0px); top: 0px; left: 0px; will-change: transform;">
+                
+                <a class="dropdown-item notify-item" data-method="get" href="/users/edit">
+                    <i class="ti-home"></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a class="dropdown-item notify-item" rel="nofollow" data-method="delete" href="#" id="logout-btn">
+                    <i class="mdi mdi-logout"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+        </li>
+        <div class="notification-icon has-notification right-bar-toggle">
+            <i class="mdi mdi-bell-outline"></i>
+            <span class="notification-marker"></span>
+        </div>
+    </div>
+
+    <!-- Resources -->
+    <link rel="stylesheet" type="text/css" href="/static/templates/top-navbar/top-navbar.css">
+    <script type="text/javascript" src="/static/templates/top-navbar/top-navbar.js"></script>
+</div>

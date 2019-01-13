@@ -1,0 +1,88 @@
+<div class="left side-menu left-sidebar collapsed" id="left-sidebar">
+    <div class="sidebar-inner slimscrollleft">
+        <!--- Divider -->
+        <div id="sidebar-menu">
+            
+            <div class="nav-title">
+                <a href="/" class="logo-expanded side-logo">
+                    <img src="/static/images/logo-expanded.png" height="37">
+                </a>
+                <a href="" class="logo-collapsed side-logo">
+                    <img src="/static/images/logo-collapsed.png" height="55">
+                </a>
+            </div>
+
+            <ul class="nav-items-container">
+                {% for item in request.security.getModules %}
+                    {% if item.menutype == 0 %}
+                        <li class="{% if app == item.label %}active{% endif %}">
+                            <a href="{{ item.url }}" class="waves-effect waves-primary">
+                                <img src="
+                                {% if app == item.label %}
+                                    {{ item.icon_active }}
+                                {% else %}
+                                    {{ item.icon }}
+                                {% endif %}">
+                                <span class="item-name"> {{ item.title }} </span>
+                            </a>
+                        </li>
+                    {% elif item.menutype == 1 %}
+                        <li class="{% if app == item.label %}active{% endif %} has_sub">
+                            <a href="javascript:void(0);" class="waves-effect waves-primary">
+                                <img src="
+                                {% if app == item.label %}
+                                    {{ item.icon_active }}
+                                {% else %}
+                                    {{ item.icon }}
+                                {% endif %}">
+                                <span class="item-name"> {{ item.title }} </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                {% for child in item.childs %}
+                                    <li>
+                                        <a href="{{ child.url }}">{{ child.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}    
+                {% endfor %}
+
+                <!-- Menu config -->
+                {% if request.security.bAdmin %}
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect waves-primary">
+                        <img src="/static/images/left-sidebar/settings-icon.svg">
+                        <span class="item-name"> Configuración </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled">
+                        {% for item in request.security.getConfigMenus %}
+                            {% if item.menutype == 10 %}
+                                <li>
+                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                <!-- copyright -->
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect waves-primary">
+                        <span class="item-name">Copyright Deeplegal 2018</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- Resources -->
+    <link rel="stylesheet" type="text/css" href="/static/templates/left-sidebar/left-sidebar.css">
+    <script type="text/javascript" src="/static/templates/left-sidebar/left-sidebar.js"></script>
+</div>
+
