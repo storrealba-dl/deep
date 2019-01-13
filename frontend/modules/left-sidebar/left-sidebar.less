@@ -1,0 +1,123 @@
+@import '../../styles/variables';
+@expanded-width: 239px;
+
+.left-sidebar {
+
+	font-size: 12px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+		
+	&.side-menu.left {
+		top: 0;
+		z-index: 9000;
+		transition: width 0.3s;
+	}
+
+	&.expanded {
+		width: @expanded-width;
+
+		#sidebar-menu {
+			.logo-collapsed {
+				display: none;
+			}
+		}
+	}
+
+	&.collapsed {
+		width: 101px;
+
+		#sidebar-menu {
+			.logo-expanded {
+				display: none;
+			}
+
+			.nav-items-container li > a > span,
+			.nav-items-container li > ul {
+				display: none !important; //overrides minton
+			}
+		}
+	}
+
+	#sidebar-menu {
+		.side-logo {
+			display: block;
+		}
+
+		.logo-expanded {
+			margin-top: 10px;
+			margin-bottom: 50px;
+			margin-left: 37px;
+		}
+
+		.logo-collapsed {
+			margin-top: 10px;
+			margin-bottom: 32px;
+			margin-left: 28px;
+		}
+
+		.nav-items-container > li > a {
+			padding-left: 37px;
+			width: @expanded-width;
+			color: @gray-200;
+		}
+
+		.nav-items-container > li.active,
+		.nav-items-container > li.active > a {
+			font-weight: bold;
+    		color: @gray-1600;
+		}
+
+		.nav-items-container > li > a:hover {
+			.item-name {
+				font-weight: bold;
+    			color: @gray-1600;
+    		}
+		}
+
+		.nav-items-container > li > a > span{
+			display: inline-block;
+		}
+
+		.nav-items-container > li > a > img {
+			width: 22px;
+			height: 22px;
+			margin-right: 24px;
+		}
+
+		// Subnav
+
+		.subdrop {
+			background: none !important; //overrides minton
+			border: none;
+		}
+
+		.nav-items-container > li > ul {
+			background: @gray-50;
+		}
+
+		.nav-items-container > li > ul a {
+			font-size: 12px;
+			width: @expanded-width;
+		}
+
+		.nav-items-container > li > ul a:hover {
+			font-weight: bold;
+    		color: @gray-1600;
+		}
+
+		.nav-items-container > li > ul li a:before {
+			margin-right: 16px;
+			margin-left: 20px;
+		    font-size: 20px;
+		    content: "\2022";
+		    color: #d8d8d8;
+		    vertical-align: middle;
+		}
+
+		.nav-items-container > li > ul a:hover:before {
+    		color: @blue-100;
+		}
+	}
+}

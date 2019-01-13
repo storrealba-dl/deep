@@ -1,0 +1,131 @@
+@import '../../styles/variables';
+
+.top-navbar {
+    position: fixed;
+    z-index: 8000;
+    height: 74px;
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: solid 1px @gray-150;
+    padding: 22px 60px;
+    padding-left: calc(60px + 100px); /*adding lefnav spacing*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: @gray-50;
+    transition: width 0.3s;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: @gray-300;
+
+    @media @phone {
+        padding: 10px;
+        /*TODO: arrange elements in smaller devices*/
+    }
+
+    .search-container {
+        font-size: 16px;
+        line-height: 1.63;
+        font-weight: lighter;
+        width: 60%;
+        position: relative;
+
+        i {
+            font-size: 25px;
+            position: absolute;
+            top: -5px;
+        }
+
+        input {
+            border: none;
+            background: transparent;
+            color: @gray-900;
+            width: 100%;
+            padding-left: 35px;
+
+            &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                font-weight: 300;
+                color: @gray-300;
+                opacity: 1; /* Firefox */
+            }
+
+            &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                font-weight: 300;
+                color: @gray-300;
+            }
+
+            &::-ms-input-placeholder { /* Microsoft Edge */
+                font-weight: 300;
+                color: @gray-300;
+            }
+        }
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+
+        .company-logo {
+            margin-right: 28px;
+            height: 30px;
+        }
+
+        .user-avatar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: @blue-100;
+            color: @white;
+            font-size: 12px;
+            //margin-right: 12px;
+        }
+
+        .user-name {
+            margin-right: 20px;
+            font-size: 14px;
+            font-weight: lighter;
+            color: @gray-300;
+
+            max-width: 185px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
+            &.dropdown-toggle::after{
+                position: absolute;
+                right: 20px; //margin right
+                top: 8px;
+            }
+        }
+
+        .notification-icon {
+            position: relative;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .notification-icon.has-notification .notification-marker {
+            display: block;
+        }
+
+        .notification-marker {
+            display: none;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            right: 15%;
+            top: 30%;
+            background-color: @orange-500;
+        }
+    }
+    
+    .profile-dropdown {
+        width: auto
+    }
+}
