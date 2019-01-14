@@ -56,12 +56,6 @@
                 </div>
             </div>
         </form>
-        <div id="status-message" class="alert alert-info">
-        	<div class="loading-message">
-        		<div class="lds-dual-ring"></div> 
-        		<span>Ingresando</span>
-        	</div>
-        </div>
     </div>
 
     <script>
