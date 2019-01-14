@@ -70,9 +70,9 @@
 	    	deeplegal.Util.preventDefault(e);
 			var t = this;
 			var data = {
-				user: this.ref.user.value,
-				pass: this.ref.password.value,
-				remember: this.ref.remember.checked,
+				user: this.refs.user.value,
+				pass: this.refs.password.value,
+				remember: this.refs.remember.checked,
 	            csrfmiddlewaretoken: deeplegal.Util.getCsrf()
 			}
 
