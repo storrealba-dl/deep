@@ -15,7 +15,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="mdi mdi-account"></i></span>
                         </div>
-                        <input class="form-control" type="text" name="user" required="" placeholder="Usuario">
+                        <input class="form-control" type="text" name="user" required="" ref="user" placeholder="Usuario">
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="mdi mdi-radar"></i></span>
                         </div>
-                        <input class="form-control" type="password" name="pass" required="" placeholder="Contraseña">
+                        <input class="form-control" type="password" name="password" required="" ref="password" placeholder="Contraseña">
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <div class="form-group row">
                 <div class="col-12">
                     <div class="checkbox checkbox-primary">
-                        <input id="checkbox-signup" name="remember" type="checkbox">
+                        <input id="checkbox-signup" name="remember" type="checkbox" ref="remember">
                         <label for="checkbox-signup">
                             Recuérdame
                         </label>
@@ -70,9 +70,9 @@
 	    	deeplegal.Util.preventDefault(e);
 			var t = this;
 			var data = {
-				user: this.user.value,
-				pass: this.user.value,
-				remember: this.remember.checked,
+				user: this.ref.user.value,
+				pass: this.ref.password.value,
+				remember: this.ref.remember.checked,
 	            csrfmiddlewaretoken: deeplegal.Util.getCsrf()
 			}
 
