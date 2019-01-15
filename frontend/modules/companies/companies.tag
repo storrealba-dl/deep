@@ -2,7 +2,7 @@
 
     <listadmin config="{adminConfig}">
         
-        <yield to="modal-add">
+        <yield to="modal-edit">
             <div class="form-container">
                 <form ref="editForm">
                     
@@ -10,11 +10,11 @@
                         
                         <div class="form-group col-md-6">
                             <label for="company-name" class="col-form-label">Nombre</label>
-                            <input name="name" type="text" class="form-control" id="company-name" placeholder="Nombre">
+                            <input ref="name" name="name" type="text" class="form-control" id="company-name" placeholder="Nombre">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="contact" class="col-form-label">Contacto</label>
-                            <input name="contact_name" type="text" class="form-control" id="contact" placeholder="Contacto">
+                            <input ref="contact_name" name="contact_name" type="text" class="form-control" id="contact" placeholder="Contacto">
                         </div>
 
                     </div>
@@ -22,11 +22,11 @@
                         
                         <div class="form-group col-md-6">
                             <label for="email" class="col-form-label">e-mail</label>
-                            <input name="email" type="email" class="form-control" id="email" placeholder="e-mail">
+                            <input ref="email" name="email" type="email" class="form-control" id="email" placeholder="e-mail">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="phone" class="col-form-label">Telefono</label>
-                            <input name="phone" type="text" class="form-control" id="phone" placeholder="Telefono">
+                            <input ref="phone" name="phone" type="text" class="form-control" id="phone" placeholder="Telefono">
                         </div>
 
                     </div>
@@ -34,11 +34,11 @@
                         
                         <div class="form-group col-md-6">
                             <label for="address" class="col-form-label">Dirección</label>
-                            <input name="address" type="text" class="form-control" id="address" placeholder="Dirección">
+                            <input ref="address" name="address" type="text" class="form-control" id="address" placeholder="Dirección">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="city" class="col-form-label">Ciudad</label>
-                            <input name="city" type="text" class="form-control" id="city" placeholder="Ciudad">
+                            <input ref="city" name="city" type="text" class="form-control" id="city" placeholder="Ciudad">
                         </div>
 
                     </div>
@@ -46,11 +46,11 @@
                         
                         <div class="form-group col-md-6">
                             <label for="district" class="col-form-label">Comuna</label>
-                            <input name="district" type="text" class="form-control" id="district" placeholder="Comuna">
+                            <input ref="district" name="district" type="text" class="form-control" id="district" placeholder="Comuna">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="plan" class="col-form-label">Plan</label>
-                            <select name="plan_id" class="custom-select" id="plan">
+                            <select ref="plan_id" name="plan_id" class="custom-select" id="plan">
 
                             </select>
                         </div>
@@ -155,7 +155,7 @@
                             var button = '<div class="btn-group">\
                                 <button class="dropdown-toggle waves-effect waves-light btn btn-outline-primary btn-sm" data-toggle="dropdown"><i class="mdi mdi-dots-horizontal"></i></button>\
                                 <div class="dropdown-menu" x-placement="bottom-start">\
-                                    <a data-company-id="'+ n.id +'" class="dropdown-item" href="#" onclick="deeplegal.Companies.editCompany(this)" data-toggle="modal" data-target="#modal-edit">Editar</a>\
+                                    <a data-company-id="'+ n.id +'" class="dropdown-item" href="#" data-company-info="' + JSON.stringify(n) + '" data-toggle="modal" data-target="#modal-edit">Editar</a>\
                                     <a data-company-id="'+ n.id +'" class="dropdown-item" href="#" onclick="deeplegal.Companies.confirmDeleteCompany(this)" data-toggle="modal" data-target="#modal-delete">Borrar</a>\
                                 </div>\
                             </div>';
@@ -170,12 +170,13 @@
         /**
         * @companyId: if empty will create a new company
         */
-        this.editCompany = function(companyId) {
-            var t = this;
-            var form = this.refs.editForm;
-            var url = companyId ? '/companies/' + companyId  : '/companies/';
-            var method = companyId ? 'PUT' : 'POST';
-            var data = new FormData(form);
+        this.saveCompany = function(companyId) {
+            var t = this,
+                form = this.tags.listadmin.refs.editForm,
+                url = companyId ? '/companies/' + companyId  : '/companies/',
+                method = companyId ? 'PUT' : 'POST',
+                data = new FormData(form);
+
             data.append('csrfmiddlewaretoken', deeplegal.Util.getCsrf());
 
             $.ajax({
@@ -193,19 +194,25 @@
                 deeplegal.Util.hideMessage();
 
                 //success?
-                if(r) {
+                if(status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
                     //TODO: REFRESH COMPANIES t.loadCompanies()
-                    this.tags.trigger('addedItem');
+                    this.tags.listadmin.trigger('addedItem');
                     form.reset();
                     $('#logo-placeholder').empty();
+                } else {
+                    deeplegal.Util.showMessage(r.result, 'alert-danger');    
                 }
             }).fail(function(r) {
                 var error = 'Hubo un error.'
                 deeplegal.Util.showMessage(error, 'alert-danger');
             })
+        }
+
+        this.deleteCompany = function() {
+            
         }
     </script>
 </companies>

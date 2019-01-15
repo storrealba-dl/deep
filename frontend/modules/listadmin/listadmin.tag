@@ -37,12 +37,12 @@
                 <div class="modal-body">
 
                     <div class="modal-dynamic-content" ref="modal-dynamic-content">
-                    	<yield from="modal-add"/>
+                    	<yield from="modal-edit"/>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="submit-edit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" id="submit-edit" class="btn btn-primary" onclick={ parent.saveCompany }>Guardar</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
             </div><!-- /.modal-content -->
@@ -104,8 +104,24 @@
 		riot.observable(this);
 
 		this.on('addedItem', function() {
-			$(this.refs.modalEdit).modal('hide')
+			$(this.refs.modalEdit).modal('hide');
+			$datatable.ajax.reload();
 		})
+
+		$(this.modalEdit).on('show.bs.modal', function (e) {
+			var data = e.relatedTarget.dataset.companyInfo;
+			populateForm(data);
+		});
+
+		$(this.modalEdit).on('hidden.bs.modal', function (e) {
+			this.refs.formEdit.reset();
+		});
+
+		function populateForm(data) {
+			for (field in data) {
+			  this.refs[field].value = data[field];
+			}
+		}
 
 	</script>
 </listadmin>
