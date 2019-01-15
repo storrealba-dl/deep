@@ -212,7 +212,7 @@
         }
 
         this.deleteCompany = function() {
-            
+            //TODO: delete company
         }
     </script>
 </companies>
