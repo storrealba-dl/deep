@@ -136,7 +136,9 @@
 
 		function populateForm(data) {
 			for (field in data) {
-			  self.refs[field] ? self.refs[field].value = data[field];
+			  	if(self.refs[field]) {
+			  		self.refs[field].value = data[field];
+			  	}
 			}
 		}
 
