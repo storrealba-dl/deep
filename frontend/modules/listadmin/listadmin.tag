@@ -123,7 +123,7 @@
 			url: this.settings.datatableUrl,
 			type: 'GET',
 			data: {
-				csrfmiddlewaretoken: deeplegal.Util.getCsrf();
+				csrfmiddlewaretoken: deeplegal.Util.getCsrf()
 			}
 		}
 

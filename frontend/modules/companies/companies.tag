@@ -80,7 +80,7 @@
             actionButton: 'Agregar Empresas',
             actionIcon: 'mdi mdi-plus-circle',
             datatableUrl: '/companies/',
-            modalsTitle: 'Empresa'
+            modalsTitle: 'Empresa',
             datatable: {
                 columns: [
                     {
