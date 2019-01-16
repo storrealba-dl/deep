@@ -135,15 +135,17 @@
 			$(t.refs.modalEdit).modal('hide');
 			t.itemToSave = null;
 			t.$datatable.ajax.reload();
+			t.update();
 		})
 
 		this.on('itemDeleted', function() {
 			$(t.refs.modalDelete).modal('hide');
 			t.itemToDelete = {};
 			t.$datatable.ajax.reload();
+			t.update();
 		})
 
-		$(this.modalEdit).on('show.bs.modal', function (e) {
+		$(this.refs.modalEdit).on('show.bs.modal', function (e) {
 			if(e.relatedTarget.dataset.itemInfo) {	
 				t.modalEditAction = 'Editar';
 				t.itemToSave = e.relatedTarget.dataset.itemId;
@@ -154,17 +156,17 @@
 			}
 		});
 
-		$(this.modalEdit).on('hidden.bs.modal', function (e) {
+		$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
 			t.refs.formEdit.reset();
 			t.itemToSave = null;
 		});
 
-		$(this.modalDelete).on('show.bs.modal', function (e) {
+		$(this.refs.modalDelete).on('show.bs.modal', function (e) {
 			t.itemToDelete.name = e.relatedTarget.dataset.itemName;
 			t.itemToDelete.id = e.relatedTarget.dataset.itemId;
 		});
 
-		$(this.modalDelete).on('hidden.bs.modal', function (e) {
+		$(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
 			itemToDelete = {name: '', id: null};
 		});
 
