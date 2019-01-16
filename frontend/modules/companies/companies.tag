@@ -285,7 +285,7 @@
 
             //form validation
             this.$formEdit = $(listadmin.refs.formEdit);
-            $form.validate({
+            $formEdit.validate({
                 rules: {
                     name: {
                         required: true,
