@@ -58,13 +58,13 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4 ">
-                            <div id="logo-placeholder">
+                            <div ref="logoPlaceholder" id="logo-placeholder">
                                 
                             </div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="company-logo" class="col-form-label">Logo</label>
-                            <input name="company_logo" type="file" class="form-control" id="company-logo" name="">
+                            <input ref="logoInput" name="company_logo" type="file" class="form-control" id="company-logo" name="">
                         </div>                                
                     </div>
 
@@ -75,6 +75,8 @@
     </listadmin>
 
     <script>
+        var self = this;
+
         this.adminConfig = {
             title: 'Empresas',
             actionButton: 'Agregar Empresas',
@@ -172,8 +174,7 @@
         * @companyId: if empty will create a new company
         */
         this.save = function(companyId) {
-            var t = this,
-                form = this.tags.listadmin.refs.editForm,
+            var form = this.tags.listadmin.refs.editForm,
                 url = companyId ? '/companies/' + companyId  : '/companies/',
                 method = companyId ? 'PUT' : 'POST',
                 data = new FormData(form);
@@ -199,8 +200,8 @@
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
-                    this.tags.listadmin.trigger('itemAdded');
-                    form.reset();
+                    self.tags.listadmin.trigger('itemAdded');
+                    self.resetForm();
                     //TODO: check image management
                     $('#logo-placeholder').empty();
                 } else {
@@ -237,5 +238,46 @@
                 deeplegal.Companies.onFail();
             })
         }
+
+        this.resetForm = function() {
+            var listadmin = self.tags.listadmin;
+            listadmin.refs.editForm.reset();
+            listadmin.refs.logoPlaceholder.innerHTML = '';
+        }
+
+        this.previewLogo = function(imgUrl) {
+            var listadmin = self.tags.listadmin,
+                logoPlaceholder = listadmin.refs.logoPlaceholder,
+                img = document.createElement('img');
+            
+            img.setAttribute(imgUrl);
+            logoPlaceholder.innerHTML = '';
+            logoPlaceholder.appendChild(img);
+        }
+
+        this.on('mount', function() {
+            var listadmin = this.tags.listadmin;
+            
+            listadmin.on('formPopulated', function(data) {
+                var url = '/picture/' + data.id + '/';
+                self.previewLogo(url)
+            })
+
+            
+            listadmin.refs.logoInput.onchange = function() {
+                if(this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var url = e.target.result;
+                        self.previewLogo(url)
+                    };
+                } else {
+                    var id = listadmin.refs.itemToSave.id,
+                        url = '/picture/' + id + '/';
+                    self.previewLogo(url)
+                }
+            }
+        })
     </script>
 </companies>

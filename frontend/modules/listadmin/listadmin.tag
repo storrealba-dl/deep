@@ -140,6 +140,7 @@
 			  		self.refs[field].value = data[field];
 			  	}
 			}
+			self.trigger('formPopulated', data);
 		}
 
 		this.on('mount', function() {
@@ -173,7 +174,6 @@
 			});
 
 			$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
-				self.refs.formEdit.reset();
 				self.itemToSave = null;
 				self.update();
 			});
