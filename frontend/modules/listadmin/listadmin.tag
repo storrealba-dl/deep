@@ -59,7 +59,7 @@
                 <div class="modal-body">
 
                     <div>
-                        <p>¿Desea borrar la {itemToDelete.name}</p>
+                        <p>¿Desea borrar {itemToDelete.name}?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -169,20 +169,24 @@
 				} else {
 					self.modalEditAction = 'Agregar';
 				}
+				self.update();
 			});
 
 			$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
 				self.refs.formEdit.reset();
 				self.itemToSave = null;
+				self.update();
 			});
 
 			$(this.refs.modalDelete).on('show.bs.modal', function (e) {
 				self.itemToDelete.name = e.relatedTarget.dataset.itemName;
 				self.itemToDelete.id = e.relatedTarget.dataset.itemId;
+				self.update();
 			});
 
 			$(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
 				self.itemToDelete = {name: '', id: null};
+				self.update();
 			});
 
 		})
