@@ -156,7 +156,7 @@
                             var button = '<div class="btn-group">\
                                 <button class="dropdown-toggle waves-effect waves-light btn btn-outline-primary btn-sm" data-toggle="dropdown"><i class="mdi mdi-dots-horizontal"></i></button>\
                                 <div class="dropdown-menu" x-placement="bottom-start">\
-                                    <a data-item-id="'+ n.id +'" data-item-name="'+ n.name +'" class="dropdown-item" href="#" data-item-info="' + JSON.stringify(n) + '" data-toggle="modal" data-target="#modal-edit">Editar</a>\
+                                    <a data-item-id="'+ n.id +'" data-item-name="'+ n.name +'" class="dropdown-item" href="#" data-item-info=\'' + JSON.stringify(n) + '\' data-toggle="modal" data-target="#modal-edit">Editar</a>\
                                     <a data-item-id="'+ n.id +'" class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-delete">Borrar</a>\
                                 </div>\
                             </div>';
