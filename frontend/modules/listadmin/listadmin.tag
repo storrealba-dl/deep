@@ -89,31 +89,31 @@
 		* 
 		*/
 
-		var t = this,
-			itemToDelete = {name: '', id: null},
-			itemToSave = null,
-			modalEditAction = 'Editar',
-			defaults = {
-				title: 'Admin',
-				actionButton: 'Agregar',
-				actionIcon: 'mdi mdi-plus-circle',
-				datatableUrl: '/',
-				modalsTitle: 'Admin',
-				datatable: {
-					destroy: true,
-					processing: true,
-					pageLength: 10,
-					paging: true,
-					ordering: false,
-					searching: false,
-					info: false,
-					filter: false,
-					autoWidth: false,
-					lengthChange: false,
-					fixedColumns: true
-				}
-			};
+		var t = this;
+		var defaults = {
+			title: 'Admin',
+			actionButton: 'Agregar',
+			actionIcon: 'mdi mdi-plus-circle',
+			datatableUrl: '/',
+			modalsTitle: 'Admin',
+			datatable: {
+				destroy: true,
+				processing: true,
+				pageLength: 10,
+				paging: true,
+				ordering: false,
+				searching: false,
+				info: false,
+				filter: false,
+				autoWidth: false,
+				lengthChange: false,
+				fixedColumns: true
+			}
+		};
 
+		this.itemToDelete = {name: '', id: null};
+		this.itemToSave = null;
+		this.modalEditAction = 'Editar';
 		this.settings = $.extend(true, defaults, this.opts.config)
 		
 		//adding ajax config
@@ -125,6 +125,7 @@
 			}
 		}
 
+		//start datatable
 		this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
 
 		//binding events
@@ -165,6 +166,8 @@
 			itemToDelete = {name: '', id: null};
 		});
 
+
+		//handlers
 		this.handlerSave = function() {
 			t.parent.save(t.itemToSave);
 		}
