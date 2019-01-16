@@ -114,8 +114,6 @@
 				}
 			};
 
-		riot.observable(this);
-
 		this.settings = $.extend(true, defaults, this.opts.config)
 		
 		//adding ajax config
