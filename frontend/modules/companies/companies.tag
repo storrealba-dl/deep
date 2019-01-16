@@ -280,7 +280,7 @@
                 }
             }
 
-            $(listadmin.refs.modalEdit).on('show.bs.modal', function (e) {
+            $(listadmin.refs.modalEdit).on('hidden.bs.modal', function (e) {
                 self.resetForm();
             })
         })
