@@ -23,6 +23,10 @@ class CompaniesView(RestModelView):
   def setFilter(self, data):
     return True
 
+  def expandFields(self, obj, data):
+    obj["plan_name"] = data.plan.name
+    return obj
+
 class MenusView(RestModelView):
   obj = Menus.objects
 
