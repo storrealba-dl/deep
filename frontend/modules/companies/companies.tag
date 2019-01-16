@@ -227,12 +227,11 @@
             }).done(function(r) {
                 deeplegal.Util.hideMessage();
 
-                if(r) {
+                if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
-                    this.tags.listadmin.trigger('itemDeleted');
-                    $('#modal-delete').modal('hide');
+                    self.tags.listadmin.trigger('itemDeleted');
                 }
             }).fail(function(r) {
                 deeplegal.Companies.onFail();
