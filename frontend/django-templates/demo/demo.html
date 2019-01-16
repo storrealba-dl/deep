@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+
+{% block section_css %}
+<link rel="stylesheet" type="text/css" href="/frontend/modules/companies/companies.css">
+<link rel="stylesheet" type="text/css" href="/frontend/modules/listadmin/listadmin.css">
+{% endblock section_css %}
+
+{% block app_content %}
+<section id="companies" class="container-fluid section-container">
+
+    <companies></companies>
+    
+</section>
+{% endblock app_content %}
+
+{% block section_scripts %}
+<script type="text/javascript" src="/frontend/modules/companies/companies.js"></script>
+<script type="text/javascript" src="/frontend/modules/listadmin/listadmin.js"></script>
+{% endblock section_scripts %}
