@@ -125,10 +125,12 @@
 			}
 		}
 
-		//start datatable
-		this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
-
 		//binding events
+		this.on('mount', function() {
+			//start datatable
+			this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
+		})
+
 		this.on('itemAdded', function() {
 			$(t.refs.modalEdit).modal('hide');
 			t.itemToSave = null;
@@ -165,7 +167,6 @@
 		$(this.modalDelete).on('hidden.bs.modal', function (e) {
 			itemToDelete = {name: '', id: null};
 		});
-
 
 		//handlers
 		this.handlerSave = function() {
