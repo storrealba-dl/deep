@@ -4,7 +4,7 @@
         
         <yield to="modal-edit">
             <div class="form-container">
-                <form ref="editForm">
+                <form ref="formEdit">
                     
                     <div class="form-row">
                         
