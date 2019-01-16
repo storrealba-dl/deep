@@ -14,5 +14,6 @@ urlpatterns = [
   path('companies/<int:company_id>/ruts/<int:id>/', RutsView.as_view(), name='test'),
   path('companies/<int:company_id>/teams/', TeamsView.as_view(), name='test'),
   path('companies/<int:company_id>/teams/<int:id>/', TeamsView.as_view(), name='test'),
+  path('plans/', PlansView.as_view(), name='test'),
 ]
 

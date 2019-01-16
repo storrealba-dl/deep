@@ -55,6 +55,9 @@ class MenusItemsView(RestModelView):
   def update(self, request, *args, **kwargs):
     return self.jsonResponse(jsonObj={"result": "Unimplemented", "status": 500}, status=500)
 
+class PlansView(RestModelView):
+  obj = Plans.objects
+
 class RutsView(RestModelView):
   obj = Ruts.objects
 
