@@ -162,7 +162,7 @@
 				if(e.relatedTarget.dataset.itemInfo) {	
 					self.modalEditAction = 'Editar';
 					self.itemToSave = e.relatedTarget.dataset.itemId;
-					var data = e.relatedTarget.dataset.itemInfo;
+					var data = JSON.parse(e.relatedTarget.dataset.itemInfo);
 					populateForm(data);
 				} else {
 					self.modalEditAction = 'Agregar';
