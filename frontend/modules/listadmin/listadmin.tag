@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div id="modal-edit" refs="modalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-edit.title" aria-hidden="true" style="display: none;">
+	<div id="modal-edit" ref="modalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-edit.title" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="modal-dynamic-content" ref="modal-dynamic-content">
+                    <div class="modal-dynamic-content" ref="modalDynamicContent">
                     	<yield from="modal-edit"/>
                     </div>
 
@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <div id="modal-delete" refs="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-delete.title" aria-hidden="true" style="display: none;">
+    <div id="modal-delete" ref="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-delete.title" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
