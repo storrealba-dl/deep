@@ -216,7 +216,7 @@
         this.delete = function(companyId) {
             $.ajax({
                 method: 'DELETE',
-                url: '/companies/' + id,
+                url: '/companies/' + companyId,
                 data : {
                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
