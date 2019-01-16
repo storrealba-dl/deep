@@ -131,7 +131,7 @@
 		}
 
 		this.handleDelete = function() {
-			self.parent.delete(self.itemToDelete)
+			self.parent.delete(self.itemToDelete.id)
 		}
 
 		function populateForm(data) {
