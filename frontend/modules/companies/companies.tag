@@ -193,17 +193,12 @@
                     deeplegal.Util.showMessage(loading, 'alert-info');
                 }
             }).done(function(r) {
-                deeplegal.Util.hideMessage();
-
-                //success?
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
                     self.tags.listadmin.trigger('itemAdded');
                     self.resetForm();
-                    //TODO: check image management
-                    $('#logo-placeholder').empty();
                 } else {
                     deeplegal.Util.showMessage(r.result, 'alert-danger');    
                 }
@@ -225,8 +220,6 @@
                     deeplegal.Util.showMessage(loading, 'alert-info');
                 }
             }).done(function(r) {
-                deeplegal.Util.hideMessage();
-
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
