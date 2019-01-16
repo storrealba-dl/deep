@@ -90,7 +90,7 @@
 		*/
 
 		var t = this,
-			itemToDelete = {},
+			itemToDelete = {name: '', id: null},
 			itemToSave = null,
 			modalEditAction = 'Editar',
 			defaults = {
@@ -162,7 +162,7 @@
 		});
 
 		$(this.modalDelete).on('hidden.bs.modal', function (e) {
-			t.itemToDelete = {};
+			itemToDelete = {name: '', id: null},
 		});
 
 		this.handlerSave = function() {
