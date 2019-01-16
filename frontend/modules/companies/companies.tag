@@ -242,6 +242,7 @@
             var listadmin = self.tags.listadmin;
             listadmin.refs.formEdit.reset();
             listadmin.refs.logoPlaceholder.innerHTML = '';
+            self.$formEdit.resetForm(); //reset validator
         }
 
         this.previewLogo = function(imgUrl) {
