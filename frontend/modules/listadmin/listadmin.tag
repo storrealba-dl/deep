@@ -42,7 +42,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="submit-edit" class="btn btn-primary" onclick={ handlerSave }>Guardar</button>
+                    <button type="submit" id="submit-edit" class="btn btn-primary" onclick={ handleSave }>Guardar</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="submit-delete" class="btn btn-danger">Borrar</button>
+                    <button type="button" id="submit-delete" class="btn btn-danger" onclick={ handleDelete }>Borrar</button>
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -126,11 +126,11 @@
 		}
 
 		//handlers
-		this.handlerSave = function() {
+		this.handleSave = function() {
 			self.parent.save(self.itemToSave);
 		}
 
-		this.handlerDelete = function() {
+		this.handleDelete = function() {
 			self.parent.delete(self.itemToDelete)
 		}
 
