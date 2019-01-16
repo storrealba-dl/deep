@@ -174,7 +174,7 @@
         * @companyId: if empty will create a new company
         */
         this.save = function(companyId) {
-            var form = this.tags.listadmin.refs.editForm,
+            var form = this.tags.listadmin.refs.formEdit,
                 url = companyId ? '/companies/' + companyId  : '/companies/',
                 method = companyId ? 'PUT' : 'POST',
                 data = new FormData(form);
@@ -241,7 +241,7 @@
 
         this.resetForm = function() {
             var listadmin = self.tags.listadmin;
-            listadmin.refs.editForm.reset();
+            listadmin.refs.formEdit.reset();
             listadmin.refs.logoPlaceholder.innerHTML = '';
         }
 
