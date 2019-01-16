@@ -272,6 +272,8 @@
                         var url = e.target.result;
                         self.previewLogo(url)
                     };
+
+                    reader.readAsDataURL(this.files[0]);
                 } else {
                     var id = listadmin.refs.itemToSave.id,
                         url = '/picture/' + id + '/';
