@@ -162,7 +162,7 @@
 		});
 
 		$(this.modalDelete).on('hidden.bs.modal', function (e) {
-			itemToDelete = {name: '', id: null},
+			itemToDelete = {name: '', id: null};
 		});
 
 		this.handlerSave = function() {
