@@ -275,7 +275,7 @@
 
                     reader.readAsDataURL(this.files[0]);
                 } else {
-                    var id = listadmin.refs.itemToSave.id,
+                    var id = listadmin.itemToSave.id,
                         url = '/picture/' + id + '/';
                     self.previewLogo(url)
                 }
