@@ -80,6 +80,7 @@
             actionButton: 'Agregar Empresas',
             actionIcon: 'mdi mdi-plus-circle',
             datatableUrl: '/companies/',
+            modalsTitle: 'Empresa'
             datatable: {
                 columns: [
                     {
@@ -155,8 +156,8 @@
                             var button = '<div class="btn-group">\
                                 <button class="dropdown-toggle waves-effect waves-light btn btn-outline-primary btn-sm" data-toggle="dropdown"><i class="mdi mdi-dots-horizontal"></i></button>\
                                 <div class="dropdown-menu" x-placement="bottom-start">\
-                                    <a data-company-id="'+ n.id +'" class="dropdown-item" href="#" data-company-info="' + JSON.stringify(n) + '" data-toggle="modal" data-target="#modal-edit">Editar</a>\
-                                    <a data-company-id="'+ n.id +'" class="dropdown-item" href="#" onclick="deeplegal.Companies.confirmDeleteCompany(this)" data-toggle="modal" data-target="#modal-delete">Borrar</a>\
+                                    <a data-item-id="'+ n.id +'" data-item-name="'+ n.name +'" class="dropdown-item" href="#" data-item-info="' + JSON.stringify(n) + '" data-toggle="modal" data-target="#modal-edit">Editar</a>\
+                                    <a data-item-id="'+ n.id +'" class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-delete">Borrar</a>\
                                 </div>\
                             </div>';
                             
@@ -170,7 +171,7 @@
         /**
         * @companyId: if empty will create a new company
         */
-        this.saveCompany = function(companyId) {
+        this.save = function(companyId) {
             var t = this,
                 form = this.tags.listadmin.refs.editForm,
                 url = companyId ? '/companies/' + companyId  : '/companies/',
@@ -194,13 +195,13 @@
                 deeplegal.Util.hideMessage();
 
                 //success?
-                if(status == 200) {
+                if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
-                    //TODO: REFRESH COMPANIES t.loadCompanies()
-                    this.tags.listadmin.trigger('addedItem');
+                    this.tags.listadmin.trigger('itemAdded');
                     form.reset();
+                    //TODO: check image management
                     $('#logo-placeholder').empty();
                 } else {
                     deeplegal.Util.showMessage(r.result, 'alert-danger');    
@@ -211,8 +212,30 @@
             })
         }
 
-        this.deleteCompany = function() {
-            //TODO: delete company
+        this.delete = function(companyId) {
+            $.ajax({
+                method: 'DELETE',
+                url: '/companies/' + id,
+                data : {
+                   csrfmiddlewaretoken: deeplegal.Util.getCsrf()
+                },
+                beforeSend: function() {
+                    var loading = deeplegal.HTMLSnippets.getSnippet('loading');
+                    deeplegal.Util.showMessage(loading, 'alert-info');
+                }
+            }).done(function(r) {
+                deeplegal.Util.hideMessage();
+
+                if(r) {
+                    var saved = deeplegal.HTMLSnippets.getSnippet('saved');
+                    deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
+
+                    this.tags.listadmin.trigger('itemDeleted');
+                    $('#modal-delete').modal('hide');
+                }
+            }).fail(function(r) {
+                deeplegal.Companies.onFail();
+            })
         }
     </script>
 </companies>

@@ -13,7 +13,7 @@
                         <div class="section-graphs">
                         </div>
                         <div class="section-filters">
-                            <button class="btn btn-primary" ref="add-item-btn" id="add-item-btn" data-toggle="modal" data-target="#modal-edit" onclick="deeplegal.Companies.addCompany()"><i class="{settings.actionIcon}"></i> {settings.actionButton}</button>
+                            <button class="btn btn-primary" id="add-item-btn" data-toggle="modal" data-target="#modal-edit"><i class="{settings.actionIcon}"></i> {settings.actionButton}</button>
                         </div>  
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="modal-edit-title">Editar Empresa</h4>
+                    <h4 class="modal-title" id="modal-edit-title">{modalEditAction} {settings.modalsTitle}</h4>
                 </div>
                 <div class="modal-body">
 
@@ -42,11 +42,32 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="submit-edit" class="btn btn-primary" onclick={ parent.saveCompany }>Guardar</button>
+                    <button type="submit" id="submit-edit" class="btn btn-primary" onclick={ handlerSave }>Guardar</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-delete" refs="modalDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-delete.title" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="modal-delete-title">Confirmar</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div>
+                        <p>¿Desea borrar la {itemToDelete.name}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submit-delete" class="btn btn-danger">Borrar</button>
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
 	
 	<script>
@@ -68,25 +89,32 @@
 		* 
 		*/
 
-		var defaults = {
-			title: 'Admin',
-			actionButton: 'Agregar',
-			actionIcon: 'mdi mdi-plus-circle',
-			datatableUrl: '/',
-			datatable: {
-				destroy: true,
-				processing: true,
-				pageLength: 10,
-				paging: true,
-				ordering: false,
-				searching: false,
-				info: false,
-				filter: false,
-				autoWidth: false,
-				lengthChange: false,
-				fixedColumns: true
-			}
-		}
+		var t = this,
+			itemToDelete = {},
+			itemToSave = null,
+			modalEditAction = 'Editar',
+			defaults = {
+				title: 'Admin',
+				actionButton: 'Agregar',
+				actionIcon: 'mdi mdi-plus-circle',
+				datatableUrl: '/',
+				modalsTitle: 'Admin',
+				datatable: {
+					destroy: true,
+					processing: true,
+					pageLength: 10,
+					paging: true,
+					ordering: false,
+					searching: false,
+					info: false,
+					filter: false,
+					autoWidth: false,
+					lengthChange: false,
+					fixedColumns: true
+				}
+			};
+
+		riot.observable(this);
 
 		this.settings = $.extend(true, defaults, this.opts.config)
 		
@@ -99,23 +127,53 @@
 			}
 		}
 
-		var $datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
+		this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
 
-		riot.observable(this);
+		//binding events
+		this.on('itemAdded', function() {
+			$(t.refs.modalEdit).modal('hide');
+			t.itemToSave = null;
+			t.$datatable.ajax.reload();
+		})
 
-		this.on('addedItem', function() {
-			$(this.refs.modalEdit).modal('hide');
-			$datatable.ajax.reload();
+		this.on('itemDeleted', function() {
+			$(t.refs.modalDelete).modal('hide');
+			t.itemToDelete = {};
+			t.$datatable.ajax.reload();
 		})
 
 		$(this.modalEdit).on('show.bs.modal', function (e) {
-			var data = e.relatedTarget.dataset.companyInfo;
-			populateForm(data);
+			if(e.relatedTarget.dataset.itemInfo) {	
+				t.modalEditAction = 'Editar';
+				t.itemToSave = e.relatedTarget.dataset.itemId;
+				var data = e.relatedTarget.dataset.itemInfo;
+				populateForm(data);
+			} else {
+				t.modalEditAction = 'Agregar';
+			}
 		});
 
 		$(this.modalEdit).on('hidden.bs.modal', function (e) {
-			this.refs.formEdit.reset();
+			t.refs.formEdit.reset();
+			t.itemToSave = null;
 		});
+
+		$(this.modalDelete).on('show.bs.modal', function (e) {
+			t.itemToDelete.name = e.relatedTarget.dataset.itemName;
+			t.itemToDelete.id = e.relatedTarget.dataset.itemId;
+		});
+
+		$(this.modalDelete).on('hidden.bs.modal', function (e) {
+			t.itemToDelete = {};
+		});
+
+		this.handlerSave = function() {
+			t.parent.save(t.itemToSave);
+		}
+
+		this.handlerDelete = function() {
+			t.parent.delete(t.itemToDelete)
+		}
 
 		function populateForm(data) {
 			for (field in data) {
