@@ -89,7 +89,7 @@
 		* 
 		*/
 
-		var t = this;
+		var self = this;
 		var defaults = {
 			title: 'Admin',
 			actionButton: 'Agregar',
@@ -125,58 +125,13 @@
 			}
 		}
 
-		//binding events
-		this.on('mount', function() {
-			//start datatable
-			this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
-		})
-
-		this.on('itemAdded', function() {
-			$(t.refs.modalEdit).modal('hide');
-			t.itemToSave = null;
-			t.$datatable.ajax.reload();
-			t.update();
-		})
-
-		this.on('itemDeleted', function() {
-			$(t.refs.modalDelete).modal('hide');
-			t.itemToDelete = {};
-			t.$datatable.ajax.reload();
-			t.update();
-		})
-
-		$(this.refs.modalEdit).on('show.bs.modal', function (e) {
-			if(e.relatedTarget.dataset.itemInfo) {	
-				t.modalEditAction = 'Editar';
-				t.itemToSave = e.relatedTarget.dataset.itemId;
-				var data = e.relatedTarget.dataset.itemInfo;
-				populateForm(data);
-			} else {
-				t.modalEditAction = 'Agregar';
-			}
-		});
-
-		$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
-			t.refs.formEdit.reset();
-			t.itemToSave = null;
-		});
-
-		$(this.refs.modalDelete).on('show.bs.modal', function (e) {
-			t.itemToDelete.name = e.relatedTarget.dataset.itemName;
-			t.itemToDelete.id = e.relatedTarget.dataset.itemId;
-		});
-
-		$(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
-			itemToDelete = {name: '', id: null};
-		});
-
 		//handlers
 		this.handlerSave = function() {
-			t.parent.save(t.itemToSave);
+			self.parent.save(self.itemToSave);
 		}
 
 		this.handlerDelete = function() {
-			t.parent.delete(t.itemToDelete)
+			self.parent.delete(self.itemToDelete)
 		}
 
 		function populateForm(data) {
@@ -184,6 +139,52 @@
 			  this.refs[field].value = data[field];
 			}
 		}
+
+		this.on('mount', function() {
+			//start datatable
+			this.$datatable = $(this.refs.datatable).DataTable(this.settings.datatable);
+
+			this.on('itemAdded', function() {
+				$(self.refs.modalEdit).modal('hide');
+				self.itemToSave = null;
+				self.$datatable.ajax.reload();
+				self.update();
+			})
+
+			this.on('itemDeleted', function() {
+				$(self.refs.modalDelete).modal('hide');
+				self.itemToDelete = {};
+				self.$datatable.ajax.reload();
+				self.update();
+			})
+
+			$(this.refs.modalEdit).on('show.bs.modal', function (e) {
+				if(e.relatedTarget.dataset.itemInfo) {	
+					self.modalEditAction = 'Editar';
+					self.itemToSave = e.relatedTarget.dataset.itemId;
+					var data = e.relatedTarget.dataset.itemInfo;
+					populateForm(data);
+				} else {
+					self.modalEditAction = 'Agregar';
+				}
+			});
+
+			$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
+				self.refs.formEdit.reset();
+				self.itemToSave = null;
+			});
+
+			$(this.refs.modalDelete).on('show.bs.modal', function (e) {
+				self.itemToDelete.name = e.relatedTarget.dataset.itemName;
+				self.itemToDelete.id = e.relatedTarget.dataset.itemId;
+			});
+
+			$(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
+				self.itemToDelete = {name: '', id: null};
+			});
+
+		})
+
 
 	</script>
 </listadmin>
