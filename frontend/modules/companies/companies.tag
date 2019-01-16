@@ -250,7 +250,7 @@
                 logoPlaceholder = listadmin.refs.logoPlaceholder,
                 img = document.createElement('img');
             
-            img.setAttribute(imgUrl);
+            img.setAttribute('src', imgUrl);
             logoPlaceholder.innerHTML = '';
             logoPlaceholder.appendChild(img);
         }
