@@ -262,7 +262,6 @@
                 var url = '/picture/' + data.id + '/';
                 self.previewLogo(url)
             })
-
             
             listadmin.refs.logoInput.onchange = function() {
                 if(this.files && this.files[0]) {
@@ -280,6 +279,10 @@
                     self.previewLogo(url)
                 }
             }
+
+            $(listadmin.refs.modalEdit).on('show.bs.modal', function (e) {
+                self.resetForm();
+            })
         })
     </script>
 </companies>
