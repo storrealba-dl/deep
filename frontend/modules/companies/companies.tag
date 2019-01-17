@@ -80,7 +80,7 @@
             title: 'Empresas',
             actionButton: 'Agregar Empresas',
             actionIcon: 'mdi mdi-plus-circle',
-            datatableUrl: '/companies/',
+            datatableUrl: '/r/companies/',
             modalsTitle: 'Empresa',
             datatable: {
                 columns: [
@@ -218,7 +218,7 @@
         this.save = function(companyId) {
             var form = this.tags.listadmin.refs.formEdit,
                 companyId = companyId || this.tags.listadmin.itemToSave,
-                url = companyId ? '/companies/' + companyId + '/'  : '/companies/',
+                url = companyId ? '/r/companies/' + companyId + '/'  : '/r/companies/',
                 method = companyId ? 'PUT' : 'POST',
                 data = new FormData(form);
 
@@ -254,7 +254,7 @@
         this.delete = function(companyId) {
             $.ajax({
                 method: 'DELETE',
-                url: '/companies/' + companyId,
+                url: '/r/companies/' + companyId,
                 data : {
                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
@@ -294,7 +294,7 @@
         this.getPlan = function() {
             $.ajax({
                 method: 'GET',
-                url: /plans/,
+                url: '/r/plans/',
                 data : {
                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
