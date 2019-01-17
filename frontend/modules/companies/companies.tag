@@ -80,7 +80,7 @@
             title: 'Empresas',
             actionButton: 'Agregar Empresas',
             actionIcon: 'mdi mdi-plus-circle',
-            datatableUrl: '/r/companies/',
+            datatableUrl: WS.companies,
             modalsTitle: 'Empresa',
             datatable: {
                 columns: [
@@ -218,7 +218,7 @@
         this.save = function(companyId) {
             var form = this.tags.listadmin.refs.formEdit,
                 companyId = companyId || this.tags.listadmin.itemToSave,
-                url = companyId ? '/r/companies/' + companyId + '/'  : '/r/companies/',
+                url = companyId ? WS.companies + companyId + '/'  : WS.companies,
                 method = companyId ? 'PUT' : 'POST',
                 data = new FormData(form);
 
@@ -254,7 +254,7 @@
         this.delete = function(companyId) {
             $.ajax({
                 method: 'DELETE',
-                url: '/r/companies/' + companyId,
+                url: WS.companies + companyId,
                 data : {
                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
@@ -294,7 +294,7 @@
         this.getPlan = function() {
             $.ajax({
                 method: 'GET',
-                url: '/r/plans/',
+                url: WS.plans,
                 data : {
                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
@@ -328,7 +328,7 @@
             this.getPlan();
             
             listadmin.on('formPopulated', function(data) {
-                var url = '/picture/' + data.id + '/';
+                var url = WS.pictures + data.id + '/';
                 self.previewLogo(url)
             })
             
@@ -344,7 +344,7 @@
                     reader.readAsDataURL(this.files[0]);
                 } else {
                     var id = listadmin.itemToSave.id,
-                        url = '/picture/' + id + '/';
+                        url = WS.pictures + id + '/';
                     self.previewLogo(url)
                 }
             }
