@@ -3,6 +3,7 @@ from django.views import View
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse, QueryDict
 from itertools import chain
+import syslog
 
 class RestModelView(View):
   MSG_UNIMPLEMENTED = "Operation unimplemented"
@@ -61,9 +62,16 @@ class RestModelView(View):
 
   def dispatch(self, request, *args, **kwargs):
     if self.obj:
+
       self.params = request.GET.copy()
-      self.params.update(request.POST)
-      self.params.update(QueryDict(request.body))
+      if request.method == "POST":
+        self.params.update(request.POST.copy())
+      elif request.method == "PUT":
+        request.method = 'POST'
+        request._load_post_and_files()
+        request.method = 'PUT'
+        self.params.update(request.POST.copy())
+
       self.params.update(kwargs)
       self.setFilter(request)
       return super(RestModelView, self).dispatch(request, *args, **kwargs)
