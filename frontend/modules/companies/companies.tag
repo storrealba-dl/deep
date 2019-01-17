@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="plan" class="col-form-label">Plan</label>
-                            <select ref="plan_id" name="plan_id" class="custom-select" id="plan">
+                            <select ref="planSelect" name="plan_id" class="custom-select" id="plan">
 
                             </select>
                         </div>
@@ -291,8 +291,41 @@
             logoPlaceholder.appendChild(img);
         }
 
+        this.getPlan = function() {
+            $.ajax({
+                method: 'GET',
+                url: /plans/,
+                data : {
+                   csrfmiddlewaretoken: deeplegal.Util.getCsrf()
+                },
+                beforeSend: function() {
+                    // var loading = deeplegal.HTMLSnippets.getSnippet('loading');
+                    // deeplegal.Util.showMessage(loading, 'alert-info');
+                }
+            }).done(function(r) {
+                if(r) {
+                    self.renderPlan(r.data);
+                }
+            }).fail(function(r) {
+                deeplegal.Util.showMessage('Hubo un error cargando los planes', 'alert-danger');
+            })
+        }
+
+        this.renderPlan = function(planList) {
+            var select = self.tags.listadmin.refs.planSelect;
+            for(var i = 0; i < planList.length; i++) {
+                var option = document.createElement('option');
+                option.setAttribute('value', planList[i].id);
+                option.innerHTML(planList[i].name);
+                select.appendChild(option);
+            }
+        }
+
         this.on('mount', function() {
             var listadmin = this.tags.listadmin;
+
+            //get and render plan options
+            this.getPlan();
             
             listadmin.on('formPopulated', function(data) {
                 var url = '/picture/' + data.id + '/';
