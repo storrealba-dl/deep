@@ -316,7 +316,7 @@
             for(var i = 0; i < planList.length; i++) {
                 var option = document.createElement('option');
                 option.setAttribute('value', planList[i].id);
-                option.innerHTML(planList[i].name);
+                option.innerHTML = planList[i].name;
                 select.appendChild(option);
             }
         }
