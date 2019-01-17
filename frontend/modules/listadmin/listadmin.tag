@@ -89,8 +89,7 @@
 		* 
 		*/
 
-		var self = this,
-			$formEdit = null;
+		var self = this;
 		
 		var defaults = {
 			title: 'Admin',
@@ -115,6 +114,7 @@
 
 		this.itemToDelete = {name: '', id: null};
 		this.itemToSave = null;
+		this.$formEdit = null;
 		this.modalEditAction = 'Editar';
 		this.settings = $.extend(true, defaults, this.opts.config)
 		
@@ -192,11 +192,10 @@
 				self.update();
 			});
 
+			//form validation
 			if(this.settings.formValidation) {
 				this.$formEdit = $(this.refs.formEdit).validate(this.settings.formValidation);	
 			}
-			//form validation
-            this.$formEdit = $(this.refs.formEdit).validate()
 
 		})
 
