@@ -130,7 +130,7 @@
 		//handlers
 		this.handleSave = function() {
 			//self.parent.save(self.itemToSave);
-			self.refs.formEdit.submit();
+			$(self.refs.formEdit).submit();
 		}
 
 		this.handleDelete = function() {
