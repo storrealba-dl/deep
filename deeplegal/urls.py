@@ -4,4 +4,5 @@ urlpatterns = [
   path('', include('demo.urls')),
   path('', include('auth.urls')),
   path('', include('managers.urls')),
+  path('', include('admin.urls')),
 ]
