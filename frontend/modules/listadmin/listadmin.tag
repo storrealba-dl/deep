@@ -89,7 +89,9 @@
 		* 
 		*/
 
-		var self = this;
+		var self = this,
+			$formEdit = null;
+		
 		var defaults = {
 			title: 'Admin',
 			actionButton: 'Agregar',
@@ -175,6 +177,7 @@
 
 			$(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
 				self.itemToSave = null;
+				self.$formEdit.resetForm();
 				self.update();
 			});
 
@@ -188,6 +191,12 @@
 				self.itemToDelete = {name: '', id: null};
 				self.update();
 			});
+
+			if(this.settings.formValidation) {
+				this.$formEdit = $(this.refs.formEdit).validate(this.settings.formValidation);	
+			}
+			//form validation
+            this.$formEdit = $(this.refs.formEdit).validate()
 
 		})
 

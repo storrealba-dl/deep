@@ -167,6 +167,48 @@
                         }
                     }
                 ]
+            },
+            formValidation: {
+                rules: {
+                    name: {
+                        required: true,
+                        //minlength: 2
+                    },
+                    contact_name: {
+                        required: true,
+                        //minlength: 2
+                    },
+                    email: {
+                       required: true,
+                       email: true 
+                    },
+                    phone: {
+                        required: true,
+                        digits: true
+                    },
+                    address: {
+                        required: true,
+                        //minlength: 2
+                    },
+                    city: {
+                        required: true,
+                        //minlength: 2
+                    },
+                    district: {
+                        required: true,
+                        //minlength: 2
+                    }
+                },
+                submitHandler: function(form) {
+                    //form.submit();
+                    self.save();
+                },
+                invalidHandler: function(event, validator) {
+                    deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
+                },
+                highlight: function(element, errorClass) {
+                    return false;
+                }
             }
         }
 
@@ -175,13 +217,8 @@
         */
 
         this.save = function(companyId) {
-            
-            if(!self.$formEdit.valid()) {
-                // deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
-                return false;
-            }
-
             var form = this.tags.listadmin.refs.formEdit,
+                companyId = companyId || this.tags.listadmin.itemToSave,
                 url = companyId ? '/companies/' + companyId + '/'  : '/companies/',
                 method = companyId ? 'PUT' : 'POST',
                 data = new FormData(form);
@@ -282,50 +319,6 @@
 
             $(listadmin.refs.modalEdit).on('hidden.bs.modal', function (e) {
                 self.resetForm();
-            })
-
-            //form validation
-            this.$formEdit = $(listadmin.refs.formEdit).validate({
-                rules: {
-                    name: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    contact_name: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    email: {
-                       required: true,
-                       email: true 
-                    },
-                    phone: {
-                        required: true,
-                        digits: true
-                    },
-                    address: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    city: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    district: {
-                        required: true,
-                        //minlength: 2
-                    }
-                },
-                // submitHandler: function(form) {
-                //     //form.submit();
-                //     t.formSubmission(companyId);
-                // },
-                invalidHandler: function(event, validator) {
-                    deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
-                },
-                // highlight: function(element, errorClass) {
-                //     return false;
-                // }
             })
         })
     </script>
