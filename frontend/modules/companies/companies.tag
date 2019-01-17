@@ -76,7 +76,6 @@
 
     <script>
         var self = this;
-        this.$formEdit = null;
         this.adminConfig = {
             title: 'Empresas',
             actionButton: 'Agregar Empresas',
@@ -279,7 +278,7 @@
             var listadmin = self.tags.listadmin;
             listadmin.refs.formEdit.reset();
             listadmin.refs.logoPlaceholder.innerHTML = '';
-            self.$formEdit.resetForm(); //reset validator
+            listadmin.$formEdit.resetForm(); //reset validator
         }
 
         this.previewLogo = function(imgUrl) {
