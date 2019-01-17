@@ -129,8 +129,11 @@
 
 		//handlers
 		this.handleSave = function() {
-			//self.parent.save(self.itemToSave);
-			$(self.refs.formEdit).submit();
+			if(self.settings.formValidation) {
+				$(self.refs.formEdit).submit();	
+			} else {
+				self.parent.save(self.itemToSave);	
+			}
 		}
 
 		this.handleDelete = function() {
