@@ -177,7 +177,7 @@
         this.save = function(companyId) {
             
             if(!self.$formEdit.valid()) {
-                deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
+                // deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
                 return false;
             }
 
@@ -320,9 +320,9 @@
                 //     //form.submit();
                 //     t.formSubmission(companyId);
                 // },
-                // invalidHandler: function(event, validator) {
-                //     deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
-                // },
+                invalidHandler: function(event, validator) {
+                    deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
+                },
                 // highlight: function(element, errorClass) {
                 //     return false;
                 // }
