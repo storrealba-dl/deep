@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="plan" class="col-form-label">Plan</label>
-                            <select ref="planSelect" name="plan_id" class="custom-select" id="plan">
+                            <select ref="plan_id" name="plan_id" class="custom-select" id="plan">
 
                             </select>
                         </div>
