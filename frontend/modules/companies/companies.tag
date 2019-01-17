@@ -312,7 +312,7 @@
         }
 
         this.renderPlan = function(planList) {
-            var select = self.tags.listadmin.refs.planSelect;
+            var select = self.tags.listadmin.refs.plan_id;
             for(var i = 0; i < planList.length; i++) {
                 var option = document.createElement('option');
                 option.setAttribute('value', planList[i].id);
