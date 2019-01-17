@@ -315,7 +315,7 @@
                         required: true,
                         //minlength: 2
                     }
-                }
+                },
                 // submitHandler: function(form) {
                 //     //form.submit();
                 //     t.formSubmission(companyId);
