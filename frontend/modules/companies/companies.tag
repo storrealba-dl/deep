@@ -78,7 +78,7 @@
         var self = this;
         this.adminConfig = {
             title: 'Empresas',
-            actionButton: 'Agregar Empresas',
+            actionButton: 'Agregar Empresa',
             actionIcon: 'mdi mdi-plus-circle',
             datatableUrl: WS.companies,
             modalsTitle: 'Empresa',

@@ -15,6 +15,37 @@ deeplegal.Util = {
 		return cookieValue;
 	},
 
+	/**
+	* elements in form must have ref attr that matches the backend
+	*/
+	serialize: function(form) {
+		var sel = [
+			'input[type="text"]',
+			'input[type="checkbox"]',
+			'input[type="email"]',
+			'input[type="file"]',
+			'input[type="hidden"]',
+			'input[type="number"]',
+			'input[type="password"]',
+			'input[type="radio"]',
+			'input[type="tel"]',
+			'input[type="url"]',
+			'select',
+			'textarea'
+		].toString();
+
+		var elements = form.querySelectorAll(sel);
+		var data = {}
+		for(var i = 0; i < elements.length; i++) {
+			var el = elements[i];
+			var key = el.getAttribute('ref');
+			var value = el.value
+			data[key] = value;
+		}
+
+		return data;
+	},
+
 	preventDefault: function(e) {
 		e.preventDefault ? e.preventDefault() : event.returnValue = false;
 	},

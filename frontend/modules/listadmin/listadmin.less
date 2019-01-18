@@ -1,95 +1,97 @@
 @import '../../styles/variables';
 
-table.dataTable {
-	clear: both;
-    margin-top: 6px !important;
-    margin-bottom: 6px !important;
-    max-width: none !important;
-    border-collapse: separate !important;
-    border-spacing: 0 1rem !important;
-    
-    tbody tr {
-    	background-color: @white;
-	    box-shadow: 0 4px 9px 0 rgba(0,0,0,0.02);
-	    border: 1px solid !important;
-	    border-style: hidden;
-	    margin: 24px;
-	    cursor: pointer;
-	    -webkit-transition: background-color 500ms linear;
-	    -ms-transition: background-color 500ms linear;
-	    transition: background-color 500ms linear;
-    }
-    
-    tbody tr:hover {
-    	background-color: @gray-50;
-    }
+#list-admin {
+	table.dataTable {
+		clear: both;
+	    margin-top: 6px !important;
+	    margin-bottom: 6px !important;
+	    max-width: none !important;
+	    border-collapse: separate !important;
+	    border-spacing: 0 1rem !important;
+	    
+	    tbody tr {
+	    	background-color: @white;
+		    box-shadow: 0 4px 9px 0 rgba(0,0,0,0.02);
+		    border: 1px solid !important;
+		    border-style: hidden;
+		    margin: 24px;
+		    cursor: pointer;
+		    -webkit-transition: background-color 500ms linear;
+		    -ms-transition: background-color 500ms linear;
+		    transition: background-color 500ms linear;
+	    }
+	    
+	    tbody tr:hover {
+	    	background-color: @gray-50;
+	    }
 
-    tbody tr td {
-	    padding-top: 24px;
-	    padding-bottom: 24px;
-	}
+	    tbody tr td {
+		    padding-top: 24px;
+		    padding-bottom: 24px;
+		}
 
-    tbody tr td:first-child {
-	    border-radius: 6px 0 0 6px;
-	}
+	    tbody tr td:first-child {
+		    border-radius: 6px 0 0 6px;
+		}
 
-	tbody tr td:last-child {
-	    border-radius: 0 6px 6px 0;
-	}
+		tbody tr td:last-child {
+		    border-radius: 0 6px 6px 0;
+		}
 
-    .default {
-    	display: block; 
-    	overflow: hidden; 
-    	text-overflow: ellipsis; 
-    	white-space: nowrap;
-    }
+	    .default {
+	    	display: block; 
+	    	overflow: hidden; 
+	    	text-overflow: ellipsis; 
+	    	white-space: nowrap;
+	    }
 
-    .dark {
-	    font-size: 16px;
-	    color: @gray-1600;
-	    margin-bottom: 0 !important;
-	}
+	    .dark {
+		    font-size: 16px;
+		    color: @gray-1600;
+		    margin-bottom: 0 !important;
+		}
 
-	.datatable-text-addon {
-	    color: @gray-800;
-	    text-align: left;
-	    font-size: 11px;
-	    margin-bottom: 0 !important;
-	}
+		.datatable-text-addon {
+		    color: @gray-800;
+		    text-align: left;
+		    font-size: 11px;
+		    margin-bottom: 0 !important;
+		}
 
-	.datatable-text-grey-content {
-	    font-size: 14px;
-	    color: @gray-800;
-	    margin-bottom: 0 !important;
-	}
+		.datatable-text-grey-content {
+		    font-size: 14px;
+		    color: @gray-800;
+		    margin-bottom: 0 !important;
+		}
 
-	.modal_spacing_trans {
-		background-color: transparent !important;
-		box-shadow: none !important;
-		// transition: 0.15s all ease;
-		// transform: scaleY(0);
-		// transform-origin: top;
-	}
+		.modal_spacing_trans {
+			background-color: transparent !important;
+			box-shadow: none !important;
+			// transition: 0.15s all ease;
+			// transform: scaleY(0);
+			// transform-origin: top;
+		}
 
-	.modal_spacing_trans > td:last-child {
-	    height: 44px;
-	    background-color: @blue-100 !important;
-	    border-radius: 6px;
-	    padding: 14px 25px 8px 17px;
-	    display: flex;
-	    flex-wrap: nowrap;
-	    justify-content: space-between;
-	    position: relative;
-	    right: 0;
-	    width: 450px;
-	    float: right;
-	    -webkit-transform: translateY(-16px);
-	    transform: translateY(-16px);
-	    align-items: flex-start;
-	}
-	
-	.modal_spacing_trans .btn {
-		font-size: 12px;
-		color: @blue-100;
-	}
+		.modal_spacing_trans > td:last-child {
+		    height: 44px;
+		    background-color: @blue-100 !important;
+		    border-radius: 6px;
+		    padding: 14px 25px 8px 17px;
+		    display: flex;
+		    flex-wrap: nowrap;
+		    justify-content: space-between;
+		    position: relative;
+		    right: 0;
+		    width: 450px;
+		    float: right;
+		    -webkit-transform: translateY(-16px);
+		    transform: translateY(-16px);
+		    align-items: flex-start;
+		}
+		
+		.modal_spacing_trans .btn {
+			font-size: 12px;
+			color: @blue-100;
+		}
+	}	
 }
