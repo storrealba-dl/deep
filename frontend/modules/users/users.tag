@@ -310,7 +310,7 @@
             }).done(function(r) {
                 //self.completeSelects(r);
             }).fail(function(r) {
-                deeplegal.Util.showMessage('Hubo un error'. 'alert-danger')
+                deeplegal.Util.showMessage('Hubo un error', 'alert-danger')
             })
         }
 
