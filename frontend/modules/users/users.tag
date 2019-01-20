@@ -82,7 +82,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="password" class="col-form-label">Contraseña</label>
-                            <input autocomplete="off" type="password" class="form-control" id="password">
+                            <input autocomplete="off" ref="password" name="password" type="password" class="form-control" id="password">
                         </div>
                         
                     </div>
@@ -206,6 +206,9 @@
                     phone: {
                         required: true,
                         digits: true
+                    },
+                    password: {
+                        required: true,
                     }
                 },
                 submitHandler: function(form) {
