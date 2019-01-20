@@ -361,6 +361,14 @@
 
             this.fetchSelectsData();
 
+            listadmin.on('requestAdminSave', function(itemId) {
+                self.save(itemId)
+            })
+
+            listadmin.on('requestAdminDelete', function(itemId) {
+                self.delete(itemId)
+            })
+
             $(listadmin.refs.modalEdit).on('hidden.bs.modal', function (e) {
                 self.resetForm();
             })
