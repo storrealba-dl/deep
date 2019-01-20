@@ -335,8 +335,12 @@
                 self.previewLogo(url)
             })
             
-            listadmin.on('requestAdminSave', function(item) {
-                self.save()
+            listadmin.on('requestAdminSave', function(itemId) {
+                self.save(itemId)
+            })
+
+            listadmin.on('requestAdminDelete', function(item) {
+                self.delete(itemId)
             })
 
             listadmin.refs.logoInput.onchange = function() {
