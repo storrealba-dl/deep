@@ -339,7 +339,7 @@
                 self.save(itemId)
             })
 
-            listadmin.on('requestAdminDelete', function(item) {
+            listadmin.on('requestAdminDelete', function(itemId) {
                 self.delete(itemId)
             })
 
