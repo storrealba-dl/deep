@@ -200,7 +200,9 @@
                 },
                 submitHandler: function(form) {
                     //form.submit();
-                    self.save();
+                    var listadmin = self.tags.listadmin;
+                    listadmin.trigger('requestAdminSave', listadmin.itemToSave)
+                    //self.save();
                 },
                 invalidHandler: function(event, validator) {
                     deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
@@ -321,6 +323,7 @@
             }
         }
 
+
         this.on('mount', function() {
             var listadmin = this.tags.listadmin;
 
@@ -332,6 +335,10 @@
                 self.previewLogo(url)
             })
             
+            listadmin.on('requestAdminSave', function(item) {
+                self.save()
+            })
+
             listadmin.refs.logoInput.onchange = function() {
                 if(this.files && this.files[0]) {
                     var reader = new FileReader();

@@ -132,12 +132,14 @@
 			if(self.settings.formValidation) {
 				$(self.refs.formEdit).submit();	
 			} else {
-				self.parent.save(self.itemToSave);	
+				self.trigger('requestAdminSave', self.itemToSave)
+				//self.parent.save(self.itemToSave);	
 			}
 		}
 
 		this.handleDelete = function() {
-			self.parent.delete(self.itemToDelete.id)
+			self.trigger('requestAdminDelete', self.itemToDelete.id)
+			//self.parent.delete(self.itemToDelete.id)
 		}
 
 		function populateForm(data) {
