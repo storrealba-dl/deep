@@ -195,7 +195,7 @@
                         required: true,
                         //minlength: 2
                     },
-                    contact_name: {
+                    rut: {
                         required: true,
                         //minlength: 2
                     },
@@ -215,14 +215,15 @@
                         required: true,
                         //minlength: 2
                     },
-                    district: {
+                    county: {
                         required: true,
                         //minlength: 2
                     }
                 },
                 submitHandler: function(form) {
-                    //form.submit();
-                    self.save();
+                    var listadmin = self.tags.listadmin;
+                    listadmin.trigger('requestAdminSave', listadmin.itemToSave)
+                    //self.save();
                 },
                 invalidHandler: function(event, validator) {
                     deeplegal.Util.showMessageAutoClose('Por favor verifique los datos', 'alert-danger');
@@ -250,9 +251,6 @@
                 method: method,
                 url: url,
                 data : data,
-                cache: false,
-                contentType: false,
-                processData: false,
                 beforeSend: function() {
                     var loading = deeplegal.HTMLSnippets.getSnippet('loading');
                     deeplegal.Util.showMessage(loading, 'alert-info');
