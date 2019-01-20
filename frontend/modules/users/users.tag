@@ -321,7 +321,7 @@
                 },
                 {
                     ref: 'company_id',
-                    data: options.views
+                    data: options.companies
                 }]);
 
             function loopOptions(array) {
