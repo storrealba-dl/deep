@@ -8,49 +8,49 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="user-name" class="col-form-label">Nombre</label>
-                            <input ref="name" autocomplete="off" type="text" class="form-control" id="user-name" placeholder="Nombre">
+                            <input ref="name" name="name" autocomplete="off" type="text" class="form-control" id="user-name" placeholder="Nombre">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="rut" class="col-form-label">RUT</label>
-                            <input ref="rut" autocomplete="off" type="text" class="form-control" id="rut" placeholder="RUT">
+                            <input ref="rut" name="rut" autocomplete="off" type="text" class="form-control" id="rut" placeholder="RUT">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="email" class="col-form-label">e-mail</label>
-                            <input ref="email" autocomplete="off" type="email" class="form-control" id="email" placeholder="e-mail">
+                            <input ref="email" name="email" autocomplete="off" type="email" class="form-control" id="email" placeholder="e-mail">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="phone" class="col-form-label">Telefono</label>
+                            <label for="phone" name="phone" class="col-form-label">Telefono</label>
                             <input ref="phone" autocomplete="off" type="text" class="form-control" id="phone" placeholder="Telefono">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="address" class="col-form-label">Dirección</label>
-                            <input ref="address" autocomplete="off" type="text" class="form-control" id="address" placeholder="Dirección">
+                            <input ref="address" name="address" autocomplete="off" type="text" class="form-control" id="address" placeholder="Dirección">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="city" class="col-form-label">Ciudad</label>
-                            <input ref="city" autocomplete="off" type="text" class="form-control" id="city" placeholder="Ciudad">
+                            <input ref="city" name="city" autocomplete="off" type="text" class="form-control" id="city" placeholder="Ciudad">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="district" class="col-form-label">Comuna</label>
-                            <input ref="county" autocomplete="off" type="text" class="form-control" id="district" placeholder="Comuna">
+                            <input ref="county" name="county" autocomplete="off" type="text" class="form-control" id="county" placeholder="Comuna">
                         </div>
                     </div>
                     <div class="form-row"> 
                         <div class="form-group col-md-6">
                             <label for="company" class="col-form-label">Empresa</label>
-                            <select ref="company_id" autocomplete="off" type="text" class="form-control" id="company">
+                            <select ref="company_id" name="company_id" autocomplete="off" type="text" class="form-control" id="company">
                                 
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="role" class="col-form-label">Permisos</label>
-                            <select ref="role_id" autocomplete="off" type="text" class="form-control" id="role">
+                            <select ref="role_id" name="role_id" autocomplete="off" type="text" class="form-control" id="role">
                                 
                             </select>
                         </div>
@@ -58,13 +58,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="menu" class="col-form-label">Menu</label>
-                            <select ref="menu_id" autocomplete="off" type="text" class="form-control" id="menu">
+                            <select ref="menu_id" name="menu_id" autocomplete="off" type="text" class="form-control" id="menu">
                                 
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="view" class="col-form-label">Vistas</label>
-                            <select ref="view_id" autocomplete="off" type="text" class="form-control" id="view">
+                            <select ref="view_id" name="view_id" autocomplete="off" type="text" class="form-control" id="view">
 
                             </select>
                         </div>
@@ -206,18 +206,6 @@
                     phone: {
                         required: true,
                         digits: true
-                    },
-                    address: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    city: {
-                        required: true,
-                        //minlength: 2
-                    },
-                    county: {
-                        required: true,
-                        //minlength: 2
                     }
                 },
                 submitHandler: function(form) {
