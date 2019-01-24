@@ -27,7 +27,7 @@ DL_CONFIG = importlib.import_module('config.'+DL_CONTEXT, '*')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DL_CONFIG.DEBUG
 
-ALLOWED_HOSTS = ['dev.deeplegal.glamsi.com', 'test.deeplegal.glamsi.com', 'staging.deeplegal.glamsi.com', 'app.deeplegal.ai']
+ALLOWED_HOSTS = ['dev.deeplegal.glamsi.com', 'test.deeplegal.glamsi.com', 'staging.deeplegal.glamsi.com', 'app.deeplegal.ai', 'localhost']
 
 # Application definition
 
@@ -119,3 +119,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/example.com/static/'
