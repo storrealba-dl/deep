@@ -51,7 +51,7 @@ MIDDLEWARE = [
 #    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'managers.middleware.DeepLegalMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
+#    'htmlmin.middleware.MarkRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'deeplegal.urls'

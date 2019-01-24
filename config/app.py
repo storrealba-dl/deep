@@ -1,5 +1,7 @@
 from django.conf import settings
 
+DL_APP_NAME = "app.deeplegal"
+
 DEBUG = False
 
 HTML_MINIFY = True
