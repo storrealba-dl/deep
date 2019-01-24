@@ -81,3 +81,9 @@ class TeamsView(RestModelView):
     self.obj = self.obj.filter(company_id=self.params["company_id"])
     return True
 
+class RolesView(RestModelView):
+  obj = Roles.objects
+
+class ViewsView(RestModelView):
+  obj = Views.objects
+
