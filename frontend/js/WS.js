@@ -4,5 +4,6 @@ var WS = {
 	menusItems: '/r/menusitems/',
 	pictures: '/picture/',
 	plans: '/r/plans/',
-	users: '/r/users/'
+	users: '/r/users/',
+	menus: '/r/menus/'
 }

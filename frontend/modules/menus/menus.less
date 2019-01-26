@@ -1,0 +1,80 @@
+@import '../../styles/variables';
+
+#menus {
+	
+	h2 {
+		font-size: 18px; 
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+
+	.config-container {
+
+		.card-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.btn-delete-config,
+		.btn-edit-config {
+			border-radius: 3px;
+			display: inline-block;
+		    width: 22px;
+		    height: 22px;
+		    text-align: center;
+		}
+
+		.config-option {
+			margin-right: 5px;
+		}
+
+		.config-actions-container {
+			display: flex;
+
+			a {
+				margin-left: 5px;
+			}
+		}
+	}
+
+	#config-template {
+		display: none;
+	}
+
+	.modal {
+	
+		.alert {
+			position: fixed;
+		    width: 400px;
+		    z-index: 1;
+		    left: 50%;
+		    margin-left: -200px;
+		}
+
+		.modal-body {
+			min-height: 90px;
+		}
+	}
+
+	#modal-edit {
+
+		h5 {
+			margin-bottom: 20px; 
+		}
+
+		.form-container {
+			border: 1px solid rgba(0,0,0,0.1);
+		    padding: 15px;
+		    border-radius: 6px;
+		}
+
+		.checkbox-container {
+			margin-bottom: 15px;
+		}
+
+		#checkbox-template {
+			display: none;
+		}
+	}
+}

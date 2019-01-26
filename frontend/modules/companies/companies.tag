@@ -75,6 +75,10 @@
     </listadmin>
 
     <script>
+        /**
+         * Config to be passed to listadmin component
+         */ 
+
         var self = this;
         this.adminConfig = {
             title: 'Empresas',
@@ -214,15 +218,17 @@
         }
 
         /**
-        * @companyId: if empty will create a new company
-        */
+         * save
+         * Saves or creates companies 
+         * @param {Number} company id. if empty will create a new company
+         */
 
         this.save = function(companyId) {
-            var form = this.tags.listadmin.refs.formEdit,
-                companyId = companyId || this.tags.listadmin.itemToSave,
-                url = companyId ? WS.companies + companyId + '/'  : WS.companies,
-                method = companyId ? 'PUT' : 'POST',
-                data = new FormData(form);
+            var form = this.tags.listadmin.refs.formEdit;
+            var companyId = companyId || this.tags.listadmin.itemToSave;
+            var url = companyId ? WS.companies + companyId + '/'  : WS.companies;
+            var method = companyId ? 'PUT' : 'POST'
+            var data = new FormData(form);
 
             data.append('csrfmiddlewaretoken', deeplegal.Util.getCsrf());
 
@@ -253,6 +259,12 @@
             })
         }
 
+        /**
+         * delete
+         * Deletes companies 
+         * @param {Number} company id
+         */
+
         this.delete = function(companyId) {
             $.ajax({
                 method: 'DELETE',
@@ -276,6 +288,12 @@
             })
         }
 
+        /**
+         * resetForm
+         * Reset form to create/edit companies 
+         * passed to listadmin through yelding 
+         */
+
         this.resetForm = function() {
             var listadmin = self.tags.listadmin;
             listadmin.refs.formEdit.reset();
@@ -283,15 +301,28 @@
             listadmin.$formEdit.resetForm(); //reset validator
         }
 
+        /**
+         * previewLogo
+         * Shows the preview for a given image url
+         * in the company form 
+         * @param {String} image url
+         */
+
         this.previewLogo = function(imgUrl) {
-            var listadmin = self.tags.listadmin,
-                logoPlaceholder = listadmin.refs.logoPlaceholder,
-                img = document.createElement('img');
+            var listadmin = self.tags.listadmin;
+            var logoPlaceholder = listadmin.refs.logoPlaceholder;
+            var img = document.createElement('img');
             
             img.setAttribute('src', imgUrl);
             logoPlaceholder.innerHTML = '';
             logoPlaceholder.appendChild(img);
         }
+
+        /**
+         * getPlan
+         * Loads the plans to be loaded in the select
+         * in the company form 
+         */
 
         this.getPlan = function() {
             $.ajax({
@@ -312,6 +343,12 @@
                 deeplegal.Util.showMessage('Hubo un error cargando los planes', 'alert-danger');
             })
         }
+
+        /**
+         * renderPlan
+         * Populates the select with the given options
+         * in the company form 
+         */
 
         this.renderPlan = function(planList) {
             var select = self.tags.listadmin.refs.plan_id;
