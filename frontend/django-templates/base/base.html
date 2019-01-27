@@ -28,17 +28,6 @@
 
         <script src="/frontend/lib/minton/js/jquery.min.js"></script>
 
-        <!-- Deeplegal js-->
-        
-        <!-- build:js -->
-        <script type="text/javascript" src="/frontend/js/deeplegal.js"></script>
-        <script type="text/javascript" src="/frontend/js/WS.js"></script>
-        <script type="text/javascript" src="/frontend/js/Util.js"></script>
-        <script type="text/javascript" src="/frontend/js/HTMLSnippets.js"></script>
-        <script type="text/javascript" src="/frontend/js/Events.js"></script>
-        <script type="text/javascript" src="/frontend/js/NotificationService.js"></script>
-        <!-- endbuild -->
-
         <script src="/frontend/lib/minton/js/modernizr.min.js"></script>        
     </head>
 
@@ -116,13 +105,19 @@
         <script src="/frontend/lib/minton/js/jquery.app.js"></script>
 
         <script src="/frontend/lib/riot/riot.min.js"></script>
-        <script src="/frontend/js/Store.js"></script>
+        
+        <!-- Deeplegal js-->
+        
+        <!-- build:js -->
+        <script type="text/javascript" src="/frontend/js/deeplegal.js"></script>
+        <script type="text/javascript" src="/frontend/js/WS.js"></script>
+        <script type="text/javascript" src="/frontend/js/Util.js"></script>
+        <script type="text/javascript" src="/frontend/js/HTMLSnippets.js"></script>
+        <script type="text/javascript" src="/frontend/js/Events.js"></script>
+        <script type="text/javascript" src="/frontend/js/NotificationService.js"></script>
+        <!-- endbuild -->
 
         {% block section_scripts %} {% endblock section_scripts %}
 
-        <script type="text/javascript">
-            riot.store = new Store();
-            riot.mount('*');
-        </script>
     </body>
 </html>
