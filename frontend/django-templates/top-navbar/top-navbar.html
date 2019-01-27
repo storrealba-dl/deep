@@ -8,11 +8,11 @@
     <div class="user-info">
         <img class="company-logo" src="/picture/{{ request.security.cLoggedUser.company_id }}/">
         
-        <div class="user-avatar">{{ request.security.initials }}</div>
+        <div class="user-avatar">{{ request.cSecMgr.userLetter }}</div>
         
         <li class="list-inline-item dropdown notification-list">
             <a class="user-name nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                {{ request.security.cLoggedUser.name|capfirst }}
+                {{ request.cSecMgr.userTitle|capfirst }}
             </a>
             
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="Preview" x-placement="bottom-end" style="position: absolute; transform: translate3d(-105px, 21px, 0px); top: 0px; left: 0px; will-change: transform;">
