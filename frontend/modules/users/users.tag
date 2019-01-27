@@ -94,6 +94,10 @@
     </listadmin>
 
     <script>
+        /**
+         * Config to be passed to listadmin component
+         */ 
+
         var self = this;
         this.adminConfig = {
             title: 'Usuarios',
@@ -226,8 +230,10 @@
         }
 
         /**
-        * @userId: if empty will create a new user
-        */
+         * save
+         * Saves or creates users 
+         * @param {Number} user id. if empty will create a new user
+         */
 
         this.save = function(userId) {
             var form = this.tags.listadmin.refs.formEdit,
@@ -261,6 +267,12 @@
                 deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
+
+        /**
+         * delete
+         * Deletes users 
+         * @param {Number} user id
+         */
 
         this.delete = function(userId) {
             $.ajax({
@@ -338,6 +350,12 @@
                 }
             }
         }
+
+        /**
+         * resetForm
+         * Reset form to create/edit users 
+         * passed to listadmin through yelding 
+         */
 
         this.resetForm = function() {
             var listadmin = self.tags.listadmin;

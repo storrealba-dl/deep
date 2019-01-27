@@ -73,21 +73,24 @@
 	<script>
 		
 		/**
-		*
-		* listadmin
-		* 
-		* Renders the view for admin pages using datatable.
-		* Recieves an object with its configuration
-		*
-		* @opts.config.title: Page title
-		* @opts.config.actionButton: Action button text
-		* @opts.config.datatableUr: Url for the websersive to render the datatable
-		* @opts.config.datatable: datatable config options
-		*
-		* Events (fired by parent tag)
-		* addedItem / editedItem / deletedItem
-		* 
-		*/
+		 *
+		 * listadmin
+		 * 
+		 * Renders the view for admin pages using datatable.
+		 * Recieves an object with its configuration
+		 *
+		 * @opts.config.title: Page title
+		 * @opts.config.actionButton: Action button text
+		 * @opts.config.datatableUr: Url for the websersive to
+		 * render the datatable
+		 * @opts.config.datatable: datatable config options
+		 * @opts.config.formValidation: config object for
+		 * form validation 
+		 *
+		 * Events (fired by parent tag)
+		 * addedItem / editedItem / deletedItem
+		 * 
+		 */
 
 		var self = this;
 		
@@ -133,13 +136,11 @@
 				$(self.refs.formEdit).submit();	
 			} else {
 				self.trigger('requestAdminSave', self.itemToSave)
-				//self.parent.save(self.itemToSave);	
 			}
 		}
 
 		this.handleDelete = function() {
 			self.trigger('requestAdminDelete', self.itemToDelete.id)
-			//self.parent.delete(self.itemToDelete.id)
 		}
 
 		function populateForm(data) {

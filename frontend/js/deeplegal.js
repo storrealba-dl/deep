@@ -8,6 +8,9 @@ var deeplegal = {
 		if(deeplegal.NotificationService) {
 			deeplegal.NotificationService.init();
 		}
+		
+		riot.observable(this);
+		riot.mount('*')
 	}
 }
 {

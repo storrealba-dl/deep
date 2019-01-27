@@ -113,6 +113,9 @@ deeplegal.Util = {
 	messageTimeout: null,
 
 	showMessage: function(messageContent, alertClass) {
+		if(deeplegal.Util.messageTimeout) {
+			clearTimeout(deeplegal.Util.messageTimeout)
+		}
 		var $messageContainer = $('#message-alert-container');
 		var $messageTarget = $('#message-alert-target');
 		$messageTarget.html(messageContent);
@@ -132,16 +135,17 @@ deeplegal.Util = {
 	showMessageAutoClose: function(messageContent, alertClass, time) {
 		time = time || 1500;
 
-		if(deeplegal.Util.messageTimeout) {
-			clearTimeout(deeplegal.Util.messageTimeout)
-		}
-
 		deeplegal.Util.showMessage(messageContent, alertClass);
 
 		deeplegal.Util.messageTimeout = setTimeout(function() {
 			deeplegal.Util.hideMessage();
 		}, time)
 
+	},
+
+	showLoading: function() {
+		var loading = deeplegal.HTMLSnippets.getSnippet('loading');
+		deeplegal.Util.showMessage(loading, 'alert-info');
 	}
 }
 
