@@ -16,7 +16,7 @@
                     <small class="text-muted">Opciones activas:</small>
                 </p>
                 
-                <span class="badge badge-primary config-option" each="{opts.config.items}" ref="activeItem" data-id="{id}" data-name="{name}">{name}</span>
+                <span class="badge badge-primary config-option" each="{opts.items}" ref="activeItem" data-id="{id}" data-name="{name}">{name}</span>
                 
             </div>
         </div>

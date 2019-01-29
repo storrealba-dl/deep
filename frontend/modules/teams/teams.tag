@@ -1,4 +1,4 @@
-<menus>
+<teams>
     <div class="row m-t-40">
         <div class="col-sm-10">
             <div class="row">
@@ -7,27 +7,27 @@
                         <i class="ti-angle-left"></i>
                     </a>
                     <h1>
-                        Configuraciones de Menú
+                        Equipos de Trabajo
                     </h1>
                     <div class="section-actions">
                         <div class="section-graphs">
                         </div>
                         <div class="section-filters">
-                            <button class="btn btn-primary" id="add-item-btn" data-toggle="modal" data-target="#modal-add"><i class="mdi mdi-plus-circle"></i> Crear Nueva Configuración</button>
+                            <button class="btn btn-primary" id="add-item-btn" data-toggle="modal" data-target="#modal-add"><i class="mdi mdi-plus-circle"></i> Crear Nuevo Equipo</button>
                         </div>  
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="section-body col-sm-12">
-                    <h2 if="{menus.length > 0}">Configuraciones existentes:</h2>
-                    <div if="{menus.length == 0}">
-                        <h2>No hay configuraciones creadas</h2>
-                        <p>Haga click en <strong>Crear Nueva Configuración</strong> para empezar.</p>
+                    <h2 if="{teams.length > 0}">Configuraciones existentes:</h2>
+                    <div if="{teams.length == 0}">
+                        <h2>No hay equipos creados</h2>
+                        <p>Haga click en <strong>Crear Nuevo Equipo</strong> para empezar.</p>
                     </div>
                     <div class="row">
 
-                        <optionspanel each="{menu, index in menus}" config="{menu}" index="{index}" items="{menu.items}" not-deletable-tooltip="No se puede eliminar una configuración en uso">
+                        <optionspanel each="{team, index in teams}" config="{team}" index="{index}" items="{team.members}" not-deletable-tooltip="No se puede eliminar un equipo en uso">
                         </optionspanel>
 
                     </div>
@@ -50,14 +50,14 @@
                             <div class="form-row">
                                 <div class="col-sm-12 col-xs-12 checkbox-container">
                                     <label for="config-name">Ingrese el nombre:</label>
-                                    <input type="text" class="form-control" name="configName" ref="configName" id="new-config-name">
+                                    <input type="text" class="form-control" name="teamName" ref="teamName" id="new-config-name">
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="submit-create" class="btn btn-primary" onclick="{createMenuConfig}">Crear</button>
+                    <button type="button" id="submit-create" class="btn btn-primary" onclick="{createTeam}">Crear</button>
                     <button class="btn btn-danger" id="cancel-create" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -69,29 +69,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="modal-edit-title">Editar Configuración <strong>{currentTitle}</strong></h4>
+                    <h4 class="modal-title" id="modal-edit-title">Editar Equipo de Trabajo <strong>{currentTitle}</h4>
                 </div>
                 <div class="modal-body">
 
-                    <h5>Active las opciones que desea agregar</h5>
+                    <h5>Seleccione los usuarios que desea incluir</h5>
                     
                     <div class="form-container">
-                        <form id="edit-form" ref="editForm">
+                        <form id="edit-form">
                             <div class="form-row edit-options-container">
                                 
-                                <div class="col-sm-4 col-xs-6 checkbox-container"  each="{item in menusItems}">
-
-                                    <switchery color="#3bafda" input-value="{item.id}" label="{item.title}" group="{group}" data-ref="item{item.id}"></switchery>
-
-                                </div>
+                                <select multiple="multiple" ref="selectUsers" id="users-select">
+                                    <option each="{user in users}" value="{user.id}">{user.name}</option>
+                                </select>
 
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="hidden-config-id" value="" name="">
-                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="submit-save" class="btn btn-primary" onclick="{save};">Guardar</button>
+                    <button class="btn btn-danger" id="cancel-save" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -107,7 +105,7 @@
                 <div class="modal-body">
 
                     <div>
-                        <p>¿Desea borrar la configuración <strong>{currentTitle}?</strong></p>
+                        <p>¿Desea borrar el equipo <strong>{currentTitle}?</strong></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -121,50 +119,57 @@
 
     <script>
         var self = this;
-        this.menus;
-        this.menusItems;
+        this.teams;
+        this.users;
         this.currentItem;
         this.currentTitle;
+        this.$multiSelect;
         this.group = 'menusItems'; // Labels the switchery to target the event
 
         /**
-         * loadMenus 
-         * Retrieves menus from db
+         * loadTeams 
+         * Retrieves teams from db
          */
 
-        this.loadMenus = function() {
+        this.loadTeams = function() {
             $.ajax({
                 method: 'GET',
-                url: WS.menus,
+                url: WS.teams,
                 beforeSend: function() {
                     deeplegal.Util.showLoading();
                 }
             }).done(function(r) {
                 deeplegal.Util.hideMessage();
-                self.menus = r.data;
+                self.teams = r.data;
                 self.update();
             }).fail(function(r) {
+                //XXX test
+                self.teams = [{"name": "equipo 1", "id": 1, "deleteAllowed": false, "members": [{"id": 62, "name": "aaronn"}, {"id": 46, "name": "CARLOS SOLA"}, {"id": 35, "name": "Sebastian Torrealba"}]}, {"name": "equipo nuevo", "id": 12, "deleteAllowed": true, "members": []}, {"name": "grupo123123123", "id": 16, "deleteAllowed": true, "members": []}, {"name": "grupito", "id": 17, "deleteAllowed": true, "members": []}, {"name": "grupito1111", "id": 18, "deleteAllowed": true, "members": []}];
+                self.update();
+                //XXX end test
+
                 var error = 'Hubo un error.'
                 deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
         /*
-         * loadMenusItems
+         * loadUsers
          * Retrieves item list to add on modal edit config
          */
 
-        this.loadMenusItems = function() {
+        this.loadUsers = function() {
             $.ajax({
                 method: 'GET',
-                url: WS.menusitems,
+                url: WS.users,
                 beforeSend: function() {
                     deeplegal.Util.showLoading();
                 }
             }).done(function(r) {
                 deeplegal.Util.hideMessage();
-                self.menusItems = r.data;
+                self.users = r.data;
                 self.update();
+                self.startMultiSelect();
             }).fail(function(r) {
                 var error = 'Hubo un error.'
                 deeplegal.Util.showMessage(error, 'alert-danger');
@@ -172,18 +177,18 @@
         }
 
         /**
-         * createMenuConfig
-         * Creates menu template config 
+         * createTeams
+         * Creates team of users
          * @param {Event} click
          */
 
-        this.createMenuConfig = function(e) {
+        this.createTeam = function(e) {
             deeplegal.Util.preventDefault(e);
             $.ajax({
                 method: 'POST',
-                url: WS.menus,
+                url: WS.teams,
                 data: {
-                    name: self.refs.configName.value,
+                    name: self.refs.teamName.value,
                     csrfmiddlewaretoken: deeplegal.Util.getCsrf()
                 },
                 beforeSend: function() {
@@ -191,7 +196,7 @@
                 }
             }).done(function(r) {
                 if(r.status == 200) {
-                    self.loadMenus();
+                    self.loadTeams();
                     $(self.refs.modalAdd).modal('hide');
                 } else {
                     var error = 'Hubo un error.'
@@ -300,16 +305,60 @@
             self.update();
         }
 
+        /**
+         * startMultiSelect
+         * Starts the multi select when the users are loaded
+         */
+
+        this.startMultiSelect = function() {
+            var $select = $(self.refs.selectUsers);
+            self.$multiSelect = $select.multiSelect({
+                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Buscar...'>",
+                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Buscar...'>",
+                afterInit: function (ms) {
+                    var that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        $selectionSearch = that.$selectionUl.prev(),
+                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which === 40) {
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+
+                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                        .on('keydown', function (e) {
+                            if (e.which == 40) {
+                                that.$selectionUl.focus();
+                                return false;
+                            }
+                        });
+                },
+                afterSelect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                },
+                afterDeselect: function () {
+                    this.qs1.cache();
+                    this.qs2.cache();
+                }
+            });
+        }
+
         this.on('mount', function() {
-            this.loadMenus();
-            this.loadMenusItems();
+            this.loadTeams();
+            this.loadUsers();
         })
 
         // Listener for editing options
         deeplegal.on('editOptionPanel', function(option) {
             self.currentItem = option.id;
-            self.currentTitle = self.menus[option.index].name;
-            self.updateCheckboxStatus(option);
+            self.currentTitle = self.teams[option.index].name;
+            //self.updateCheckboxStatus(option);
             self.update();
             $(self.refs.modalEdit).modal('show');
         })
@@ -337,8 +386,8 @@
         });
 
         $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
-            self.refs.configName.value = '';
-        })
+            self.refs.teamName.value = '';
+        });
 
     </script>
-</menus>
+</teams>
