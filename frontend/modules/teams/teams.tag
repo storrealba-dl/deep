@@ -145,11 +145,6 @@
                 self.teams = r.data;
                 self.update();
             }).fail(function(r) {
-                //XXX test
-                self.teams = [{"name": "equipo 1", "id": 1, "deleteAllowed": false, "members": [{"id": 62, "name": "aaronn"}, {"id": 46, "name": "CARLOS SOLA"}, {"id": 35, "name": "Sebastian Torrealba"}]}, {"name": "equipo nuevo", "id": 12, "deleteAllowed": true, "members": []}, {"name": "grupo123123123", "id": 16, "deleteAllowed": true, "members": []}, {"name": "grupito", "id": 17, "deleteAllowed": true, "members": []}, {"name": "grupito1111", "id": 18, "deleteAllowed": true, "members": []}];
-                self.update();
-                //XXX end test
-
                 var error = 'Hubo un error.'
                 deeplegal.Util.showMessage(error, 'alert-danger');
             })
