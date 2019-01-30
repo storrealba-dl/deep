@@ -3,6 +3,7 @@
  */
 
 var deeplegal = {
+	tags: null,
 	
 	init: function() {
 		if(deeplegal.NotificationService) {
@@ -10,7 +11,7 @@ var deeplegal = {
 		}
 		
 		riot.observable(this);
-		riot.mount('*')
+		this.tags = riot.mount('*');
 	}
 }
 {

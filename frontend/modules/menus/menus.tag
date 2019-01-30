@@ -107,7 +107,7 @@
                 <div class="modal-body">
 
                     <div>
-                        <p>¿Desea borrar la configuración <strong>{currentTitle}?</strong></p>
+                        <p>¿Desea borrar la configuración <strong>{currentTitle}</strong>?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -303,6 +303,18 @@
         this.on('mount', function() {
             this.loadMenus();
             this.loadMenusItems();
+
+            $(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
+                self.clearCurrentItem();
+            });
+
+            $(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
+                self.clearCurrentItem();
+            });
+
+            $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
+                self.refs.configName.value = '';
+            })
         })
 
         // Listener for editing options
@@ -326,18 +338,6 @@
             if(tag.getData().group == self.group) {
                 self.save(tag);    
             }
-        })
-
-        $(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
-            self.clearCurrentItem();
-        });
-
-        $(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
-            self.clearCurrentItem();
-        });
-
-        $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
-            self.refs.configName.value = '';
         })
 
     </script>

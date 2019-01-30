@@ -79,9 +79,12 @@
                         <form id="edit-form">
                             <div class="form-row edit-options-container">
                                 
-                                <select multiple="multiple" ref="selectUsers" id="users-select">
+                                <div data-is="multiselect" ref="usersSelect" items="{users}" value-key="id" text-key="name">
+                                </div>
+
+                                <!-- <select multiple="multiple" ref="selectUsers" id="users-select">
                                     <option each="{user in users}" value="{user.id}">{user.name}</option>
-                                </select>
+                                </select> -->
 
                             </div>
                         </form>
@@ -105,7 +108,7 @@
                 <div class="modal-body">
 
                     <div>
-                        <p>¿Desea borrar el equipo <strong>{currentTitle}?</strong></p>
+                        <p>¿Desea borrar el equipo <strong>{currentTitle}</strong>?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -123,7 +126,6 @@
         this.users;
         this.currentItem;
         this.currentTitle;
-        this.$multiSelect;
         this.group = 'menusItems'; // Labels the switchery to target the event
 
         /**
@@ -169,7 +171,7 @@
                 deeplegal.Util.hideMessage();
                 self.users = r.data;
                 self.update();
-                self.startMultiSelect();
+                self.refs.usersSelect.refresh();
             }).fail(function(r) {
                 var error = 'Hubo un error.'
                 deeplegal.Util.showMessage(error, 'alert-danger');
@@ -209,40 +211,38 @@
         }
 
         /**
-         * updateCheckboxStatus
-         * Set the the switchery checkbox according to config
-         * @param {Object} index and id of config to find in this.menu
+         * updateMultiselect
+         * Set the mutliselect according to config
+         * @param {Object} {index: 1, id: 10} index and id 
+         * of config to find in this.menu
          */ 
-        this.updateCheckboxStatus = function(option) {
-            var menu = self.menus[option.index];
+        this.updateMultiselect = function(option) {
+            var team = self.teams[option.index];
             
-            //reset all checkbox
-            deeplegal.trigger('resetSwitcheryCheckbox') 
+            var usersSelect = this.refs.usersSelect;
+            usersSelect.reset();
 
-
-            for(var i = 0; i < menu.items.length; i++) {
-                var item = menu.items[i];
-                var switchery = self.refs['item'+item.id];
-                switchery.setSwitchery(true)
+            for(var i = 0; i < team.members.length; i++) {
+                var member = team.members[i];
+                var value = member.id.toString();
+                this.refs.usersSelect.select(value);
             }
         }
 
         /**
          * save
-         * Saves checkbox (switchery) status
-         * @param {Object} switchery tag
+         * Save users in team
+         * @param {Number} team id
          */
 
         this.save = function(switcheryTag) {
-            var switcheryData = switcheryTag.getData();
             var data = {
                 csrfmiddlewaretoken: deeplegal.Util.getCsrf(),
-                itemId: switcheryData.id,
-                toggle: switcheryData.checked
-            }
+                members: this.refs.usersSelect.getSelectedItems()
+            };
             $.ajax({
                 method: 'PUT',
-                url: WS.menus + this.currentItem + '/',
+                url: WS.teams + this.currentItem + '/',
                 data: data,
                 beforeSend: function() {
                     //deeplegal.Util.showLoading();
@@ -251,7 +251,7 @@
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
-                    self.loadMenus();
+                    self.loadTeams();
                 } else {
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
@@ -273,7 +273,7 @@
             }
             $.ajax({
                 method: 'DELETE',
-                url: WS.menus + this.currentItem + '/',
+                url: WS.teams + this.currentItem + '/',
                 data: data,
                 beforeSend: function() {
                     deeplegal.Util.showLoading();
@@ -282,7 +282,7 @@
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
-                    self.loadMenus();
+                    self.loadTeams();
                     $(self.refs.modalDelete).modal('hide');
                 } else {
                     var error = 'Hubo un error.'
@@ -304,61 +304,29 @@
             self.currentTitle = '';
             self.update();
         }
-
-        /**
-         * startMultiSelect
-         * Starts the multi select when the users are loaded
-         */
-
-        this.startMultiSelect = function() {
-            var $select = $(self.refs.selectUsers);
-            self.$multiSelect = $select.multiSelect({
-                selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Buscar...'>",
-                selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Buscar...'>",
-                afterInit: function (ms) {
-                    var that = this,
-                        $selectableSearch = that.$selectableUl.prev(),
-                        $selectionSearch = that.$selectionUl.prev(),
-                        selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
-                        selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
-
-                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                        .on('keydown', function (e) {
-                            if (e.which === 40) {
-                                that.$selectableUl.focus();
-                                return false;
-                            }
-                        });
-
-                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                        .on('keydown', function (e) {
-                            if (e.which == 40) {
-                                that.$selectionUl.focus();
-                                return false;
-                            }
-                        });
-                },
-                afterSelect: function () {
-                    this.qs1.cache();
-                    this.qs2.cache();
-                },
-                afterDeselect: function () {
-                    this.qs1.cache();
-                    this.qs2.cache();
-                }
-            });
-        }
-
+        
         this.on('mount', function() {
             this.loadTeams();
             this.loadUsers();
+
+            $(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
+                self.clearCurrentItem();
+            });
+
+            $(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
+                self.clearCurrentItem();
+            });
+
+            $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
+                self.refs.teamName.value = '';
+            });
         })
 
         // Listener for editing options
         deeplegal.on('editOptionPanel', function(option) {
             self.currentItem = option.id;
             self.currentTitle = self.teams[option.index].name;
-            //self.updateCheckboxStatus(option);
+            self.updateMultiselect(option);
             self.update();
             $(self.refs.modalEdit).modal('show');
         })
@@ -366,28 +334,11 @@
         // Listener for deleting a panel options
         deeplegal.on('deleteOptionPanel', function(option) {
             self.currentItem = option.id;
-            self.currentTitle = self.menus[option.index].name;
+            self.currentTitle = self.teams[option.index].name;
             self.update();
             $(self.refs.modalDelete).modal('show');
         })
 
-        deeplegal.on('saveSwitcheryStatus', function(tag) {
-            if(tag.getData().group == self.group) {
-                self.save(tag);    
-            }
-        })
-
-        $(this.refs.modalEdit).on('hidden.bs.modal', function (e) {
-            self.clearCurrentItem();
-        });
-
-        $(this.refs.modalDelete).on('hidden.bs.modal', function (e) {
-            self.clearCurrentItem();
-        });
-
-        $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
-            self.refs.teamName.value = '';
-        });
 
     </script>
 </teams>
