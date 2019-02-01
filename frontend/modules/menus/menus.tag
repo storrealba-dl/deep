@@ -7,7 +7,7 @@
                         <i class="ti-angle-left"></i>
                     </a>
                     <h1>
-                        Configuraciones de Menú
+                        <translate>Configuraciones de Menú</translate>
                     </h1>
                     <div class="section-actions">
                         <div class="section-graphs">
@@ -339,6 +339,23 @@
         $(this.refs.modalAdd).on('hidden.bs.modal', function(e) {
             self.refs.configName.value = '';
         })
+
+
+        this.translate.dictionary({
+            "en": {
+                "menus": {
+                    "Configuraciones de Menú": "Menu Configuration"    
+                }
+            },
+            "es": {
+                "menus": {
+                    "Configuraciones de Menú": "Configuraciones de Menú"    
+                }
+            }
+        })
+        this.translate.apply('menus');
+        this.translate.setLanguage('es');
+
 
     </script>
 </menus>
