@@ -303,21 +303,6 @@
         this.on('mount', function() {
             this.loadMenus();
             this.loadMenusItems();
-
-            this.translate.dictionary({
-                "en": {
-                    "menus": {
-                        "Configuraciones de Menú": "Menu Configuration"    
-                    }
-                },
-                "es": {
-                    "menus": {
-                        "Configuraciones de Menú": "Configuraciones de Menú"    
-                    }
-                }
-            })
-            this.translate.apply('menus');
-            this.translate.setLanguage('es');
         })
 
         // Listener for editing options
@@ -356,7 +341,20 @@
         })
 
 
-
+        translate.dictionary({
+            "en": {
+                "menus": {
+                    "Configuraciones de Menú": "Menu Configuration"    
+                }
+            },
+            "es": {
+                "menus": {
+                    "Configuraciones de Menú": "Configuraciones de Menú"    
+                }
+            }
+        })
+        translate.apply('menus');
+        translate.setLanguage('es');
 
 
     </script>
