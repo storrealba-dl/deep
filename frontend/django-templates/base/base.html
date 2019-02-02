@@ -105,12 +105,16 @@
         <script src="/frontend/lib/minton/js/jquery.app.js"></script>
 
         <script src="/frontend/lib/riot/riot.min.js"></script>
-        <script src="/frontend/lib/riot-translate/riot-translate.min.js"></script><!-- exposes global var 'translate' -->
+        <script src="https://unpkg.com/i18next/i18next.js"></script>
+        <script src="https://unpkg.com/i18next-xhr-backend/i18nextXHRBackend.js"></script>
+        <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.js"></script>
+        <!-- exposes global var 'translate' -->
 
         <!-- Deeplegal js-->
         
         <!-- build:js -->
         <script type="text/javascript" src="/frontend/js/deeplegal.js"></script>
+        <script type="text/javascript" src="/frontend/js/i18n.js"></script>
         <script type="text/javascript" src="/frontend/js/WS.js"></script>
         <script type="text/javascript" src="/frontend/js/Util.js"></script>
         <script type="text/javascript" src="/frontend/js/HTMLSnippets.js"></script>

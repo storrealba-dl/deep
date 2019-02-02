@@ -1,20 +1,57 @@
-/**
- * namespace for all modules
- */
+(function() {
+    'use strict';
 
-var deeplegal = {
+    /**
+     * Internationalization loaded promise
+     * @type {Deferred}
+     */
+    var i18nInitialized = $.Deferred();
 	
-	init: function() {
-		if(deeplegal.NotificationService) {
-			deeplegal.NotificationService.init();
-		}
+	/**
+	 * namespace for all modules
+	 */
+	var deeplegal = window.deeplegal = {
 		
-		riot.observable(this);
-		riot.mount('*')
-	}
-}
-{
+		opts: {
+			path: '/static/',
+			modules: [
+				'companies',
+				'left-sidebar',
+				'listadmin',
+				'login',
+				'menus',
+				'optionspanel',
+				'right-sidebar',
+				'ruts',
+				'switchery',
+				'top-navbar',
+				'users'
+			]
+		},
+
+		init: function() {
+			if(deeplegal.NotificationService) {
+				deeplegal.NotificationService.init();
+			}
+			
+			//riot.observable(this);
+			//riot.mount('*')
+
+			// i18n is loaded
+	        $.when(i18nInitialized).then(function() {
+	            // Mount all riot templates
+	            window.riot.mount('*');
+	        });
+		}
+	};
+
+	window.riot.observable(deeplegal);
+	
+	// Sometimes this event is fired before the document.ready, so bind it now
+    deeplegal.on('i18nInitialized', i18nInitialized.resolve);
+
 	$(document).ready(function() {
 		deeplegal.init();
 	}) 
-}
+
+})();
