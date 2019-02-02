@@ -1,17 +1,19 @@
 (function() {
     'use strict';
 
+
     /**
      * Internationalization loaded promise
      * @type {Deferred}
      */
     var i18nInitialized = $.Deferred();
-	
+
 	/**
 	 * namespace for all modules
 	 */
 	var deeplegal = window.deeplegal = {
 		
+
 		opts: {
 			path: '/static/',
 			modules: [
@@ -49,6 +51,9 @@
 	
 	// Sometimes this event is fired before the document.ready, so bind it now
     deeplegal.on('i18nInitialized', i18nInitialized.resolve);
+
+
+	riot.observable(this);
 
 	$(document).ready(function() {
 		deeplegal.init();

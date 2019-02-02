@@ -31,7 +31,7 @@ var appFileMin = 'deeplegal.{version}.{random}.min.{ext}'
 
 gulp.task('stylesDev', function () {
     var destCss = destPath + 'css/';
-    return gulp.src(['./styles/*.less', './modules/**/*.less'])
+    return gulp.src(['./styles/*.less', './modules/**/*.less', './plugins/**/*.less'])
     	.pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(less({
@@ -49,7 +49,7 @@ gulp.task('stylesDev', function () {
 
 gulp.task('styles', function(){
     var destCss = destPath + 'css/';
-    return gulp.src(['./styles/*.less', './modules/**/*.less'])
+    return gulp.src(['./styles/*.less', './modules/**/*.less', './plugins/**/*.less'])
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(less({
@@ -79,7 +79,7 @@ gulp.task('styles', function(){
  */
 
 gulp.task('scriptsDev', function () {
-    var tagSrc = ['./modules/**/*.tag'],
+    var tagSrc = ['./modules/**/*.tag', './plugins/**/*.tag'],
         jsSrc = './js/*.js',
         destJs = destPath + 'js/';
 
@@ -98,7 +98,7 @@ gulp.task('scriptsDev', function () {
  */
 
 gulp.task('scripts', function () {
-    var tagSrc = ['./modules/**/*.tag'],
+    var tagSrc = ['./modules/**/*.tag', './plugins/**/*.tag'],
         jsSrc = './django-templates/base/base.html',
         destJs = destPath + 'js/';
 
@@ -129,7 +129,9 @@ gulp.task('djangoTemplatesDev', function() {
     return gulp.src(src)
         .pipe(replace(/href="\/frontend\/styles/g, 'href="/static/css'))
         .pipe(replace(/href="\/frontend\/modules/g, 'href="/static/css'))
+        .pipe(replace(/href="\/frontend\/plugins/g, 'href="/static/css'))
         .pipe(replace(/src="\/frontend\/modules/g, 'src="/static/js'))
+        .pipe(replace(/src="\/frontend\/plugins/g, 'src="/static/js'))
         .pipe(replace(/href="\/frontend/g, 'href="/static'))
         .pipe(replace(/src="\/frontend/g, 'src="/static'))
         .pipe(gulp.dest(destTemplatePath));
@@ -152,7 +154,9 @@ gulp.task('djangoTemplates', function() {
         //replace modules url
         .pipe(replace(/href="\/frontend\/styles/g, 'href="/static/css'))
         .pipe(replace(/href="\/frontend\/modules/g, 'href="/static/css')) 
+        .pipe(replace(/href="\/frontend\/plugins/g, 'href="/static/css')) 
         .pipe(replace(/src="\/frontend\/modules/g, 'src="/static/js'))
+        .pipe(replace(/src="\/frontend\/plugins/g, 'src="/static/js'))
         //replace other elements - lib
         .pipe(replace(/href="\/frontend/g, 'href="/static'))
         .pipe(replace(/src="\/frontend/g, 'src="/static'))
@@ -213,11 +217,11 @@ gulp.task('images', function () {
 var watchOpts = process.env.hasOwnProperty('WATCH_POLL') ? {usePolling: true, mode: 'poll'} : {};
 
 gulp.task('stylesDev:watch', function() {
-	gulp.watch(['./styles/*.less', './modules/**/*.less'], watchOpts, gulp.parallel('stylesDev'));
+	gulp.watch(['./styles/*.less', './modules/**/*.less', './plugins/**/*.less'], watchOpts, gulp.parallel('stylesDev'));
 })
 
 gulp.task('scriptsDev:watch', function() {
-    var tagSrc = ['./modules/**/*.tag'],
+    var tagSrc = ['./modules/**/*.tag', './plugins/**/*.tag'],
         jsSrc = './js/*.js';
 
     gulp.watch([tagSrc, jsSrc], watchOpts, gulp.parallel('scriptsDev'));

@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+
+{% block section_css %}
+<link rel="stylesheet" type="text/css" href="/frontend/lib/minton/plugins/multiselect/css/multi-select.css">
+<link rel="stylesheet" type="text/css" href="/frontend/modules/teams/teams.css">
+<link rel="stylesheet" type="text/css" href="/frontend/plugins/optionspanel/optionspanel.css">
+<link rel="stylesheet" type="text/css" href="/frontend/plugins/multiselect/multiselect.css">
+{% endblock section_css %}
+
+{% block app_content %}
+<section id="teams" class="container-fluid section-container">
+
+    <teams></teams>
+    
+</section>
+{% endblock app_content %}
+
+{% block section_scripts %}
+<script type="text/javascript" src="/frontend/lib/minton/plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
+<script type="text/javascript" src="/frontend/lib/minton/plugins/multiselect/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="/frontend/modules/teams/teams.js"></script>
+<script type="text/javascript" src="/frontend/plugins/optionspanel/optionspanel.js"></script>
+<script type="text/javascript" src="/frontend/plugins/multiselect/multiselect.js"></script>
+
+{% endblock section_scripts %}

@@ -7,5 +7,6 @@ var WS = {
 	users: '/r/users/',
 	ruts: '/r/ruts/',
 	menus: '/r/menus/',
-	menusitems: '/r/menusitems/'
+	menusitems: '/r/menusitems/',
+	teams: '/r/teams/'
 }
