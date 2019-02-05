@@ -43,6 +43,19 @@ class MenusView(RestModelView):
       obj["items"].append({"id": i.id, "name": i.title})
     return obj
 
+  def updateFields(self, data, params):
+    try:
+      toggle = params["toggle"]
+      item = MenusItems.objects.get(id=params["itemId"])
+      if toggle == "true":
+        data.items.add(item)
+      else:
+        data.items.remove(item)
+      return True
+    except:
+      pass
+    return False
+
 class MenusItemsView(RestModelView):
   obj = MenusItems.objects
   searchField = "title"
