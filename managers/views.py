@@ -1,6 +1,13 @@
 from django.conf import settings
+from django.shortcuts import render
 from auth.models import *
 from managers.restmodel import RestModelView
+from lib.deep_helpers import *
+from django.http import HttpResponse, JsonResponse
+
+
+def default(request):
+  return renderTemplate(request, "deepdrive/deepdrive.html")
 
 class UsersView(RestModelView):
   hideFields = [ "password", "session_id" ]
@@ -37,6 +44,19 @@ class MenusView(RestModelView):
     for i in queryset.all():
       obj["items"].append({"id": i.id, "name": i.title})
     return obj
+
+  def updateFields(self, data, params):
+    try:
+      toggle = params["toggle"]
+      item = MenusItems.objects.get(id=params["itemId"])
+      if toggle == "true":
+        data.items.add(item)
+      else:
+        data.items.remove(item)
+      return True
+    except:
+      pass
+    return False
 
 class MenusItemsView(RestModelView):
   obj = MenusItems.objects

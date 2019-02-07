@@ -23,6 +23,9 @@ class SecurityMgr():
     self.request = request
     self.session = request.session
 
+    self.app_name = None
+    self.url_name = None
+
     if self.session.get("logged_in", 0):
       try:
         cUser = Users.objects.get(id=self.session.get("uid"))
@@ -30,6 +33,12 @@ class SecurityMgr():
           self.setLogin(cUser)
       except:
         pass
+
+  def dict(self):
+    r = {
+      
+    }
+    return r
 
   def setLogin(self, cUser):
     if cUser:
@@ -44,8 +53,11 @@ class SecurityMgr():
       self.cCompany = cUser.company
       self.cMenu = cUser.menu
       self.bLogged = True
-      self.bAdmin = cUser.role_id == 1000
+      self.bAdmin = cUser.role_id >= 1000
       self.bSuper = cUser.role_id == 99999
+
+      self.app_name = self.request.resolver_match.app_name
+      self.url_name = self.request.resolver_match.url_name
 
     return self.bLogged
 
@@ -87,3 +99,8 @@ class SecurityMgr():
     return bcrypt.encrypt(password, rounds=11)
 
 
+  def getModules(self):
+    return self.cMenu.items.filter(menutype__lte=2)
+
+  def getConfigMenus(self):
+    return MenusItems.objects.filter(level__lte=self.cUser.role_id, menutype__gte=10)

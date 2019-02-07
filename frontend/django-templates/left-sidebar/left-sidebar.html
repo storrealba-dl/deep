@@ -13,7 +13,7 @@
             </div>
 
             <ul class="nav-items-container">
-                {% for item in request.security.getModules %}
+                {% for item in request.cSecMgr.getModules %}
                     {% if item.menutype == 0 %}
                         <li class="{% if app == item.label %}active{% endif %}">
                             <a href="{{ item.url }}" class="waves-effect waves-primary">
@@ -50,7 +50,7 @@
                 {% endfor %}
 
                 <!-- Menu config -->
-                {% if request.security.bAdmin %}
+                {% if request.cSecMgr.bAdmin %}
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect waves-primary">
                         <img src="/static/images/left-sidebar/settings-icon.svg">
@@ -58,7 +58,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled">
-                        {% for item in request.security.getConfigMenus %}
+                        {% for item in request.cSecMgr.getConfigMenus %}
                             {% if item.menutype == 10 %}
                                 <li>
                                     <a href="{{ item.url }}">{{ item.title }}</a>

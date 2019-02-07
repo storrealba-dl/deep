@@ -145,9 +145,12 @@ class RestModelView(View):
     except:
       data = None
     if data:
-      # trigger user delete
-      #data.delete()
-      return self.jsonResponse(jsonObj={"result": self.MSG_DELETED, "status": 200}, status=200)
+      try:
+        # trigger delete cascade
+        data.delete()
+        return self.jsonResponse(jsonObj={"result": self.MSG_DELETED, "status": 200}, status=200)
+      except:
+        return self.jsonResponse(jsonObj={"result": self.MSG_NOT_DELETED, "status": 500}, status=200)
     return self.jsonResponse(jsonObj={"result": self.MSG_NOT_FOUND, "status": 404}, status=200)
 
   def update(self, request, *args, **kwargs):
