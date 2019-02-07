@@ -53,7 +53,7 @@ class SecurityMgr():
       self.cCompany = cUser.company
       self.cMenu = cUser.menu
       self.bLogged = True
-      self.bAdmin = cUser.role_id == 1000
+      self.bAdmin = cUser.role_id >= 1000
       self.bSuper = cUser.role_id == 99999
 
       self.app_name = self.request.resolver_match.app_name
@@ -99,3 +99,8 @@ class SecurityMgr():
     return bcrypt.encrypt(password, rounds=11)
 
 
+  def getModules(self):
+    return self.cMenu.items.filter(menutype__lte=2)
+
+  def getConfigMenus(self):
+    return MenusItems.objects.filter(level__lte=self.cUser.role_id, menutype__gte=10)
