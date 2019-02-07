@@ -15,8 +15,10 @@
 		
 
 		opts: {
+			translationEnabled: false,
 			path: '/static/',
 			modules: [
+				'cases',
 				'companies',
 				'left-sidebar',
 				'listadmin',
@@ -35,15 +37,19 @@
 			if(deeplegal.NotificationService) {
 				deeplegal.NotificationService.init();
 			}
+
+			if(this.translationEnabled) {
+				// i18n is loaded
+		        $.when(i18nInitialized).then(function() {
+		            // Mount all riot templates
+		            window.riot.mount('*');
+		        });
+			} else {
+				window.riot.mount('*');
+			}
 			
 			//riot.observable(this);
 			//riot.mount('*')
-
-			// i18n is loaded
-	        $.when(i18nInitialized).then(function() {
-	            // Mount all riot templates
-	            window.riot.mount('*');
-	        });
 		}
 	};
 
