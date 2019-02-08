@@ -1,0 +1,115 @@
+@import '../../styles/variables';
+
+.casestable-wrapper {
+	.casestable {
+		width: 100%;
+	    max-width: 100%;
+	    background-color: transparent;
+	    clear: both;
+	    margin-top: 6px !important;
+	    margin-bottom: 6px !important;
+	    max-width: none !important;
+	    border-collapse: separate !important;
+	    border-spacing: 0 1rem !important;
+		
+		thead {
+			
+			tr {
+			
+				th {
+			    	-webkit-box-sizing: content-box;
+	    			box-sizing: content-box;
+			    }
+			}
+		}
+
+		tbody {
+			
+			tr {
+				background-color: @white;
+			    box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.02);
+			    border: 1px solid !important;
+			    border-style: hidden;
+			    margin: 24px;
+			    cursor: pointer;
+
+			    td:first-child {
+			    	border-radius: 6px 0 0 6px;
+			    }
+
+				td:last-child {
+			    	border-radius: 0 6px 6px 0 ;
+			    }
+
+			    td{
+			    	padding-top: 24px;
+	    			padding-bottom: 24px;
+	    			-webkit-box-sizing: content-box;
+	    			box-sizing: content-box;
+
+	    			.default {
+	    				font-size: 16px;
+					    color: @gray-1600;
+					    margin-bottom: 0 !important;
+	    			}
+
+	    			.light {
+	    				color: @gray-800;
+	    			}
+
+	    			.md {
+	    				font-size: 14px;
+	    			}
+
+	    			.sm {
+	    				font-size: 11px;
+	    			}
+
+	    			.ellipsis {
+	    				overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+	    			}
+			    }
+			}
+
+			tr.row-options {
+				background: none;
+			    border: none !important;
+			    box-shadow: none;
+
+			    td {
+			    	padding: 0;
+			    }
+
+			    div.row-options {
+				    background-color: @blue-100;
+				    border-radius: 6px;
+				    padding: 10px;
+				    display: flex;
+				    flex-wrap: nowrap;
+				    justify-content: space-between;
+				    width: 490px;
+				    margin-top: -15px;
+				    align-items: flex-start;
+				    float: right;
+
+				    .btn {
+				    	font-size: 12px;
+    					color: @blue-100;
+				    }
+
+				    .btn-danger {
+					    font-size: 12px;
+					    color: @white;
+				    }
+				}
+			}
+		}
+	}
+
+	.row-options-container {
+		display: none;
+	}
+}
+	
