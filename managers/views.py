@@ -3,12 +3,18 @@ from django.shortcuts import render
 from auth.models import *
 from managers.restmodel import RestModelView
 from lib.deep_helpers import *
+from lib.decorators import *
 from django.http import HttpResponse, JsonResponse
 
+from django.utils.decorators import method_decorator
 
 def default(request):
   return renderTemplate(request, "deepdrive/deepdrive.html")
 
+def cases(request):
+  return JsonResponse(settings.DL_CONFIG.DL_CASES["forums"], safe=False)
+
+#@method_decorator(admin_required, name="dispatch")
 class UsersView(RestModelView):
   hideFields = [ "password", "session_id" ]
   forbidenFields = [ "password", "session_id", "id" ]
