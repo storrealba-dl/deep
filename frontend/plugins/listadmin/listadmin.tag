@@ -111,7 +111,13 @@
 				filter: false,
 				autoWidth: false,
 				lengthChange: false,
-				fixedColumns: true
+				fixedColumns: true,
+				language: {
+					paginate: {
+						next: ">",
+						previous: '<'
+					}
+				}
 			}
 		};
 
@@ -201,6 +207,10 @@
 
 			//form validation
 			if(this.settings.formValidation) {
+				$.validator.addMethod('chileanPhone', function (value, element) {
+				    return this.optional(element) || /^(\+56)(((-| |\.)\d{1}(-| |\.)\d{4}(-| |\.)\d{4})|\d{9})$/.test(value);
+				}, 'Por favor ingrese un número válido. Ej: +56 1 2345 6789');
+
 				this.$formEdit = $(this.refs.formEdit).validate(this.settings.formValidation);	
 			}
 

@@ -187,7 +187,7 @@
                     },
                     phone: {
                         required: true,
-                        digits: true
+                        chileanPhone: true
                     },
                     address: {
                         required: true,
