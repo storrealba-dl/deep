@@ -35,3 +35,7 @@ DL_DB = {
   'HOST': '10.142.0.3',
   'PORT': '5432',
 }
+
+DL_CASES = {
+  "forums": [ "laboral", "civil" ]
+}

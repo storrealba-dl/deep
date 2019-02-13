@@ -36,3 +36,6 @@ DL_DB = {
   'PORT': '5432',
 }
 
+DL_CASES = {
+  "forums": [ "laboral", "civil" ]
+}
