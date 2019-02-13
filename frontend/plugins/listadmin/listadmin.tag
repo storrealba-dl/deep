@@ -116,7 +116,8 @@
 					paginate: {
 						next: ">",
 						previous: '<'
-					}
+					},
+					search: 'Buscar'
 				}
 			}
 		};

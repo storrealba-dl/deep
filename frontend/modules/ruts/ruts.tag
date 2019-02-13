@@ -37,13 +37,6 @@
             modalsTitle: 'RUT',
             datatable: {
                 searching: false,
-                language:{
-                    paginate:{
-                        next:"\u232a",
-                        previous:"\u2329"
-                    },
-                    search: "Buscar"
-                },
                 columns: [
                 {
                     title: 'RUT',
@@ -173,13 +166,9 @@
         this.fetchSelectsData = function() {
             $.ajax({
                 method: 'GET',
-                url: WS.ruts, //XXX UPDATE
-                data: {
-                    companies: true,
-                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                }
+                url: WS.companies
             }).done(function(r) {
-                //self.completeSelects(r);
+                self.completeSelects(r.data);
             }).fail(function(r) {
                 deeplegal.Util.showMessage('Hubo un error', 'alert-danger')
             })
@@ -191,17 +180,17 @@
         
             loopOptions([{
                     ref: 'company_id',
-                    data: options.companies
+                    data: options
                 }]);
 
             function loopOptions(array) {
                 for(var j = 0; j < array.length; j++) {
-                    var option = array[j].data;
+                    var data = array[j].data;
                     var select = listadmin.refs[array[j].ref];
-                    for (var i = 0; i < option.length; i++) {
-                        var opt = option[i];
+                    for (var i = 0; i < data.length; i++) {
+                        var opt = data[i];
                         var option = document.createElement('option');
-                        option.value(opt.id);
+                        option.value = opt.id;
                         option.innerHTML = opt.desc || opt.name;
                         select.appendChild(option);
                     }

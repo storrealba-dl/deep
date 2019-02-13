@@ -84,5 +84,29 @@
     <!-- Resources -->
     <link rel="stylesheet" type="text/css" href="/frontend/modules/left-sidebar/left-sidebar.css">
     <!-- <script type="text/javascript" src="/static/templates/left-sidebar/left-sidebar.js"></script> -->
+
+    <script type="text/javascript">
+        var leftSidebar = {
+            $leftSidebarEl: null,
+
+            init: function() {
+                this.$leftSidebarEl = $('#left-sidebar');
+
+                this.$leftSidebarEl.hover(function() {
+                    $(this).addClass('expanded')
+                    $(this).removeClass('collapsed')
+                }, function() {
+                    $(this).addClass('collapsed')
+                    $(this).removeClass('expanded')
+                })
+            }
+        }
+        {
+            $(document).ready(function() {
+                leftSidebar.init();
+            })
+        }
+
+    </script>
 </div>
 
