@@ -7,52 +7,52 @@
 		this.tableConfig = {
 			category: 'laboral',
 			url: WS.cases + 'laboral/',
-			scroll: WS.cases + 'laboral/scroll/',
+			scrollUrl: WS.cases + 'laboral/scroll/',
 			structure: [{
 				header: 'Nombre Causa',
-				//content: ['name', 'date'],
+				sortBy: 'date', 
 				html: function(row, index, data) {
 					return'<p class="default dark ellipsis" style="width: 180px ">' + row.name + '</p><p class="default light sm">' + row.date + '</p>';
 				}
 			},
 			{
 				header: 'RIT',
-				//content: ['rit']
+				sortBy: 'rit',
 				html: function(row, index, data) {
 					return'<p class="default light md">' + row.rit + '</p>';
 				}
 			},
 			{
 				header: 'RUT',
-				//content: ['ruc']
+				sortBy: 'rut',
 				html: function(row, index, data) {
 					return'<p class="default light md">' + row.rut + '</p>';
 				}
 			},
 			{
 				header: 'Procedimiento',
-				//content: ['monitorio','demanda']
+				sortBy: 'monitorio',
 				html: function(row, index, data) {
 					return'<p class="default dark">' + row.monitorio + '</p><p class="default light sm">' + row.demanda + '</p>';
 				}
 			},
 			{
 				header: 'Inicio',
-				//content: ['status', 'tramite']
+				sortBy: 'status', 
 				html: function(row, index, data) {
 					return'<p class="default dark">' + row.status + '</p><p class="default light sm">' + row.tramite + '</p>';
 				}
 			},
 			{
 				header: 'Etapa',
-				//content: ['etapa']
+				sortBy: 'etapa',
 				html: function(row, index, data) {
 					return'<p class="default dark">' + row.etapa + '</p>';
 				}
 			},
 			{
 				header: 'Tribunal',
-				//content: ['tribunal']
+				sortBy: 'juzgado',
 				html: function(row, index, data) {
 					return'<p class="default light md">' + row.juzgado + '</p>';
 				}
