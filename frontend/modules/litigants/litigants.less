@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+
+.litigantes-container{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+
+	.item {
+		border: solid 1px @gray-150;
+	    border-radius: 6px;
+	    display: flex;
+	    align-items: center;
+	    padding-top: 20px;
+	    padding-bottom: 20px;
+	    margin-top: 20px;
+	    width: 48.5%;
+	}
+
+	.item .item-title {
+		background-color: @blue-100;
+	    border-radius: 8px;
+	    width: 65px;
+	    height: 65px;
+	    text-align: center;
+	    color: white;
+	    display: table-cell;
+	    vertical-align: middle;
+	    padding-top: 23px;
+	    padding-bottom: 26px;
+	    font-size: 12px;
+	    font-weight: normal;
+	    letter-spacing: -0.3px;
+	    -webkit-transform: translateX(-7px);
+	    transform: translateX(-7px); 
+	    cursor: pointer;
+	}
+
+	.item .item-content .number {
+		color: @blue-100;
+		margin-bottom: 0;
+	    font-size: 14px;
+	    font-weight: 600;
+	}
+
+	.item .item-content .name {
+		font-size: 16px;
+	    color: @gray-1600;
+	    margin-bottom: 0
+	}
+
+	.item .item-content .category {
+		margin-bottom: 0;
+	    color: @gray-800;
+	    font-size: 14px
+	}
+}

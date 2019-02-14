@@ -19,7 +19,7 @@
 			<div class="row-options" ref="caseOptions">
 				<a class="btn btn-light" href="/cases/{category}/{selectedItem.id}" ref="detailsBtn"> Detalles </a>
 				<a class="btn btn-light" href="/cases/{category}/{selectedItem.id}/?notifications"> Notificaciones </a>
-				<button onclick="{}" data-toggle="modal" data-target="#modal-litigantes" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" data-info="litigantes" class="btn btn-light"> Litigantes </button>
+				<button onclick="{showLitigants}" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" data-info="litigants" class="btn btn-light"> Litigantes </button>
 				<button onclick="{}" data-toggle="modal" data-target="#modal-historia" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" data-info="historia" class="btn btn-light"> Historia </button>
 				<button onclick="{}" class="btn btn-light text-left" data-case-id="{selectedItem.id}" data-category="{opts.config.category}"><i class="mdi mdi-file-document"></i> Doc </button>
 				<button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" onclick="{}"> Eliminar </button>
@@ -28,7 +28,40 @@
 			
 	</div>
 
+	<modal ref="litigantsModal" id="litigants" size="lg" title="Litigantes" on-close="{clearLitigants}">
+		<yield to="content">
+			<litigants ref="litigants" data={litigants}>
+			</litigants>
+		</yield>
+	</modal>
+
 	<script>
+		var dummy = [{
+			id: 123,
+			name: 'ASD',
+			date: '2010-1-1',
+			rit: 123123,
+			rut: 130340,
+			monitorio: 'Monitorio',
+			demanda: 'Demanda',
+			status: 'hold',
+			tramite: 'largo',
+			etapa: 'final',
+			juzgado: '1° Juzgado de ñuñoa'
+		},
+		{
+			id: 123,
+			name: 'ASD',
+			date: '2010-1-1',
+			rit: 123123,
+			rut: 130340,
+			monitorio: 'Monitorio',
+			demanda: 'Demanda',
+			status: 'hold',
+			tramite: 'largo',
+			etapa: 'final',
+			juzgado: '1° Juzgado de ñuñoa'
+		}]
 		/**
 		 *
 		 * casestable
@@ -64,10 +97,11 @@
 		this.config = this.opts.config;
 		this.category = this.opts.config.category;
 		this.selectedItem = null;
-		this.data = [];
+		this.data = dummy//[];
 		this.headers = null;
 		this.isSearching = false;
 		this.token = null; //token for scroll
+		this.litigants = null;
 
 		this.update();
 
@@ -112,7 +146,8 @@
 
 		/**
 		 * render
-		 * add content to columns with the style given in @config.structure.html
+		 * add content to columns with the style given in 
+		 * @config.structure.html
 		 */
 
 		this.render = function(html) {
@@ -121,7 +156,8 @@
 
 		/**
 		 * showOptions
-		 * Show options for each row
+		 * Show menu options for each row (litigantes, historia, 
+		 * notificaciones, etc)
 		 */
 		this.showOptions = function() {
 			var $currentRow = $(this.root);
@@ -146,6 +182,11 @@
 			}
 		}
 
+		/**
+		 * sort
+		 * sort the table asc or desc based on the table header clicked
+		 */
+
 		this.sort = function() {
 			var key = this.root.dataset.sort;
 			var order = this.root.dataset.order;
@@ -154,6 +195,71 @@
 			updateIconOrder(this.root);
 
 			this.root.dataset.order = this.root.dataset.order == 'asc' ? 'desc' : 'asc';
+		}
+
+		/**
+		 * showLitigants
+		 * loads the litigants and shows them in a modal window 
+		 * uses modal and litigants component
+		 */
+
+		this.showLitigants = function() {
+			$.ajax({
+                method: 'GET',
+                url: WS, // XXX TODO UPDATE
+                beforeSend: function() {
+                    deeplegal.Util.showLoading();
+                }
+            }).done(function(r) {
+            	deeplegal.Util.hideMessage();
+            	
+                self.refs.litigantsModal.show();
+                self.update();
+            }).fail(function(r) {
+                var error = 'Hubo un error.'
+                deeplegal.Util.showMessage(error, 'alert-danger');
+
+                //TODO XXX UPDATE
+            	//self.litigants = r.data; 
+            	self.litigants = [{
+            		participante: 'CTA',
+            		rut: '123123',
+            		nombre: 'Pedro Perez',
+            		tipo: 'tipo',
+            		cuaderno: 'sadasd',
+            		part_desc:  'Cuenta acasd'
+            	},
+            	{
+            		participante: 'CTA',
+            		rut: '123123',
+            		nombre: 'Pedro Perez',
+            		tipo: 'tipo',
+            		cuaderno: 'sadasd',
+            		part_desc:  'Cuenta acasd'
+            	},
+            	{
+            		participante: 'CTA',
+            		rut: '123123',
+            		nombre: 'Pedro Perez',
+            		tipo: 'tipo',
+            		cuaderno: 'sadasd',
+            		part_desc:  'Cuenta acasd'
+            	}]
+
+            	self.refs.litigantsModal.show();
+            	self.update();
+            })
+		}
+
+		/** 
+		 * clearLitigants
+		 * Cleans the variable where litigants are stored
+		 * that is used for litigants component to show them
+		 * This function is passed as a cb to the modal
+		 */
+
+		this.clearLitigants = function() {
+			this.litigants = null;
 		}
 
 		this.on('mount', function(argument) {
