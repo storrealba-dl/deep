@@ -36,6 +36,7 @@
         
         <!-- Begin page -->
         <div id="wrapper">
+        {% if request.cSecMgr.bLogged %}
 
             <!-- top-navbar -->
             {% include "top-navbar/top-navbar.html" %}
@@ -49,6 +50,7 @@
             {% include "right-sidebar/right-sidebar.html" %}
             <!-- end right-sidebar -->
 
+        {% endif %}
             <div class="main-view-container">
                 {% block app_content %}
                     <div>Base content</div>
