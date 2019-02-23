@@ -134,19 +134,11 @@
          */
 
         this.loadTeams = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.teams,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
-                deeplegal.Util.hideMessage();
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.get(WS.teams).done(function(r) {
+                deeplegal.Util.hideLoading();
                 self.teams = r.data;
                 self.update();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -156,20 +148,12 @@
          */
 
         this.loadUsers = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.users,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
-                deeplegal.Util.hideMessage();
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.get(WS.users).done(function(r) {
+                deeplegal.Util.hideLoading();
                 self.users = r.data;
                 self.update();
                 self.refs.usersSelect.refresh();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -181,17 +165,10 @@
 
         this.createTeam = function(e) {
             deeplegal.Util.preventDefault(e);
-            $.ajax({
-                method: 'POST',
-                url: WS.teams,
-                data: {
-                    name: self.refs.teamName.value,
-                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                },
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+            
+            var data = {name: self.refs.teamName.value}
+            deeplegal.Util.hideLoading();
+            deeplegal.Rest.post(WS.teams, data).done(function(r) {
                 if(r.status == 200) {
                     self.loadTeams();
                     $(self.refs.modalAdd).modal('hide');
@@ -199,9 +176,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -232,17 +206,10 @@
 
         this.save = function(switcheryTag) {
             var data = {
-                csrfmiddlewaretoken: deeplegal.Util.getCsrf(),
                 members: this.refs.usersSelect.getSelectedItems()
             };
-            $.ajax({
-                method: 'PUT',
-                url: WS.teams + this.currentItem + '/',
-                data: data,
-                beforeSend: function() {
-                    //deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+
+            deeplegal.Rest.put(WS.teams, this.currentItem, data).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
@@ -251,9 +218,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -263,17 +227,8 @@
          */
 
         this.delete = function() {
-             var data = {
-                csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-            }
-            $.ajax({
-                method: 'DELETE',
-                url: WS.teams + this.currentItem + '/',
-                data: data,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.delete(WS.teams, this.currentItem).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
@@ -283,9 +238,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 

@@ -146,6 +146,10 @@ deeplegal.Util = {
 	showLoading: function() {
 		var loading = deeplegal.HTMLSnippets.getSnippet('loading');
 		deeplegal.Util.showMessage(loading, 'alert-info');
+	},
+
+	hideLoading: function() {
+		deeplegal.Util.hideMessage();
 	}
 }
 

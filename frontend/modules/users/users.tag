@@ -236,23 +236,20 @@
          */
 
         this.save = function(userId) {
-            var form = this.tags.listadmin.refs.formEdit,
-                userId = userId || this.tags.listadmin.itemToSave,
-                url = userId ? WS.users + userId + '/'  : WS.users,
-                method = userId ? 'PUT' : 'POST',
-                data = deeplegal.Util.serialize(form);
+            var form = this.tags.listadmin.refs.formEdit;
+            var userId = userId || this.tags.listadmin.itemToSave;
+            var data = deeplegal.Util.serialize(form);
                 
-                data.csrfmiddlewaretoken = deeplegal.Util.getCsrf();
+            //data.csrfmiddlewaretoken = deeplegal.Util.getCsrf();
 
-            $.ajax({
-                method: method,
-                url: url,
-                data : data,
-                beforeSend: function() {
-                    var loading = deeplegal.HTMLSnippets.getSnippet('loading');
-                    deeplegal.Util.showMessage(loading, 'alert-info');
-                }
-            }).done(function(r) {
+            deeplegal.Util.showLoading();
+            var config = {
+                processData : false,
+                contentType : false,
+            }
+            var call = userId ? deeplegal.Rest.put(WS.users, userId, data, config) : deeplegal.Rest.post(WS.users, data)
+
+            call.done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
@@ -262,9 +259,6 @@
                 } else {
                     deeplegal.Util.showMessage(r.result, 'alert-danger');    
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -275,44 +269,28 @@
          */
 
         this.delete = function(userId) {
-            $.ajax({
-                method: 'DELETE',
-                url: WS.users + userId,
-                data : {
-                   csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                },
-                beforeSend: function() {
-                    var loading = deeplegal.HTMLSnippets.getSnippet('loading');
-                    deeplegal.Util.showMessage(loading, 'alert-info');
-                }
-            }).done(function(r) {
+
+            deeplegal.Util.showLoading();
+
+            deeplegal.Rest.delete(WS.users, userId).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
                     self.tags.listadmin.trigger('itemDeleted');
                 }
-            }).fail(function(r) {
-                deeplegal.Companies.onFail();
             })
         }
 
         this.fetchSelectsData = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.users, //XXX UPDATE
-                data: {
-                    views: true,
-                    menus: true,
-                    roles: true,
-                    companies: true,
-                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
+
+            // XXX UPDATE ws
+            deeplegal.Rest.get(WS.users, userId).done(function(r) {
+                if(r.status == 200) {
+                    //self.completeSelects(r);
                 }
-            }).done(function(r) {
-                //self.completeSelects(r);
-            }).fail(function(r) {
-                deeplegal.Util.showMessage('Hubo un error', 'alert-danger')
             })
+
         }
 
         this.completeSelects = function(options) {

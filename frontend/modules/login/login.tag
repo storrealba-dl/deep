@@ -72,7 +72,7 @@
 
 			$.ajax({
 				method: 'POST',
-				url: '/r/login/', 
+				url: WS.login, 
 				data: data,
 				beforeSend: function() {
 					var loadingTemplate = deeplegal.HTMLSnippets.getSnippet('loading');

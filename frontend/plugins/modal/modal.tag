@@ -1,10 +1,10 @@
 <modal>
-	<div id="{opts.id}" class="modal fade" tabindex="-1" ref="modal" role="dialog" aria-labelledby="{opts.id}.title" aria-hidden="true" style="display: none;">
-	    <div class="modal-dialog modal-{opts.size}">
+	<div id="{id}" class="modal fade" tabindex="-1" ref="modal" role="dialog" aria-labelledby="{id}.title" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog modal-{size}">
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	                <h4 class="modal-title">{opts.title}</h4>
+	                <h4 class="modal-title">{title}</h4>
 	            </div>
 	            <div class="modal-body">
 
@@ -33,8 +33,13 @@
 		 *
 		 */
 
-		 var self = this;
-		 this.on('mount', function() {
+		var self = this;
+		this.id = this.opts.id;
+		this.size = this.opts.id;
+		this.title = this.opts.title;
+
+		var self = this;
+		this.on('mount', function() {
 		 	this.modal = this.refs.modal;	
 
 		 	$(this.modal).on('hidden.bs.modal', function() {
@@ -48,16 +53,22 @@
 			 		self.opts.onOpen();	
 			 	}
 			 })
-		 })
+		})
 		 
-		 this.show = function() {
+		this.show = function() {
 		 	$(this.modal).modal('show');
-		 }
+		}
 
-		 this.hide = function() {
+		this.hide = function() {
 		 	$(this.modal).modal('hide');
-		 }
+		}
 
-		
+		// when opts are modified the update method won't see the changes
+		this.on('forceUpdate', function() {
+			self.id = this.opts.id;
+			self.size = this.opts.size;
+			self.title = this.opts.title;
+		})
+	
 	</script>
 </modal>

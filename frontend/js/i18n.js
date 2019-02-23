@@ -118,6 +118,6 @@
         }
     };
 
-    deeplegal.i18n.init();
+    //deeplegal.i18n.init();
 
 })(window);

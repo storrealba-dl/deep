@@ -28,18 +28,17 @@
 			
 	</div>
 
-	<modal ref="litigantsModal" id="litigants" size="lg" title="Litigantes" on-close="{clearLitigants}">
+	<modal ref="infoModal" id="" size="" title="">
 		<yield to="content">
-			<litigants ref="litigants" data={litigants}>
-			</litigants>
+			<div id="infoModalContent"></div>
 		</yield>
 	</modal>
 
 	<script>
 		var dummy = [{
 			id: 123,
-			name: 'ASD',
-			date: '2010-1-1',
+			name: 'ASD asd asasd',
+			date: '2012-1-1',
 			rit: 123123,
 			rut: 130340,
 			monitorio: 'Monitorio',
@@ -51,7 +50,7 @@
 		},
 		{
 			id: 123,
-			name: 'ASD',
+			name: '12qwasd asd ',
 			date: '2010-1-1',
 			rit: 123123,
 			rut: 130340,
@@ -100,47 +99,36 @@
 		this.data = dummy//[];
 		this.headers = null;
 		this.isSearching = false;
-		this.token = null; //token for scroll
-		this.litigants = null;
+		this.token = null; //token for scroll}
+		this.infoModal = null; //loaded on mount
 
 		this.update();
 
 		/**
          * loadData
          * Load data to be displayed in the table
+         * @param {string} scroll	Token to get remaining scroll data
+         * @param {Object} sorting 	Config to sort the table 	
          */
 
-		this.loadData = function(scroll) {
+		this.loadData = function(scroll, sorting) {
 			scroll = scroll || false;
-			var ajax;
-			if(scroll) {
-				ajax = {
-					method: 'POST',
-					url: self.config.scrollUrl,
-					data: {
-						scroll: self.token,
-						csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-					}
-				}
+			sorting = sorting || {};
+
+			var id = false;
+			var call;
+			deeplegal.Util.showLoading();
+			if(!scroll) {
+				call = deeplegal.Rest.get(self.config.url, id, sorting) 
 			} else {
-				ajax = {
-					method: 'GET',
-					url: self.config.url
-				}
+				call = deeplegal.Rest.post(self.config.scrollUrl, {scroll: self.token, sorting: sorting}); 	
 			}
 
-			ajax.beforeSend = function() {
-                deeplegal.Util.showLoading();
-            }
-			
-			$.ajax(ajax).done(function(r) {
-                deeplegal.Util.hideMessage();
+			call.done(function(r) {
+                deeplegal.Util.hideLoading();
                 self.data = self.data.concat(r.data);
                 self.token = r.token;
                 self.update();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
 		}
 
@@ -188,10 +176,12 @@
 		 */
 
 		this.sort = function() {
-			var key = this.root.dataset.sort;
-			var order = this.root.dataset.order;
-			self.data.sort(dynamicSort(key, order))
-			self.update();
+			var sorting = {
+				key: this.root.dataset.sort,
+				order: this.root.dataset.order
+			}
+			self.data = [];
+			self.loadData(false, sorting);
 			updateIconOrder(this.root);
 
 			this.root.dataset.order = this.root.dataset.order == 'asc' ? 'desc' : 'asc';
@@ -213,84 +203,47 @@
             }).done(function(r) {
             	deeplegal.Util.hideMessage();
             	
-                self.refs.litigantsModal.show();
-                self.update();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
+                //setup modal
+            	self.infoModal.opts.id = 'litigants';
+            	self.infoModal.opts.size = 'lg';
+            	self.infoModal.opts.title = 'Litigantes ' + self.selectedItem.name;
 
-                //TODO XXX UPDATE
-            	//self.litigants = r.data; 
-            	self.litigants = [{
-            		participante: 'CTA',
-            		rut: '123123',
-            		nombre: 'Pedro Perez',
-            		tipo: 'tipo',
-            		cuaderno: 'sadasd',
-            		part_desc:  'Cuenta acasd'
-            	},
-            	{
-            		participante: 'CTA',
-            		rut: '123123',
-            		nombre: 'Pedro Perez',
-            		tipo: 'tipo',
-            		cuaderno: 'sadasd',
-            		part_desc:  'Cuenta acasd'
-            	},
-            	{
-            		participante: 'CTA',
-            		rut: '123123',
-            		nombre: 'Pedro Perez',
-            		tipo: 'tipo',
-            		cuaderno: 'sadasd',
-            		part_desc:  'Cuenta acasd'
-            	}]
+            	riot.mount('#infoModalContent', 'litigants', {data: r})
 
-            	self.refs.litigantsModal.show();
+            	self.infoModal.trigger('forceUpdate');
             	self.update();
+            	self.infoModal.show();
+
             })
 		}
 
-		/** 
-		 * clearLitigants
-		 * Cleans the variable where litigants are stored
-		 * that is used for litigants component to show them
-		 * This function is passed as a cb to the modal
+		/**
+		 * showHistory
+		 * loads case history and shows it in a modal window
+		 * uses modal and history component
 		 */
 
-		this.clearLitigants = function() {
-			this.litigants = null;
+		this.showHistory = function() {
+
 		}
 
 		this.on('mount', function(argument) {
+			this.infoModal = this.refs.infoModal;
 			this.loadData();
 			
 			$(window).scroll(function() {
 			    if($(window).scrollTop() == $(document).height() - $(window).height()) {
 					if(!self.isSearching && self.token) {
-						self.loadData(true);
+						self.loadData(self.token);
 					}
 			    }
 			});
 		})
 
-
-		/**
-		 * dynamicSort
-		 * used to sort array of objects
-		 */
-
-		function dynamicSort(property, order) {
-		    var sortOrder = order == 'asc' ? 1 : -1;
-		    return function (a,b) {
-		        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-		        return result * sortOrder;
-		    }
-		}
-
 		/**
 		 * updateIconOrder
 		 * sets the order icon to asc or desc 
+		 * @param {Object} TH element
 		 */
 
 		function updateIconOrder(header) {

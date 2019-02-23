@@ -1,13 +1,6 @@
 (function() {
     'use strict';
 
-
-    /**
-     * Internationalization loaded promise
-     * @type {Deferred}
-     */
-    var i18nInitialized = $.Deferred();
-
 	/**
 	 * namespace for all modules
 	 */
@@ -15,7 +8,6 @@
 		
 
 		opts: {
-			translationEnabled: false,
 			path: '/static/',
 			modules: [
 				'cases',
@@ -38,28 +30,37 @@
 				deeplegal.NotificationService.init();
 			}
 
-			if(this.translationEnabled) {
-				// i18n is loaded
-		        $.when(i18nInitialized).then(function() {
-		            // Mount all riot templates
-		            window.riot.mount('*');
-		        });
-			} else {
-				window.riot.mount('*');
-			}
+		    window.riot.mount('*');
+		    
 			
+			var fail = function() {
+				deeplegal.Util.showMessage('Hubo un error de nuestro lado. Porfavor intente más tarde', 'alert-danger');				
+			};
+
+			$.ajaxSetup({
+				statusCode: {
+					401: fail,
+					403: fail,
+					404: fail,
+					500: fail,
+					0: function() {
+						deeplegal.Util.showMessage('Su conexión a internet parece caida. Por favor verifiquela.', 'alert-danger');
+					}
+				}
+			})
+			$.ajaxPrefilter(function(options){
+				if(options.method && options.method !== 'GET') {
+					options.header = $.extend(options.headers, {
+						'X-XSRF-TOKEN': deeplegal.Util.getCsrf()
+					})
+				}
+			})
 			//riot.observable(this);
 			//riot.mount('*')
 		}
 	};
 
 	window.riot.observable(deeplegal);
-	
-	// Sometimes this event is fired before the document.ready, so bind it now
-    deeplegal.on('i18nInitialized', i18nInitialized.resolve);
-
-
-	riot.observable(this);
 
 	$(document).ready(function() {
 		deeplegal.init();
