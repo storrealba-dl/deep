@@ -1,5 +1,5 @@
 <confirm>
-	<modal ref="modal" size="sm" id="confirm" title="{title || 'Confirmar'}">
+	<modal ref="modal" size="md" id="confirm" title="{title || 'Confirmar'}">
 		<yield to="content">
 			{parent.message}
 		</yield>
