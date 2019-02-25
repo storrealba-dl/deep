@@ -7,7 +7,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr each="{row in data}" data-item="{JSON.stringify(row)}" onclick="{showOptions}">
+				<tr each="{row in data}" data-item="{JSON.stringify(row)}" onclick="{toggleOptions}">
 					<td each="{col, index in config.structure}">
 						{render(config.structure[index].html(row,index,data))}
 					</td>
@@ -19,10 +19,10 @@
 			<div class="row-options" ref="caseOptions">
 				<a class="btn btn-light" href="/cases/{category}/{selectedItem.id}" ref="detailsBtn"> Detalles </a>
 				<a class="btn btn-light" href="/cases/{category}/{selectedItem.id}/?notifications"> Notificaciones </a>
-				<button onclick="{showLitigants}" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" data-info="litigants" class="btn btn-light"> Litigantes </button>
-				<button onclick="{}" data-toggle="modal" data-target="#modal-historia" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" data-info="historia" class="btn btn-light"> Historia </button>
-				<button onclick="{}" class="btn btn-light text-left" data-case-id="{selectedItem.id}" data-category="{opts.config.category}"><i class="mdi mdi-file-document"></i> Doc </button>
-				<button class="btn btn-danger" data-toggle="modal" data-target="#modal-delete" onclick="{}"> Eliminar </button>
+				<button onclick="{showLitigants}" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" class="btn btn-light"> Litigantes </button>
+				<button onclick="{showHistory}" data-case-id="{selectedItem.id}" data-category="{opts.config.category}" class="btn btn-light"> Historia </button>
+				<button onclick="{showDocs}" class="btn btn-light text-left" data-case-id="{selectedItem.id}" data-category="{opts.config.category}"><i class="mdi mdi-file-document"></i> Doc </button>
+				<button class="btn btn-danger" onclick="{deleteCase}"> Eliminar </button>
 			</div>
 		</div>
 			
@@ -49,7 +49,7 @@
 			juzgado: '1° Juzgado de ñuñoa'
 		},
 		{
-			id: 123,
+			id: 121233,
 			name: '12qwasd asd ',
 			date: '2010-1-1',
 			rit: 123123,
@@ -96,7 +96,7 @@
 		this.config = this.opts.config;
 		this.category = this.opts.config.category;
 		this.selectedItem = null;
-		this.data = dummy//[];
+		this.data = dummy//[] XXX UPDATE;
 		this.headers = null;
 		this.isSearching = false;
 		this.token = null; //token for scroll}
@@ -106,7 +106,9 @@
 
 		/**
          * loadData
-         * Load data to be displayed in the table
+         * Load data to be displayed in the table. It concats the results
+         * to the data loaded previously stored in this.data
+         *
          * @param {string} scroll	Token to get remaining scroll data
          * @param {Object} sorting 	Config to sort the table 	
          */
@@ -115,10 +117,10 @@
 			scroll = scroll || false;
 			sorting = sorting || {};
 
-			var id = false;
 			var call;
 			deeplegal.Util.showLoading();
 			if(!scroll) {
+				var id = false;
 				call = deeplegal.Rest.get(self.config.url, id, sorting) 
 			} else {
 				call = deeplegal.Rest.post(self.config.scrollUrl, {scroll: self.token, sorting: sorting}); 	
@@ -135,7 +137,9 @@
 		/**
 		 * render
 		 * add content to columns with the style given in 
-		 * @config.structure.html
+		 * @opts.config.structure.html
+		 * 
+		 * @param {String} html 
 		 */
 
 		this.render = function(html) {
@@ -143,36 +147,59 @@
 		}
 
 		/**
-		 * showOptions
-		 * Show menu options for each row (litigantes, historia, 
-		 * notificaciones, etc)
+		 * toggleOptions
+		 * Toggle menu options for each row (litigantes, historia, 
+		 * notificaciones, etc).
 		 */
-		this.showOptions = function() {
+		this.toggleOptions = function() {
 			var $currentRow = $(this.root);
 			$('.show-options').removeClass('show-options');
 
 			if($currentRow.next().hasClass('row-options')) {
-				self.selectedItem = null;
-				$('.row-options').remove();
+				self.hideOptions();
 			} else {
 				self.selectedItem = JSON.parse(this.root.dataset.item);
 				self.update();
 
-				$('.row-options').remove();
-				$currentRow.addClass('show-options');
-				var $optionsTr = $('<tr>').addClass('row-options');
-				var $optionsTd = $('<td>').attr('colspan', self.config.structure.length)
-				var $options = $(self.refs.caseOptions);
-
-				$options.appendTo($optionsTd);
-				$optionsTd.appendTo($optionsTr);
-				$optionsTr.insertAfter($currentRow);	
+				self.showOptions($currentRow);
 			}
+		}
+
+		/**
+		 * hideOptions
+		 * Hide menu options for each row (litigantes, historia, 
+		 * notificaciones, etc).
+		 */
+
+		this.hideOptions = function() {
+			self.selectedItem = null;
+			$('.row-options').remove();
+		}
+
+		/**
+		 * showOptions
+		 * Show menu options for each row (litigantes, historia, 
+		 * notificaciones, etc).
+		 * 
+		 * @param {Object} $row 	jQuery object of the selected row
+		 */
+
+		this.showOptions = function($row) {
+			$('.row-options').remove();
+			$row.addClass('show-options');
+			var $optionsTr = $('<tr>').addClass('row-options');
+			var $optionsTd = $('<td>').attr('colspan', self.config.structure.length)
+			var $options = $(self.refs.caseOptions);
+
+			$options.appendTo($optionsTd);
+			$optionsTd.appendTo($optionsTr);
+			$optionsTr.insertAfter($row);	
 		}
 
 		/**
 		 * sort
 		 * sort the table asc or desc based on the table header clicked
+		 * (server side)
 		 */
 
 		this.sort = function() {
@@ -189,31 +216,28 @@
 
 		/**
 		 * showLitigants
-		 * loads the litigants and shows them in a modal window 
+		 * loads the litigants and shows them in a modal window.
 		 * uses modal and litigants component
 		 */
 
 		this.showLitigants = function() {
-			$.ajax({
-                method: 'GET',
-                url: WS, // XXX TODO UPDATE
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
-            	deeplegal.Util.hideMessage();
+			deeplegal.Util.showLoading();
+			// XXX UPDATE ws and id
+			var id = false;
+			deeplegal.Rest.get(WS.litigants, id).done(function(r) {
+            	deeplegal.Util.hideLoading();
             	
                 //setup modal
-            	self.infoModal.opts.id = 'litigants';
-            	self.infoModal.opts.size = 'lg';
-            	self.infoModal.opts.title = 'Litigantes ' + self.selectedItem.name;
+                self.infoModal.updateOpts({
+                	id: 'litigants',
+                	size: 'lg',
+                	title: 'Litigantes ' + self.selectedItem.name
+                })
 
             	riot.mount('#infoModalContent', 'litigants', {data: r})
 
-            	self.infoModal.trigger('forceUpdate');
             	self.update();
             	self.infoModal.show();
-
             })
 		}
 
@@ -224,10 +248,102 @@
 		 */
 
 		this.showHistory = function() {
+			deeplegal.Util.showLoading();
+			// XXX UPDATE ws
+			var id = false;
+			deeplegal.Rest.get(WS.history, id).done(function(r) {
+            	deeplegal.Util.hideLoading();
+            	
+                //setup modal
+                self.infoModal.updateOpts({
+                	id: 'history',
+                	size: 'lg',
+                	title: 'Historia ' + self.selectedItem.name
+                })
+                
+                //reverse historia so it shows latests first
+				r.historia = r.historia.reverse();
+            	riot.mount('#infoModalContent', 'history', {data: r})
 
+            	self.update();
+            	self.infoModal.show();
+            })
 		}
 
-		this.on('mount', function(argument) {
+		/**
+		 * showDocs
+		 * show the files associated to the case. will download / show if 
+		 * there's 1 file or open a modal if multiple files.
+		 */
+
+		this.showDocs = function() {
+			deeplegal.Util.showLoading();
+			//XXX UPDATE ws
+			var id = false;
+			deeplegal.Rest.get(WS.cases + /sarasa/, id).done(function(r) {
+            	deeplegal.Util.hideLoading();
+            	
+                switch(r.length) {
+                	case 0:
+                		deeplegal.Util.showMessage('El caso no tiene documentos asociados', 'alert-info');
+                		break;
+
+                	case 1:
+                		// XXX UPDATE ws
+                		viewFile(r[0], WS.cases)
+                		break;
+
+                	default: 
+                		//setup modal
+		                self.infoModal.updateOpts({
+		                	id: 'documents',
+		                	size: 'lg',
+		                	title: 'Documentos ' + self.selectedItem.name
+		                })
+		                
+		            	riot.mount('#infoModalContent', 'document-list', {data: r})
+
+		            	self.update();
+		            	self.infoModal.show();
+                }
+            })
+		}
+
+		/**
+		 * deleteCase
+		 * Deletes the case from the user account (uses confirm plugin)
+		 */
+
+		this.deleteCase = function() {
+			var item = self.selectedItem;
+			var deferred = $.Deferred();
+			
+			deferred.done(function() {
+				deeplegal.Util.showLoading();
+		        // XXX UPDATE ws
+		        deeplegal.Rest.delete(WS.cases, self.selectedItem.id).done(function(r) {
+		        	var saved = deeplegal.HTMLSnippets.getSnippet('saved');
+		        	deeplegal.Util.showMessageAutoClose(saved);
+
+		        	//remove the item from the data array;
+		        	self.data = self.data.filter(deletedItem);
+		        	self.hideOptions();
+		        	self.update();
+
+		        	function deletedItem(i) {
+		        		return i.id != item.id;
+	        		}
+		        })
+			})
+
+			var confirm = deeplegal.plugins.confirm;
+			confirm.setOpts({
+				promise: deferred,
+				message: '¿Desea borrar el caso ' + self.selectedItem.name + '?'
+			}).show();
+		}
+
+		this.on('mount', function() {
 			this.infoModal = this.refs.infoModal;
 			this.loadData();
 			
@@ -258,12 +374,24 @@
 		 * resets order icon in col header
 		 */
 
-		 function resetOrder() {
+		function resetOrder() {
 		 	var icons = $('i.mdi-sort-ascending, i.mdi-sort-descending', $(self.refs.table));
 		 	icons.each(function() {
 		 		this.className = 'mdi mdi-sort';
 		 	})
-		 }
+		}
+
+		/**
+		 * viewFile
+		 * open a document in a new window
+		 *
+		 * @param {Object} file 	Object with file info
+		 * @param {string} url 		base url to request the file
+		 */
+
+		function viewFile(file, url) {
+			window.open(url + '/doc/?path=' + f.path,'_blank');
+		}
 	</script>
 
 </casestable>

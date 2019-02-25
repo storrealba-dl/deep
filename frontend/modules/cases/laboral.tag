@@ -6,8 +6,8 @@
 	<script>
 		this.tableConfig = {
 			category: 'laboral',
-			url: WS.cases + 'laboral/',
-			scrollUrl: WS.cases + 'laboral/scroll/',
+			url: WS.cases + '/laboral',
+			scrollUrl: WS.cases + '/laboral/scroll',
 			structure: [{
 				header: 'Nombre Causa',
 				sortBy: 'date', 

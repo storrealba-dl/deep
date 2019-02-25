@@ -1,4 +1,6 @@
-#modal-historia {
+@import '../../styles/variables';
+
+.history {
 	.timeline-info {
 		margin: 20px 0;
 		
@@ -51,6 +53,7 @@
 		    width: 56px;
 		    line-height: 1; 
 		    padding-top: 8px;
+		    user-select: none;
 
 		    &.timeline-icon-start {
 				text-align: center;
@@ -134,6 +137,15 @@
 		    .timeline-text-area.under-style {
 				float: left;
 				padding-top: 5px;
+			}
+
+			.direction {
+				flex-direction: row-reverse;
+			}
+
+			.tl-action-instance {
+				margin-left: 0;
+				margin-right: 10px;
 			}
 		}
 

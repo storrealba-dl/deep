@@ -8,31 +8,17 @@
 		
 
 		opts: {
-			path: '/static/',
-			modules: [
-				'cases',
-				'companies',
-				'left-sidebar',
-				'listadmin',
-				'login',
-				'menus',
-				'optionspanel',
-				'right-sidebar',
-				'ruts',
-				'switchery',
-				'top-navbar',
-				'users'
-			]
+			path: '/static',
 		},
+
+		modules: [],
+		plugins: [],
 
 		init: function() {
 			if(deeplegal.NotificationService) {
 				deeplegal.NotificationService.init();
 			}
-
-		    window.riot.mount('*');
 		    
-			
 			var fail = function() {
 				deeplegal.Util.showMessage('Hubo un error de nuestro lado. Porfavor intente más tarde', 'alert-danger');				
 			};
@@ -55,6 +41,8 @@
 					})
 				}
 			})
+
+			window.riot.mount('*');
 			//riot.observable(this);
 			//riot.mount('*')
 		}

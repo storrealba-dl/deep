@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.document-list {
+	list-style-type: none;
+	padding: 0;
+
+	li {
+		display: flex;
+		border-bottom: 1px solid @gray-150;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+	}
+
+	li span:nth-child(1) {
+		font-size: 22px;
+	}
+
+	li span:nth-child(2) {
+		margin-right: auto;
+		padding-left: 10px;
+	}
+
+	li:last-child {
+		border-bottom: none;
+	}
+}

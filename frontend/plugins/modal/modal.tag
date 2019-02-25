@@ -35,7 +35,7 @@
 
 		var self = this;
 		this.id = this.opts.id;
-		this.size = this.opts.id;
+		this.size = this.opts.size;
 		this.title = this.opts.title;
 
 		var self = this;
@@ -63,12 +63,12 @@
 		 	$(this.modal).modal('hide');
 		}
 
-		// when opts are modified the update method won't see the changes
-		this.on('forceUpdate', function() {
-			self.id = this.opts.id;
-			self.size = this.opts.size;
-			self.title = this.opts.title;
-		})
+		this.updateOpts = function(opts) {
+			self.id = opts.id;
+			self.size = opts.size;
+			self.title = opts.title;
+			self.update();
+		}
 	
 	</script>
 </modal>
