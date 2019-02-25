@@ -11,13 +11,14 @@
         //modules: neo.utils.toArray(neo.opts.modules),
 
         init: function() {
+            if(deeplegal.opts.translationEnabled) {
+                $.holdReady(true);
 
-            $.holdReady(true);
+                // Shortcut global translate method
+                w._ = w.i18next.t.bind(w.i18next);
 
-            // Shortcut global translate method
-            w._ = w.i18next.t.bind(w.i18next);
-
-            this.initI18next();
+                this.initI18next();
+            }
         },
 
         initI18next: function() {
@@ -40,8 +41,8 @@
             return {
                 // i18next uses the array for internal stuff, so we pass a copy
                 whitelist: this.supportedLanguages.slice(0),
-                //ns: deeplegal.opts.modules,
-                ns: ['menus'],
+                ns: deeplegal.opts.modules,
+                //ns: ['menus'],
                 load: 'languageOnly',
                 defaultNS: 'i18n',
                 // submit missing translations
@@ -117,6 +118,6 @@
         }
     };
 
-    deeplegal.i18n.init();
+    //deeplegal.i18n.init();
 
 })(window);

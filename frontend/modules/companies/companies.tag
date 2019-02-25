@@ -226,24 +226,18 @@
         this.save = function(companyId) {
             var form = this.tags.listadmin.refs.formEdit;
             var companyId = companyId || this.tags.listadmin.itemToSave;
-            var url = companyId ? WS.companies + companyId + '/'  : WS.companies;
-            var method = companyId ? 'PUT' : 'POST'
             var data = new FormData(form);
 
-            data.append('csrfmiddlewaretoken', deeplegal.Util.getCsrf());
-
-            $.ajax({
-                method: method,
-                url: url,
-                data : data,
-                cache: false,
+            var config = {
                 contentType: false,
-                processData: false,
-                beforeSend: function() {
-                    var loading = deeplegal.HTMLSnippets.getSnippet('loading');
-                    deeplegal.Util.showMessage(loading, 'alert-info');
-                }
-            }).done(function(r) {
+                processData: false
+            }
+
+            deeplegal.Util.showLoading();
+            
+            var call = companyId ? deeplegal.Rest.put(WS.companies, companyId, data, config) : deeplegal.Rest.post(WS.companies, data, config)
+
+            call.done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
@@ -251,11 +245,8 @@
                     self.tags.listadmin.trigger('itemAdded');
                     self.resetForm();
                 } else {
-                    deeplegal.Util.showMessage(r.result, 'alert-danger');    
+                    deeplegal.Util.showMessage(r.result, 'alert-danger')
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -266,25 +257,15 @@
          */
 
         this.delete = function(companyId) {
-            $.ajax({
-                method: 'DELETE',
-                url: WS.companies + companyId,
-                data : {
-                   csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                },
-                beforeSend: function() {
-                    var loading = deeplegal.HTMLSnippets.getSnippet('loading');
-                    deeplegal.Util.showMessage(loading, 'alert-info');
-                }
-            }).done(function(r) {
+            deeplegal.Util.showLoading();
+
+            deeplegal.Rest.delete(WS.companies, companyId).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose(saved, 'alert-success');
 
                     self.tags.listadmin.trigger('itemDeleted');
                 }
-            }).fail(function(r) {
-                deeplegal.Companies.onFail();
             })
         }
 
@@ -325,22 +306,11 @@
          */
 
         this.getPlan = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.plans,
-                data : {
-                   csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                },
-                beforeSend: function() {
-                    // var loading = deeplegal.HTMLSnippets.getSnippet('loading');
-                    // deeplegal.Util.showMessage(loading, 'alert-info');
-                }
-            }).done(function(r) {
+            var id = false;
+            deeplegal.Rest.get(WS.plans, id).done(function(r) {
                 if(r) {
                     self.renderPlan(r.data);
                 }
-            }).fail(function(r) {
-                deeplegal.Util.showMessage('Hubo un error cargando los planes', 'alert-danger');
             })
         }
 

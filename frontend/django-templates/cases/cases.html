@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+
+{% block section_css %}
+<link rel="stylesheet" type="text/css" href="/frontend/modules/cases/cases.css">
+{% endblock section_css %}
+
+{% block app_content %}
+<section id="cases" class="container-fluid section-container">
+
+    <cases></cases>
+    
+</section>
+{% endblock app_content %}
+
+{% block section_scripts %}
+
+<!-- deeplegal -->
+<script type="text/javascript" src="/frontend/modules/cases/cases.js"></script>
+<script type="text/javascript" src="/frontend/modules/cases/laboral.js"></script>
+<script type="text/javascript" src="/frontend/plugins/scrolltable/scrolltable.js"></script>
+<script type="text/javascript" src="/frontend/plugins/switchery/switchery.js"></script>
+{% endblock section_scripts %}

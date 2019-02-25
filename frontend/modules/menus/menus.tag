@@ -133,19 +133,11 @@
          */
 
         this.loadMenus = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.menus,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
-                deeplegal.Util.hideMessage();
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.get(WS.menus).done(function(r) {
+                deeplegal.Util.hideLoading();
                 self.menus = r.data;
                 self.update();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -155,19 +147,11 @@
          */
 
         this.loadMenusItems = function() {
-            $.ajax({
-                method: 'GET',
-                url: WS.menusitems,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
-                deeplegal.Util.hideMessage();
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.get(WS.menusItems).done(function(r) {
+                deeplegal.Util.hideLoading();
                 self.menusItems = r.data;
                 self.update();
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -179,17 +163,11 @@
 
         this.createMenuConfig = function(e) {
             deeplegal.Util.preventDefault(e);
-            $.ajax({
-                method: 'POST',
-                url: WS.menus,
-                data: {
-                    name: self.refs.configName.value,
-                    csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-                },
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+            
+            var data = {name: self.refs.configName.value};
+
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.post(WS.menus, data).done(function(r) {
                 if(r.status == 200) {
                     self.loadMenus();
                     $(self.refs.modalAdd).modal('hide');
@@ -197,9 +175,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -213,7 +188,6 @@
             
             //reset all checkbox
             deeplegal.trigger('resetSwitcheryCheckbox') 
-
 
             for(var i = 0; i < menu.items.length; i++) {
                 var item = menu.items[i];
@@ -231,18 +205,11 @@
         this.save = function(switcheryTag) {
             var switcheryData = switcheryTag.getData();
             var data = {
-                csrfmiddlewaretoken: deeplegal.Util.getCsrf(),
                 itemId: switcheryData.id,
                 toggle: switcheryData.checked
             }
-            $.ajax({
-                method: 'PUT',
-                url: WS.menus + this.currentItem + '/',
-                data: data,
-                beforeSend: function() {
-                    //deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+
+            deeplegal.Rest.put(WS.menus, this.currentItem, data).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
@@ -251,9 +218,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
@@ -263,17 +227,8 @@
          */
 
         this.delete = function() {
-             var data = {
-                csrfmiddlewaretoken: deeplegal.Util.getCsrf()
-            }
-            $.ajax({
-                method: 'DELETE',
-                url: WS.menus + this.currentItem + '/',
-                data: data,
-                beforeSend: function() {
-                    deeplegal.Util.showLoading();
-                }
-            }).done(function(r) {
+            deeplegal.Util.showLoading();
+            deeplegal.Rest.delete(WS.menus, this.currentItem).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
@@ -283,9 +238,6 @@
                     var error = 'Hubo un error.'
                     deeplegal.Util.showMessage(error, 'alert-danger');
                 }
-            }).fail(function(r) {
-                var error = 'Hubo un error.'
-                deeplegal.Util.showMessage(error, 'alert-danger');
             })
         }
 
