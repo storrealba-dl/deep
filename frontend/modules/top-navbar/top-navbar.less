@@ -8,7 +8,7 @@
     width: 100%;
     border-bottom: solid 1px @gray-150;
     padding: 22px 60px;
-    padding-left: calc(60px + 100px); /*adding lefnav spacing*/
+    padding-left: 220px; //leftbar + 20px
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,17 +25,41 @@
         /*TODO: arrange elements in smaller devices*/
     }
 
+    @media @desktop {
+        padding: 10px;
+    }
+
+    .logo-mobile-container {
+        display: none;
+
+        @media @desktop {
+            display: flex;
+            align-items: center;
+        }
+
+        #hamburger-btn {
+            color: @blue-100;
+            display: block;
+            font-size: 40px;
+            margin-right: 20px;
+        }
+    }
+
     .search-container {
         font-size: 16px;
         line-height: 1.63;
         font-weight: lighter;
         width: 60%;
         position: relative;
+        height: 100%;
+
+        @media @desktop {
+            display: none;
+        }
 
         i {
             font-size: 25px;
-            position: absolute;
-            top: -5px;
+            margin-right: 10px;
         }
 
         input {
@@ -43,7 +67,7 @@
             background: transparent;
             color: @gray-900;
             width: 100%;
-            padding-left: 35px;
+            //padding-left: 35px;
 
             &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                 font-weight: 300;
@@ -66,6 +90,10 @@
     .user-info {
         display: flex;
         align-items: center;
+
+        @media @desktop {
+            display: none;
+        }
 
         .company-logo {
             margin-right: 28px;

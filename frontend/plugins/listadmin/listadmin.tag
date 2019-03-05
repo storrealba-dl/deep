@@ -1,6 +1,6 @@
 <listadmin>
-	<div class="row m-t-40" id="list-admin">
-	    <div class="col-sm-10">
+	<div class="row" id="list-admin">
+	    <div class="col-sm-12">
 	      	<div class="row">
 		        <div class="section-header col-sm-12">
 		        	<a href="/" class="back-link-item">

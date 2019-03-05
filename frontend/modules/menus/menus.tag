@@ -1,13 +1,13 @@
 <menus>
-    <div class="row m-t-40">
-        <div class="col-sm-10">
+    <div class="row">
+        <div class="col-sm-12">
             <div class="row">
                 <div class="section-header col-sm-12">
                     <a href="/" class="back-link-item">
                         <i class="ti-angle-left"></i>
                     </a>
                     <h1>
-                        { _('menus:Configuraciones de Menú') }
+                        Configuraciones de Menú
                     </h1>
                     <div class="section-actions">
                         <div class="section-graphs">

@@ -1,5 +1,5 @@
 @import '../../styles/variables';
-@expanded-width: 239px;
+@expanded-width: 200px;
 
 .left-sidebar {
 
@@ -8,6 +8,32 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    width: @expanded-width;
+
+    @media @desktop {
+    	display: none;
+    	top: 74px;
+    } 
+
+    &.open {
+    	@media @desktop {
+    		display: block !important;
+			top: 74px !important;
+			margin: 0 !important;
+			width: 75vw !important;
+			height: calc(100vh - 74px) !important;
+			position: fixed;
+    	}
+
+    	.item-name {
+    		display: inline-block !important;
+    		font-size: 18px;
+    	}
+
+    	.copyright-menu {
+    		font-size: 14px;
+    	}
+    }
 		
 	&.side-menu.left {
 		top: 0;
@@ -15,52 +41,35 @@
 		transition: width 0.3s;
 	}
 
-	&.expanded {
-		width: @expanded-width;
-
-		#sidebar-menu {
-			.logo-collapsed {
-				display: none;
-			}
-		}
-	}
-
-	&.collapsed {
-		width: 101px;
-
-		#sidebar-menu {
-			.logo-expanded {
-				display: none;
-			}
-
-			.nav-items-container li > a > span,
-			.nav-items-container li > ul {
-				display: none !important; //overrides minton
-			}
-		}
-	}
-
 	#sidebar-menu {
+		padding-top: 0;
+
+		.nav-title {
+			padding: 18px;
+
+			@media @desktop {
+				display: none;
+			}
+		}
+
 		.side-logo {
 			display: block;
 		}
 
 		.logo-expanded {
-			margin-top: 10px;
-			margin-bottom: 50px;
-			margin-left: 37px;
-		}
-
-		.logo-collapsed {
-			margin-top: 10px;
-			margin-bottom: 32px;
-			margin-left: 28px;
+			
 		}
 
 		.nav-items-container > li > a {
-			padding-left: 37px;
-			width: @expanded-width;
 			color: @gray-200;
+			padding: 15px 15px;
+			margin: 0;
+		}
+
+		.nav-items-container > li:hover > a {
+			@media @desktop {
+				width: auto !important	
+			}
 		}
 
 		.nav-items-container > li.active,
@@ -84,6 +93,10 @@
 			width: 22px;
 			height: 22px;
 			margin-right: 24px;
+
+			@media @desktop {
+				margin-right: 14px;
+			}
 		}
 
 		// Subnav
@@ -94,12 +107,13 @@
 		}
 
 		.nav-items-container > li > ul {
-			background: @gray-50;
+			
 		}
 
 		.nav-items-container > li > ul a {
 			font-size: 12px;
-			width: @expanded-width;
+			padding-left: 20px;
+			background: @gray-50;
 		}
 
 		.nav-items-container > li > ul a:hover {
@@ -121,3 +135,14 @@
 		}
 	}
 }
+
+// @media (max-width: 1039px) {
+// 	.left-sidebar {
+// 	    display: none;
+// 	}
+
+// 	.left-sidebar.open {
+// 		display: block;
+// 		width: auto;
+// 	}
+// }

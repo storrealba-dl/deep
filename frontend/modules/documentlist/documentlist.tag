@@ -1,4 +1,4 @@
-<document-list>
+<documentlist>
 	<ul class="document-list">
 		<li each={opts.data}>
 			<span>
@@ -15,4 +15,4 @@
 		 * 						document info to show in a list
 		 */
 	</script>
-</document-list>
+</documentlist>

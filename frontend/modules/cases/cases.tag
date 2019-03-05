@@ -1,6 +1,6 @@
 <cases>
-	<div class="row m-t-40">
-	    <div class="col-sm-10">
+	<div class="row">
+	    <div class="col-sm-12">
 	      	<div class="row">
 		        <div class="cases-header section-header col-sm-12">
 		        	<a href="/" class="back-link-item">
