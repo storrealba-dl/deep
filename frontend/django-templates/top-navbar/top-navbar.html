@@ -1,25 +1,33 @@
 <div class="top-navbar" id="top-navbar">
-    <div class="search-container">
+    <div class="logo-mobile-container">
+        <a href="#" id="hamburger-btn" style="touch-action: none;"><i class="mdi mdi-menu"></i></a>
+        <a href="/" class="logo-expanded side-logo">
+            <img src="/static/images/logo-expanded.png" height="37">
+        </a>
+    </div>
+    
+    <!-- <div class="search-container">
         <i class="mdi mdi-magnify"></i>
         <input type="text" name="" placeholder="Buscar Caso, Causas..." disabled id="top-navbar-search">
-        <!-- <span>Buscar Caso, Causas…</span> -->
-    </div>
+    </div> -->
+
+    <div data-is="searchbar" class="search-container"></div>
 
     <div class="user-info">
         <img class="company-logo" src="/picture/{{ request.security.cLoggedUser.company_id }}/">
         
-        <div class="user-avatar">{{ request.cSecMgr.userLetter }}</div>
+        <div class="user-avatar">{{ request.security.initials }}</div>
         
         <li class="list-inline-item dropdown notification-list">
             <a class="user-name nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                {{ request.cSecMgr.userTitle|capfirst }}
+                {{ request.security.cLoggedUser.name|capfirst }}
             </a>
             
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="Preview" x-placement="bottom-end" style="position: absolute; transform: translate3d(-105px, 21px, 0px); top: 0px; left: 0px; will-change: transform;">
                 
-                <a class="dropdown-item notify-item" data-method="get" href="/users/edit">
+                <a class="dropdown-item notify-item" data-method="get" href="/password/">
                     <i class="ti-home"></i>
-                    <span>Perfil</span>
+                    <span>Cambiar Contraseña</span>
                 </a>
 
                 <a class="dropdown-item notify-item" rel="nofollow" data-method="delete" href="#" id="logout-btn">

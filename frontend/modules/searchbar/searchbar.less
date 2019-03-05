@@ -1,0 +1,62 @@
+.search-container {
+    font-size: 16px;
+    line-height: 1.63;
+    font-weight: lighter;
+    width: 60%;
+    position: relative;
+    height: 100%;
+
+    i {
+            font-size: 25px;
+            margin-right: 10px;
+        }
+
+    .taginput-container {
+        display: none;
+        position: relative;
+    }
+
+    .launcher-container {
+        position: absolute;
+        top: 0px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        margin-top: -3px;
+        cursor: pointer;
+
+        span {
+            user-select: none;
+        }
+    }
+
+    .launcher-container.disabled {
+        cursor: default;
+    }
+
+    .close-searchbar {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border: none;
+        background: none;
+        font-family: monospace;
+        color: rgba(0,0,0,0.2);
+        cursor: pointer;
+    }
+
+    .label.badge {
+        padding: 6px;
+    }
+
+    .bootstrap-tagsinput {
+        width: 100%;
+        display: flex;
+        background: none;
+        border: none;
+        box-shadow: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-radius: 0;
+    }
+}
+    

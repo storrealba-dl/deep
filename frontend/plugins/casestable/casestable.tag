@@ -66,9 +66,10 @@
 		 * casestable
 		 * 
 		 * Renders list of cases in a table using ajax from a given url 
-		 * and loads more content when scrolling bottom.
+		 * and loads more content when scrolling down.
 		 * Recieves an object with its configuration
 		 *
+		 * @param {Object} opts.config:
 		 * @opts.config.category: laboral, civil, etc. used to build options url
 		 * @opts.config.url: url to load the data
 		 * @opts.config.scroll: url to get more thata when scrolling
@@ -98,7 +99,7 @@
 		this.selectedItem = null;
 		this.data = dummy//[] XXX UPDATE;
 		this.headers = null;
-		this.isSearching = false;
+		this.isLoading = false;
 		this.token = null; //token for scroll}
 		this.infoModal = null; //loaded on mount
 
@@ -119,6 +120,7 @@
 
 			var call;
 			deeplegal.Util.showLoading();
+			self.isLoading = true;
 			if(!scroll) {
 				var id = false;
 				call = deeplegal.Rest.get(self.config.url, id, sorting) 
@@ -130,6 +132,30 @@
                 deeplegal.Util.hideLoading();
                 self.data = self.data.concat(r.data);
                 self.token = r.token;
+                self.isLoading = false;
+                self.update();
+            })
+		}
+
+		/**
+         * search
+         * Loads table with search results
+         *
+         * @param {string} query	Search tearm
+         */
+
+		this.search = function(query) {
+			
+			deeplegal.Util.showLoading();
+			self.isLoading = true;
+			var id = false;
+			call = deeplegal.Rest.get(self.config.url, id);
+
+			call.done(function(r) {
+                deeplegal.Util.hideLoading();
+                self.data = r.data;
+                self.token = r.token;
+                self.isLoading = false;
                 self.update();
             })
 		}
@@ -349,11 +375,22 @@
 			
 			$(window).scroll(function() {
 			    if($(window).scrollTop() == $(document).height() - $(window).height()) {
-					if(!self.isSearching && self.token) {
+					if(!self.isLoading && self.token) {
 						self.loadData(self.token);
 					}
 			    }
 			});
+
+			//listent to search events
+			deeplegal.on('searchRequest', function(opts) {
+				var isSelfCategory = opts && opts.tags && opts.tags.find(function(tag) {
+					return tag.value == self.category;
+				})
+				
+				if(isSelfCategory) {
+					self.search(opts.query);
+				}
+			})
 		})
 
 		/**
