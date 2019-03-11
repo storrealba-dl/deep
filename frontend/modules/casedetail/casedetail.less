@@ -1,0 +1,662 @@
+@import '../../styles/variables';
+
+#case-detail {
+
+	.cases-full-header {
+		margin-bottom: 20px;
+
+		h1 {
+			font-size: 22px;
+			margin-bottom: 0;
+			line-height: 1;
+		}
+
+		span {
+			color: @gray-800;
+			font-size: 12px;
+		}
+	}
+
+	.case-full-info {
+		
+		.card {
+			border: none;
+			border-radius: @br6;
+
+			.card-title {
+				display: flex;
+				font-size: 10px;
+				justify-content: space-between;
+				color: @gray-800;
+				margin-bottom: 10px;
+			}
+
+			dl {
+				display: flex;
+				flex-wrap: wrap;
+				font-size: 13px;
+			}
+
+			dl dt,
+			dl dd {
+				width: 50%;
+				margin: 0;
+				border-bottom: 2px solid @gray-150;
+				padding: 10px 0;
+
+			}
+
+			dl dt {
+				font-weight: normal;
+			}
+
+			dl dd {
+				text-align: right;
+				color: @gray-800;
+			}
+
+			dl dd button,
+			dl dd a.btn {
+				width: 90px;
+				padding: 3px;
+				font-size: 12px;
+				margin-top: 5px;
+
+				&:first-child {
+					margin-top: 0;
+				}
+			}
+
+			.actions {
+				//display: flex;
+				//justify-content: space-between;
+				text-align: right;
+			}
+
+
+		}
+	}
+
+	.section-content {
+		padding-top: 0px;
+
+		.nav-tabs {
+			border-bottom: none;
+
+			.nav-item {
+				margin-right: 20px;
+
+				@media @tablet {
+					margin-right: 0;
+					font-size: 14px;
+				}
+			}
+
+			.nav-item a {
+				border: none;
+				background-color: @gray-175;
+				color: @gray-200;
+				display: flex;
+			}
+
+			.nav-item a.active {
+				background: @white;
+				color: @gray-1600;
+
+				.tab-icon {
+					color: @blue-100;
+				}
+			}
+
+			.nav-item .tab-icon {
+				width: 20px;
+			    height: 20px;
+			    border-radius: 50%;
+			    background: @gray-100;
+			    text-align: center;
+			    font-size: 10px;
+			    display: flex;
+			    align-items: center;
+			    justify-content: center;
+			    margin-right: 8px;
+			}
+		}
+
+		//temporary
+		.mobile-hidden {
+			@media @tablet {
+				display: none;
+			}
+		}
+
+		.tab-content {
+			background: @white;
+			border-radius: 0 6px 6px 6px;
+			padding: 20px;
+		}
+
+		.tabs-shared-header {
+			display: none;
+			//display: flex;
+			justify-content: space-between;
+
+			.tabs-shared-description {
+				font-size: 10px;
+				color: @gray-800;
+			}
+		}
+
+		.tabs-shared-actions ul {
+			display: flex;
+			list-style-type: none;
+		}
+
+		.tabs-shared-actions ul li {
+			margin-left: 15px;
+			font-size: 20px;
+			font-weight: lighter;
+		}
+
+		.sub-section-messages {
+			margin-bottom: -20px; //so the last message wont have a white spacing below
+
+			.sub-section-tools {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 25px;
+			}
+
+			.sub-section-tools .select {
+				width: 30%;
+			}
+
+			.sub-section-tools .select select{
+				width: 100%;
+			}
+
+			.sub-section-tools .search-box {
+				width: 60%;
+				position: relative;
+			}
+
+			.sub-section-tools .search-box input {
+				width: 100%;
+				border-radius: 20px;
+				border: none;
+				background-color: @gray-150;
+				padding: 7px 20px;
+			}
+
+			.sub-section-tools .search-box  button{
+				position: absolute;
+				top: -2px;
+				right: 0;
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				font-size: 25px;
+			}
+
+		}
+
+		.message-container {
+			display: none;
+			border-bottom: 1px solid @gray-175;
+			background: @gray-50;
+			margin: 0 -20px; // (same as tab-content padding)
+			padding: 15px;
+
+			.main-message {
+				//padding: 20px 0;
+				display: flex;
+				align-items: center;
+				margin-bottom: 15px;
+
+				.message-icon {
+					border: 1px solid @blue-100;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 24px;
+					background: @blue-100;
+					color: @white;
+					max-width: 50px;
+					max-height: 50px;
+					min-width: 50px;
+					min-height: 50px;
+					border-radius: 50%;
+					margin-right: 10px;
+
+					&.light {
+						color: @blue-100;
+						background: @white;
+					}
+				}
+
+				.history-files {
+					margin-left: auto;
+				}
+			}
+
+			.message-category {
+				margin-right: 10px;
+			}
+
+			.message-content {
+				line-height: 1.3;
+				color: @gray-800;
+				margin: 0;
+				font-size: 12px;
+			}
+
+			.sub-messages-container {
+				width: 80%;
+				margin: 0 auto;
+				list-style-type: none;
+				padding: 0;
+				font-size: 13px;
+			}
+
+			.sub-messages-container .sub-message {
+				background: @white;
+				border-radius: @br6;
+				padding: 15px;
+				margin-bottom: 15px;
+			}
+
+			.sub-messages-container .sub-message-header {
+				display: flex;
+				align-items: center;
+			}
+
+			.user-photo{
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-right: 10px;
+
+				img {
+					width: 100%;
+				}
+			}
+
+			.user-photo.initial {
+			    background: @blue-100;
+			    color: @white;
+			    text-align: center;
+			    display: flex;
+			    justify-content: space-around;
+			    align-items: center;
+			}
+
+			.sub-messages-container .sub-message-header .user-name{
+				flex-grow: 1;
+				font-weight: bold;
+			}
+
+			.sub-messages-container .sub-message-header .date {
+				font-weight: bold;
+			}
+
+			.sub-messages-container .sub-message-body {
+				padding-left: 40px; //user-photo width and margin
+				color: @gray-800;
+			}
+
+			.sub-messages-container .sub-message-body p{
+				margin-bottom: 0;
+			}
+
+			.leave-message {
+				width: 80%;
+				margin: 0 auto;
+				padding: 0;
+				font-size: 13px;
+				position: relative;
+				padding-left: 30px;
+			}
+
+			.leave-message .user-photo{
+				width: 25px;
+			    height: 25px;
+			    position: absolute;
+			    top: 9px;
+			    //margin-top: -12.5px;
+			    left: 25px;
+			}
+
+			.leave-message input.input-leave-message {
+				border: 2px solid @blue-100;
+				border-radius: @br6;
+				display: block;
+				width: 100%;
+				padding: 10px;
+				padding-left: 30px;
+				padding-right: 80px;
+			}
+			
+			.leave-message .btn-send {
+				position: absolute;
+				top: 6px;
+				right: 6px;
+			}
+
+			.leave-message .btn-attachment {
+				position: absolute;
+				top: 6px;
+				right: 43px;
+			}
+
+			.input-file,
+			.file-name {
+				display: none;
+			}
+
+			.file-name {
+				margin-top: 10px;
+				margin-bottom: 0;
+				font-weight: normal;
+				max-width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+
+				.file-name-target {
+					font-weight: bold;
+				}
+			}
+
+			input[type="submit"] {
+				display: none;
+			}
+
+			.file-reset-btn {
+				cursor: pointer;
+			}
+
+			.sub-message-template {
+				display: none;
+			}
+		}
+
+		#notifications-table {
+
+			.notif-user-email {
+				display: block;
+			    font-size: 10px;
+			    line-height: 0.5;
+			    color: @gray-200;
+			}
+		}
+
+		.litigantes-container{
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+
+			.item {
+				border: solid 1px @gray-150;
+			    border-radius: 6px;
+			    display: flex;
+			    align-items: center;
+			    padding-top: 20px;
+			    padding-bottom: 20px;
+			    margin-top: 20px;
+			    width: 48.5%;
+
+			    @media @tablet {
+			    	width: 100%;
+			    }
+			}
+
+			.item .item-title {
+				background-color: @blue-100;
+			    border-radius: 8px;
+			    width: 65px;
+			    height: 65px;
+			    text-align: center;
+			    color: white;
+			    display: table-cell;
+			    vertical-align: middle;
+			    padding-top: 23px;
+			    padding-bottom: 26px;
+			    font-size: 12px;
+			    font-weight: normal;
+			    letter-spacing: -0.3px;
+			    -webkit-transform: translateX(-7px);
+			    transform: translateX(-7px); 
+			    cursor: pointer;
+			}
+
+			.item .item-content .number {
+				color: @blue-100;
+				margin-bottom: 0;
+			    font-size: 14px;
+			    font-weight: 600;
+			}
+
+			.item .item-content .name {
+				font-size: 16px;
+			    color: @gray-1600;
+			    margin-bottom: 0
+			}
+
+			.item .item-content .category {
+				margin-bottom: 0;
+			    color: @gray-800;
+			    font-size: 14px
+			}
+		}
+	}
+
+	#history {
+		.timeline-info {
+    		margin: 20px 0;
+			
+			.timeline-duration,
+			.timeline-status {
+				margin-top: 10px;
+				margin-right: 10px;
+
+				div:first-child {
+					padding: .375rem .75rem;
+				    font-size: 13px;
+				    border: solid 1px @blue-100;
+				    border-radius: 6px 0 0 6px;
+				}
+
+				div:first-child > p {
+					font-size: 15px;
+				    font-weight: 600;
+				    color: @blue-100;
+				    margin-bottom: 0;
+				}
+
+				div:last-child {
+					font-size: 13px;
+				    font-weight: 100;
+				    color: @white;
+				    padding: .375rem .75rem;
+				    background-color: @blue-100;
+				    border: solid 1px @blue-100;
+				    border-radius: 0 6px 6px 0;
+				}
+			}
+		}
+
+		.timeline {
+
+			.timeline-icon {
+				-webkit-border-radius: 50%;
+			    background: @blue-100;
+			    border-radius: 50%;
+			    border: 1px solid @blue-100;
+			    color: @white;
+			    display: block;
+			    height: 56px;
+			    left: -73px;
+			    margin-top: -10px;
+			    position: absolute;
+			    text-align: center;
+			    top: 50%;
+			    width: 56px;
+			    line-height: 1; 
+			    padding-top: 8px;
+
+			    &.timeline-icon-start {
+					text-align: center;
+					background-color: @blue-100; 
+					width: 48.7px;
+					height: 23.7px; 
+					border-radius: 6px; 
+					color: @white;
+					padding-top: 4px;
+				}
+
+				&.timeline-icon-end {
+					text-align: center; 
+					background-color: @gray-200; 
+					width: 52.7px; 
+					height: 12.7px; 
+					border-style: hidden; 
+					border-radius: 15px; 
+					transform: translateY(26px);
+				}
+
+			    .timeline-day {
+				    font-size: 20px;
+				}
+			}
+
+			.timeline-item.alt {
+
+				.timeline-icon {
+				    left: auto;
+				    right: -72px;
+				}
+
+				p {
+				    text-align: right;
+				}
+			}
+
+			.timeline-desk .panel {
+			    background: @white;
+			    display: block;
+			    margin-bottom: 5px;
+			    margin-left: 45px;
+			    position: relative;
+			    text-align: left;
+			    padding: 15px;
+			    border-radius: 5px;
+			    //min-height: 110px;
+			}
+
+			.timeline-desk .arrow {
+			    border-bottom: 8px solid transparent;
+			    border-right: 8px solid @white !important;
+			    border-top: 8px solid transparent;
+			    display: block;
+			    height: 0;
+			    left: -7px;
+			    margin-top: -10px;
+			    position: absolute;
+			    top: 50%;
+			    width: 0;
+			}
+
+			.timeline-left-panel {
+			    bottom: 0;
+			    right: 0;
+			    position: absolute;
+
+			    .timeline-text-area.under-style {
+					float: right;
+					padding-top: 5px;
+				}
+			}
+
+			.timeline-right-panel {
+			    float: left;
+			    bottom: 0;
+			    left: 0;
+			    position: absolute;
+
+			    .timeline-text-area.under-style {
+					float: left;
+					padding-top: 5px;
+				}
+			}
+
+			.timeline-text-area .btn {
+				visibility: hidden;
+			}
+
+			.timeline-button {
+			    text-align: center;
+			    background-color: @blue-100;
+			    color: white;
+			    font-size: 12px;
+			    font-weight: 100;
+			    padding: 4px 10px 4px 10px;
+			    align-self: flex-end;
+			}
+
+			.timeline-up-text-style {
+			    text-align: center;
+			    font-size: 16px;
+			    color: @gray-1600;
+			    margin-left: 10px;
+			    min-width: 150px;
+			    border-bottom: solid 1px @gray-800;
+			}
+
+			.timeline-down-text-style {
+			    margin-top: 0 !important;
+			    text-align: center;
+			    font-size: 16px;
+			    color: @gray-1600;
+			    margin-right: 10px;
+			    min-width: 150px;
+			    border-bottom: solid 1px @gray-800;
+			}
+		}
+
+		#template-historia {
+			display: none;
+		}
+	}
+
+	#modal-users {
+		
+		.filter-element {
+			display: none;
+		}		
+	}
+
+	#modal-files {
+
+		.files-list {
+			list-style-type: none;
+    		padding: 0;
+
+    		li {
+    			display: flex;
+    			border-bottom: 1px solid @gray-150;
+    			justify-content: space-between;
+    			align-items: center;
+    			padding: 10px;
+    		}
+
+    		li span:nth-child(2) {
+    			font-size: 18px;
+    		}
+
+    		li span:nth-child(2) {
+    			margin-right: auto;
+    			padding-left: 10px;
+    		}
+		}
+	}
+}

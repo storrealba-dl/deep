@@ -1,17 +1,202 @@
 {% extends "base/base.html" %}
 
 {% block section_css %}
-<link rel="stylesheet" type="text/css" href="/frontend/modules/cases/cases.css">
-<link rel="stylesheet" type="text/css" href="/frontend/plugins/casestable/casestable.css">
+<link rel="stylesheet" type="text/css" href="/frontend/modules/casedetail/casedetail.css">
 <link rel="stylesheet" type="text/css" href="/frontend/modules/litigants/litigants.css">
 <link rel="stylesheet" type="text/css" href="/frontend/modules/history/history.css">
-<link rel="stylesheet" type="text/css" href="/frontend/modules/documentlist/documentlist.css">
 {% endblock section_css %}
 
 {% block app_content %}
-<section id="cases" class="container-fluid section-container">
+<section id="case-detail" class="container-fluid section-container">
 
-    <cases></cases>
+    <!-- <casedetail category="{{ es.materia }}" name="{{ es.nombre }}" document="{{ es.documento }}" updated="{{ es.actualizacion }}" cards="{cards}" case-id="{{ es.crr_idcausa|stringformat:'s' }}"></casedetail> -->
+
+    <script type="text/javascript">
+    	var cards = [
+    	//card 1
+    	{
+    		title: '',
+    		metadata: {
+    			id: '{{ es.crr_idcausa|stringformat:"s" }}',
+    			name: '{{ es.nombre }}',
+    			category: '{{ es.materia }}'
+    		},
+    		{% if es.materia == "apelaciones" %}
+			info: [{
+				title: 'Libro',
+				detail: '{{ es.rit }}'
+			}, {
+				title: 'Estado interno',
+				detail: '{{ es.estado }}'
+			}, {
+				title: 'Ubicación',
+				detail: '{{ es.ubicacion }}'
+			}, {
+				title: 'Recurso',
+				detail: '{{ es.recurso }}'
+			},{
+				title: 'Corte',
+				detail: '{{ es.corte }}'
+			}],            
+	                
+	        {% elif es.materia == "penal"%}    
+			info: [{
+				title: 'Libro',
+				detail: '{{ es.rit }}'
+			}, {
+				title: 'RUC',
+				detail: '{{ es.ruc }}'
+			}, {
+				title: 'Estado interno',
+				detail: '{{ es.estado }}'
+			}, {
+				title: 'Etapa',
+				detail: '{{ es.etapa }}'
+			}, {
+				title: 'Forma inicio',
+				detail: '{{ es.forma_inicio }}'
+			}, {
+				title: 'Tribunal',
+				detail: '{{ es.tribunal }}'
+			}, {
+				title: 'Tribunal origen',
+				detail: '{{ es.tribunal_origen }}'
+			}],            	            
+	            
+	        {% else %}
+	        info: [{
+				title: 'Etapa',
+				detail: '{{ es.etapa }}'
+			}, {
+				title: 'Estado interno',
+				detail: 'N/A'
+			}, {
+				title: 'Bitacora',
+				detail: 'N/A'
+			}],            	     
+	        {% endif %}
+	        actions: ['delete']
+    	},
+    	//card 2
+    	{
+    		title: 'Datos adicionales de la página oficial',
+    		metadata: {
+    			id: '{{ es.crr_idcausa|stringformat:"s" }}',
+    			name: '{{ es.nombre }}',
+    			category: '{{ es.materia }}'
+    		},
+    		{% if es.materia == "apelaciones" %}
+            info: [{
+            	title: 'Fecha ingreso',
+            	detail: '{{ es.fechaInicio }}'
+            }, {
+            	title: 'Estado recurso',
+            	detail: '{{ es.estado_recurso }}'
+            }, {
+            	title: 'Estado procesal',
+            	detail: '{{ es.estado_procesal }}'
+            }, {
+            	title: 'Recurso',
+            	detail: '{{ es.recurso }}'
+            }]                       
+                                
+			{% elif es.materia == "penal" %}
+			info: [{
+				title: 'Fecha ingreso',
+				detail: '{{ es.fechaInicio }}'
+			}, {
+				title: 'Estado actual',
+				detail: '{{ es.estado_actual }}'
+			}]
+			
+			{% else %}
+			info: [{
+				title: 'Fecha ingreso',
+				detail: '{{ es.fechaInicio }}'
+			}, {
+				title: 'Procedimiento',
+				detail: '{{ es.proc }}'
+			}, {
+				title: 'Tribunal',
+				detail: '{{ es.tribunal }}'
+			}]                                	                                    
+                                
+			{% endif %}
+    	},
+    	//card 3
+    	{
+    		title: 'Datos adicionales de la página oficial',
+    		metadata: {
+    			id: '{{ es.crr_idcausa|stringformat:"s" }}',
+    			name: '{{ es.nombre }}',
+    			category: '{{ es.materia }}'
+    		},
+    		{% if es.materia == "apelaciones" %}
+			info: [{
+				title: 'Relator',
+				detail: '{{ es.relator }}'
+			}, {
+				title: 'Sala',
+				detail: '{{ es.sala }}'
+			}, {
+				title: 'Tramite',
+				detail: '{{ es.desc_tramite }}'
+			}, {
+				title: 'Estado',
+				detail: '{{ es.estado }}'
+			}, {
+				title: 'Fecha trámite',
+				detail: '{{ es.fec_tramite }}'
+			}, {
+				title: 'Ultimo movimiento', 
+				detail: '{{ f_historia }}'
+			}],
+			buttons: ['users', 'teams', 'related']
+                                    
+
+			{% elif es.materia == "penal" %}
+			info: [{
+				title: 'Tipo',
+				detail: '{{ es.tipo }}'
+			}, {
+				title: 'Observación',
+				detail: '{{ es.observacion }}'
+			}, {
+				title: 'Estado',
+				detail: '{{ es.estado }}'
+			}, {
+				title: 'Cambio estado',
+				detail: '{{ es.fecha_cambio_estado }}'
+			}, {
+				title: 'Fecha recepción',
+				detail: '{{ es.fecha_recepción }}'
+			}, {
+				title: 'Ultimo movimiento', 
+				detail: '{{ f_historia }}'
+			}],
+			buttons: ['users', 'teams', 'related']
+                                    
+			{% else %}
+			info: [{
+				title: 'Juzgado',
+				detail: '{{ es.tribunal }}'
+			}, {
+				title: 'Materia',
+				detail: '{{ es.materia|capfirst }}'
+			}, {
+				title: 'Submateria',
+				detail: 'N/A'
+			}, {
+				title: 'Ultimo movimiento', 
+				detail: '{{ f_historia }}'
+			}],
+			buttons: ['users', 'teams', 'related']
+			{% endif %}
+    	}
+    	]
+    </script>
+    <!-- dummy -->
+    <casedetail category="laboral" name="PEREZ CON LOPEZ" document="12-12331-B" updated="12/02/2012" cards="{cards}" case_id="123123"></casedetail>
     
 </section>
 {% endblock app_content %}
@@ -19,10 +204,8 @@
 {% block section_scripts %}
 
 <!-- deeplegal -->
-<script type="text/javascript" src="/frontend/modules/cases/cases.js"></script>
-<script type="text/javascript" src="/frontend/modules/cases/laboral.js"></script>
-<script type="text/javascript" src="/frontend/plugins/casestable/casestable.js"></script>
+<script type="text/javascript" src="/frontend/modules/casedetail/casedetail.js"></script>
 <script type="text/javascript" src="/frontend/modules/litigants/litigants.js"></script>
 <script type="text/javascript" src="/frontend/modules/history/history.js"></script>
-<script type="text/javascript" src="/frontend/modules/documentlist/documentlist.js"></script>
+<script type="text/javascript" src="/frontend/plugins/detailcard/detailcard.js"></script>
 {% endblock section_scripts %}
