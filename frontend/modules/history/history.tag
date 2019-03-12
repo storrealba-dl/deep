@@ -1,5 +1,5 @@
 <history>
-	<div class="col-sm-12 history">
+	<div class="col-sm-12 history" if="{opts.data}">
         <!-- header -->
         <div class="d-flex timeline-info">
             <div class="timeline-duration d-flex">
@@ -89,13 +89,13 @@
     <script>
     /**
      * history
-     * @param opts.data 	object with the history info
+     * @param {Object} opts.data 	Object with the history info. historia should be reversed beforehand
   	 */
 
   	var self = this;
  	// used to store the history year in order to show
  	// it when it changes. Uses first one as default
-	this.prevYear = this.opts.data.historia ? new Date(this.opts.data.historia[0].fecha).getFullYear() : null;
+	this.prevYear = this.opts.data && this.opts.data.historia ? new Date(this.opts.data.historia[0].fecha).getFullYear() : null;
 
 	this.setPrevYear = function(year) {
 		console.log('prev year: ' + self.prevYear)
