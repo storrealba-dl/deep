@@ -95,7 +95,7 @@
   	var self = this;
  	// used to store the history year in order to show
  	// it when it changes. Uses first one as default
-	this.prevYear = opts.data.historia ? new Date(opts.data.historia[0].fecha).getFullYear() : null;
+	this.prevYear = this.opts.data.historia ? new Date(this.opts.data.historia[0].fecha).getFullYear() : null;
 
 	this.setPrevYear = function(year) {
 		console.log('prev year: ' + self.prevYear)
