@@ -91,8 +91,14 @@
     
     <modal id="involved-users-modal" size="lg" title="Usuarios involucrados" ref="modalInvolvedUsers">
     	<yield to="content">
-			<involvedusers users="{parent.involvedUsers}" case-id="{parent.opts.caseId}" case-category="{parent.opts.category}"></involvedusers>
+			<involvedusers users="{parent.involvedUsers}" case-id="{parent.opts.caseId}" case-category="{parent.opts.category}" group="involvedUsers"></involvedusers>
 		</yield>
+    </modal>
+
+    <modal id="involved-teams-modal" size="lg" title="Equipos involucrados" ref="modalInvolvedTeams">
+        <yield to="content">
+            <involvedusers teams="{parent.involvedTeams}" case-id="{parent.opts.caseId}" case-category="{parent.opts.category}" group="involvedTeams"></involvedusers>
+        </yield>
     </modal>
     
 
@@ -113,6 +119,9 @@
 	this.involvedUsers = null;
 	this.modalInvolvedUsers = null;
 
+    this.involvedTeams = null;
+    this.modalInvolvedTeams = null;
+
 	this.loadInvolvedUsers = function() {
 		//XXX UPDATE WS
 		deeplegal.Rest.get(WS.users).done(function(r) {
@@ -121,9 +130,22 @@
 		});
 	}
 
+    this.loadInvolvedTeams = function() {
+        //XXX UPDATE WS
+        deeplegal.Rest.get(WS.teams).done(function(r) {
+            self.involvedTeams = r.data;
+            self.update();
+        }); 
+        self.involvedTeams = [{added: true, name: 'A team', members: ['pedro', 'juan']}, {added: false, name: 'b team', members: ['roro', 'tata']}] 
+        self.update();
+    }
+
 	this.on('mount', function() {
 		this.loadInvolvedUsers();
+        this.loadInvolvedTeams();
+
 		this.modalInvolvedUsers = this.refs.modalInvolvedUsers;
+        this.modalInvolvedTeams = this.refs.modalInvolvedTeams;
 	})
 
 	deeplegal.on('showInvolvedUsers', function(caseData) {
@@ -132,8 +154,10 @@
 		}
 	})
 
-	deeplegal.on('showTeam', function(caseData) {
-		// TODO
+	deeplegal.on('showTeams', function(caseData) {
+		if(caseData.id == self.opts.caseId) {
+            self.modalInvolvedTeams.show();
+        }
 	})
 
 	deeplegal.on('showResources', function(caseData) {

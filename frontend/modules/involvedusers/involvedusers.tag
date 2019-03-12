@@ -17,8 +17,8 @@
 	        </div>
 	    </div>
 	    
-
-	    <table id="users-table" ref="usersTable" class="table table-striped table-bordered toggle-circle m-b-0 default" data-page-size="10">
+	    <!-- table for users -->
+	    <table if="{opts.users}" id="users-table" ref="usersTable" class="table table-striped table-bordered toggle-circle m-b-0 default" data-page-size="10">
 	        <thead>
 	            <tr>
 	                <th data-sort-ignore="true">Agregar</th>
@@ -40,20 +40,42 @@
 	            </tr>
 	        </tbody>
 	    </table>
+
+	    <!-- table for teams -->
+	    <table if="{opts.teams}" id="users-table" ref="usersTable" class="table table-striped table-bordered toggle-circle m-b-0 default" data-page-size="10">
+	        <thead>
+	            <tr>
+	                <th data-sort-ignore="true">Agregar</th>
+	                <th data-toggle="true">Nombre</th>
+	                <th data-toggle="true">Miembros</th>
+	            </tr>
+	        </thead>
+	        <tbody id="users-row-container">
+	            <tr style="" class="footable-even" each="{team in opts.teams}">
+	            	<td>
+	            		<switchery color="#3bafda" input-value="{team.id}" group="{group}" checked="{team.added}" data-ref="team-{team.id}"></switchery>
+	            	</td>
+	            	<td>{team.name}</td>
+	            	<td><span class="badge badge-primary" each="{member in team.members}">{member}</span></td>
+	            </tr>
+	        </tbody>
+	    </table>
+
 	</div>
 	<script>
 		/**
 		 * involvedusers
-		 * Shows all the users for a case and add / remove them from it.
+		 * Shows all the users or teams for a case and add / remove them from it.
 		 *
-		 * @param {Object} opts.users 			Array of users
+		 * @param {Object} opts.users | teams	Array of users | teams
 		 * @param {string} opts.caseId  		Case ID
 		 * @param {string} opts.caseCategory	Case category
+		 * @param {string} opts.group			String to categorize switchery els
 		 */
 
 		var self = this;
-		this.group = 'involvedUsers'; // Labels the switchery to target the event
-		
+		this.group = this.opts.group; // Labels the switchery to target the event
+		var url = this.opts.users ? WS.users : WS.teams
 		/**
 		 * saveInvolvedUsers
 		 * Saves the status of a given user based on the switchery selection (off/on)
@@ -61,9 +83,9 @@
 		 * @param {Object} user 	User data
 		 */
 
-		this.saveInvolvedUsers = function(user) {
+		this.saveInvolvedUsers = function(item) {
 			//XXX UPDATE WS
-			deeplegal.Rest.put(WS.users, this.opts.caseId, user).done(function(r) {
+			deeplegal.Rest.put(url, this.opts.caseId, item).done(function(r) {
                 if(r.status == 200) {
                     var saved = deeplegal.HTMLSnippets.getSnippet('saved');
                     deeplegal.Util.showMessageAutoClose('saved', 'alert-success');
