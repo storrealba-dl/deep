@@ -88,7 +88,61 @@
         </div>
             
     </div>
+    
+    <modal id="involved-users-modal" size="lg" title="Usuarios involucrados" ref="modalInvolvedUsers">
+    	<yield to="content">
+			<involvedusers users="{parent.involvedUsers}" case-id="{parent.opts.caseId}" case-category="{parent.opts.category}"></involvedusers>
+		</yield>
+    </modal>
+    
+
     <script>
+    /**
+     * casedetail
+     * Shows all the information about a case
+	 *
+	 * @param {string} opts.category	Case category (laboral, civil, etc)
+	 * @param {string} opts.name 		Case name/title
+	 * @param {string} opts.document 	Case document/rut/rit/rol
+	 * @param {string} opts.updated		Last update on the case
+	 * @param {Object} opts.cards		Information to be displayed on the left cards
+	 * @param {string} opts.caseId		Case ID
+	 */
+
+	var self = this;
+	this.involvedUsers = null;
+	this.modalInvolvedUsers = null;
+
+	this.loadInvolvedUsers = function() {
+		//XXX UPDATE WS
+		deeplegal.Rest.get(WS.users).done(function(r) {
+			self.involvedUsers = r.data;
+			self.update();
+		});
+	}
+
+	this.on('mount', function() {
+		this.loadInvolvedUsers();
+		this.modalInvolvedUsers = this.refs.modalInvolvedUsers;
+	})
+
+	deeplegal.on('showInvolvedUsers', function(caseData) {
+		if(caseData.id == self.opts.caseId) {
+			self.modalInvolvedUsers.show();
+		}
+	})
+
+	deeplegal.on('showTeam', function(caseData) {
+		// TODO
+	})
+
+	deeplegal.on('showResources', function(caseData) {
+		// TODO
+	})
+
+	deeplegal.on('showRelatedCases', function(caseData) {
+		// TODO
+	})
 
     </script>
 </casedetail>

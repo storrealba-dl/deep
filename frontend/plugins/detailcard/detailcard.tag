@@ -12,22 +12,22 @@
 	        <virtual if="{opts.data.buttons && opts.data.buttons.indexOf('users') > -1}">
             	<dt>Usuarios involucrados</dt>
                 <dd>
-                	<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-users"><i class="mdi mdi-plus-circle"></i> Usuario</button>
+                	<button class="btn btn-sm btn-primary" onclick="{showInvolvedUsers}"><i class="mdi mdi-plus-circle"></i> Usuario</button>
                 </dd>
             </virtual>
 
             <virtual if="{opts.data.buttons && opts.data.buttons.indexOf('teams') > -1}">
             	<dt>Equipo de trabajo</dt>
                 <dd>
-                	<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-teams"><i class="mdi mdi-plus-circle"></i> Equipo</button>
+                	<button class="btn btn-sm btn-primary" onclick="{showTeams}"><i class="mdi mdi-plus-circle"></i> Equipo</button>
                 </dd>
             </virtual>
 
             <virtual if="{opts.data.buttons && opts.data.buttons.indexOf('related') > -1}">
                 <dt>Causas asociadas</dt>
                 <dd>
-                    <button class="btn btn-sm btn-primary"><i class="mdi mdi-plus-circle"></i> Recurso</button><br>
-                    <button class="btn btn-sm btn-primary"><i class="mdi mdi-plus-circle"></i> Causa</button>
+                    <button class="btn btn-sm btn-primary" onclick="{showResources}"><i class="mdi mdi-plus-circle"></i> Recurso</button><br>
+                    <button class="btn btn-sm btn-primary" onclick="{showRelatedCases}"><i class="mdi mdi-plus-circle"></i> Causa</button>
                 </dd>	
             </virtual>
         </dl>
@@ -96,7 +96,24 @@
 			}).show();
     	}
 
-    	//TODO set buttons
+    	/**
+    	 * Triggers the event so the component that instantiated shows the data
+    	 */
+    	this.showInvolvedUsers = function() {
+    		deeplegal.trigger('showInvolvedUsers', tag.opts.data.metadata);
+    	}
+
+    	this.showTeam = function() {
+    		deeplegal.trigger('showTeam', tag.opts.data.metadata);	
+    	}
+
+    	this.showResources = function() {
+    		deeplegal.trigger('showResources', tag.opts.data.metadata);
+    	}
+
+    	this.showRelatedCases = function() {
+			deeplegal.trigger('showRelatedCases', tag.opts.data.metadata);
+    	}
 
     </script>
 </detailcard>

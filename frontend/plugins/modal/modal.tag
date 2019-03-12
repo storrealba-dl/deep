@@ -23,13 +23,13 @@
 		 * modal
 		 * component to show content in a modal window
 		 *
-		 * @param opts.id		id for the html element
-		 * @param opts.size		modal window size
-		 * @param opts.title 	modal title
-		 * @param opts.onOpen 	callback for the show event
-		 * @param opts.onClose 	callback for the hidden event
-		 * @yield content 		modal content
-		 * @yield footer 		modal footer
+		 * @param {string} opts.id			id for the html element
+		 * @param {string} opts.size		modal window size (lg, md, sm)
+		 * @param {string} opts.title 		modal title
+		 * @param {function} opts.onOpen 	callback for the show event
+		 * @param {function} opts.onClose 	callback for the hidden event
+		 * @yield {string|tag} content 		modal content
+		 * @yield {string|tag} footer 		modal footer
 		 *
 		 */
 

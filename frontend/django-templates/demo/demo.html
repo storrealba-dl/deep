@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="/frontend/modules/casedetail/casedetail.css">
 <link rel="stylesheet" type="text/css" href="/frontend/modules/litigants/litigants.css">
 <link rel="stylesheet" type="text/css" href="/frontend/modules/history/history.css">
+<link rel="stylesheet" type="text/css" href="/frontend/modules/involvedusers/involvedusers.css">
+<link rel="stylesheet" type="text/css" href="/frontend/lib/minton/plugins/footable/css/footable.core.css">
+
 {% endblock section_css %}
 
 {% block app_content %}
@@ -127,7 +130,7 @@
     	{
     		title: 'Datos adicionales de la página oficial',
     		metadata: {
-    			id: '{{ es.crr_idcausa|stringformat:"s" }}',
+    			id: '123123', //'{{ es.crr_idcausa|stringformat:"s" }}',
     			name: '{{ es.nombre }}',
     			category: '{{ es.materia }}'
     		},
@@ -196,7 +199,7 @@
     	]
     </script>
     <!-- dummy -->
-    <casedetail category="laboral" name="PEREZ CON LOPEZ" document="12-12331-B" updated="12/02/2012" cards="{cards}" case_id="123123"></casedetail>
+    <casedetail category="laboral" name="PEREZ CON LOPEZ" document="12-12331-B" updated="12/02/2012" cards="{cards}" case-id="123123"></casedetail>
     
 </section>
 {% endblock app_content %}
@@ -207,5 +210,8 @@
 <script type="text/javascript" src="/frontend/modules/casedetail/casedetail.js"></script>
 <script type="text/javascript" src="/frontend/modules/litigants/litigants.js"></script>
 <script type="text/javascript" src="/frontend/modules/history/history.js"></script>
+<script type="text/javascript" src="/frontend/plugins/switchery/switchery.js"></script>
+<script type="text/javascript" src="/frontend/modules/involvedusers/involvedusers.js"></script>
 <script type="text/javascript" src="/frontend/plugins/detailcard/detailcard.js"></script>
+<script type="text/javascript" src="/frontend/lib/minton/plugins/footable/js/footable.all.min.js"></script>
 {% endblock section_scripts %}
