@@ -29,7 +29,7 @@
                     <!-- tabs -->
                     <ul class="nav nav-tabs">
                         <li class="nav-item mobile-hidden">
-                            <a href="#messages" data-toggle="tab" aria-expanded="false" class="nav-link {opts.tabselect == "messages" ? 'active show' : ''}">
+                            <a href="#notes" data-toggle="tab" aria-expanded="false" class="nav-link {opts.tabselect == "messages" ? 'active show' : ''}">
                                 <span class="tab-icon">
                                     <i class="mdi mdi-message-outline"></i>
                                 </span>
@@ -75,6 +75,10 @@
                             </div>
                         </div>
 
+                        <section class="tab-pane fade" id="notes">
+                            <notes></notes>
+                            
+                        </section>
                         <section class="tab-pane fade" id="litigants">
                             <litigants data="{litigants}"></litigants>    
                         </section>
