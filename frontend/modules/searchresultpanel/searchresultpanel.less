@@ -1,0 +1,75 @@
+@import '../../styles/variables';
+
+@deepmail-color: #3ddcf7;
+@deepcase-color: #7266ba;
+@deepdrive-color: #00b19d;
+
+.deepsearch-result {
+	display: flex;
+    flex-direction: row;
+
+    .badge {
+    	color: @white;
+    	text-transform: capitalize;
+    }
+
+    .deepsearch-category {
+    	margin-right: 10px;
+    }
+
+    .deepsearch-info {
+    	padding-left: 10px;
+    	border-left: 1px solid;
+    	line-height: 1.2;
+
+    	.card-title {
+    		margin-bottom: 2px;
+    	}
+
+    	.card-title a {
+    		color: @text-color;
+    		font-weight: bold;
+    	}
+
+    	.card-text {
+    		margin-bottom: 0;
+    	}
+
+    	.card-text-summary em{
+
+    	}
+    }
+
+    &.deepsearch-result-deepmail {
+    	
+    	.badge {
+    		background-color: @deepmail-color;
+    	}
+
+    	.deepsearch-info {
+	    	border-color: @deepmail-color
+	    }
+    }
+
+    &.deepsearch-result-deepcase {
+    	
+    	.badge {
+    		background-color: @deepcase-color;
+    	}
+
+    	.deepsearch-info {
+	    	border-color: @deepcase-color
+	    }
+    }
+
+    &.deepsearch-result-deepdrive {
+    	
+    	.badge {
+	    	background-color: @deepdrive-color;
+	    }
+
+	    .deepsearch-info {
+	    	border-color: @deepdrive-color
+	    }
+    }
+}
