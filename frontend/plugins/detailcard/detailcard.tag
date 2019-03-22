@@ -103,8 +103,8 @@
     		deeplegal.trigger('showInvolvedUsers', tag.opts.data.metadata);
     	}
 
-    	this.showTeam = function() {
-    		deeplegal.trigger('showTeam', tag.opts.data.metadata);	
+    	this.showTeams = function() {
+    		deeplegal.trigger('showTeams', tag.opts.data.metadata);	
     	}
 
     	this.showResources = function() {
